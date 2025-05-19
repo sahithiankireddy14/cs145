@@ -20,7 +20,8 @@ lab_codes = pd.read_csv(os.path.join(data_base, "d_labitems.csv.gz"))
 procedure_codes =  pd.read_csv(os.path.join(data_base, "d_icd_procedures.csv.gz"))
 all_patient_procedures =  pd.read_csv(os.path.join(data_base, "procedures_icd.csv.gz"))
 all_patient_labs = pd.read_csv(os.path.join(data_base, "labevents.csv.gz"))
-
+all_patient_prescriptions = pd.read_csv(os.path.join(data_base, "prescriptions.csv.gz"))
+                                        
 
     
 def get_diagnoses(hadm_id):
@@ -48,10 +49,25 @@ def symptoms(pid):
     pass
 
 
+
+def get_prescriptions(hadm_id):
+     # all drugs given to patient per admision are returned
+     # the drugs are sorted by startime (so first drug in list was adminstered first etc.)
+     admission_prescriptions = all_patient_prescriptions[all_patient_prescriptions['hadm_id'] == hadm_id]
+     if not admission_prescriptions.empty:
+        merged_df = admission_prescriptions.merge(all_patient_prescriptions, on='hadm_id', how='left')
+        merged_df = merged_df.sort_values(by='starttime')
+        return merged_df['drug'].tolist()
+     return []
+    
+              
+
 def get_procedures(hadm_id):
      admission_procedures = all_patient_procedures[all_patient_procedures['hadm_id'] == hadm_id]
-     merged_df = admission_procedures.merge(procedure_codes, on='icd_code', how='left')
-     return merged_df['long_title'].tolist()
+     if not admission_procedures.empty:
+         merged_df = admission_procedures.merge(procedure_codes, on='icd_code', how='left')
+         return merged_df['long_title'].tolist()
+     return []
               
          
 def get_labs(pid, admit_time, discharge_time):
@@ -87,6 +103,7 @@ def generate_patient_admission_table(patient_admissions, patient_id):
             # no hadm_id in labs events chart, so going based off admit time and admission time
         patient_admissions_dict[hadm_id]['lab events'] = get_labs(patient_id, admission['admittime'], admission['dischtime'])
         patient_admissions_dict[hadm_id]['procedures'] = get_procedures(hadm_id)
+        patient_admissions_dict[hadm_id]['prescriptions'] = get_prescriptions(hadm_id)
     return patient_admissions_dict
     
 
@@ -120,17 +137,21 @@ def main():
         patient_admissions = admissions[admissions['subject_id'] == patient_id]
         if not patient_admissions.empty:
             patient_info_dict["race"] = patient_admissions.iloc[0]["race"]
+            patient_info_dict["martial status"] = patient_admissions.iloc[0]["marital status"]
+            
             patient_admissions_dict = generate_patient_admission_table(patient_admissions, patient_id)
         
             # diagnosis_codes
         else:
             patient_info_dict["race"] = "Unknown"
+            patient_info_dict["marital status"] = "Unknown"
+             
         # print(hcpcsevents)
         print(patient_info_dict)
         print(patient_admissions_dict)
         break
 
-
+# TODO: base path passed in as arg, fine for now 
 main()
 
 
