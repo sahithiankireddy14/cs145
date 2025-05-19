@@ -68,49 +68,60 @@ def get_labs(pid, admit_time, discharge_time):
                    
 
 
+
+def generate_patient_admission_table(patient_admissions):
+    patient_admissions_dict = {}
+    # TODO: add relavent information to patient_admissions_dict {hadm_id1: {}, hadm_id2: {}}
+    for idx, admission in patient_admissions.iterrows():
+        hadm_id = admission["hadm_id"]
+        patient_admissions_dict[hadm_id] = {}
+        admission_diagnoses = get_diagnoses(hadm_id)
+        # Sahithi Comment --> I think we can just set to empty list if nothing present?  
+        if admission_diagnoses:
+            patient_admissions_dict[hadm_id]["diagnoses"] = admission_diagnoses
+        else:
+            pass
+            # TODO: need to handle this?
+
+
+            # no hadm_id in labs events chart, so going based off admit time and admission time
+        patient_admissions_dict[hadm_id]['lab events'] = get_labs(patient_id, admission['admittime'], admission['dischtime'])
+        patient_admissions_dict[hadm_id]['procedures'] = get_procedures(hadm_id)
+    return patient_admissions_dict
+    
+
+def generate_patient_info_table(patient):
+    patient_info_dict = {}
+    gender = patient["gender"] if not pd.isna(patient["gender"]) else "Unknown"
+    anchor_year = int(patient["anchor_year"]) if not pd.isna(patient["anchor_year"]) else "Unknown"
+    age = int(patient["anchor_age"]) if not pd.isna(patient["anchor_age"]) else "Unknown"
+    if pd.isna(patient['dod']) or anchor_year == "Unknown" or age == "Unknown":
+        dod_age = None
+    else:
+        dod_age = int(patient["dod"].split("-")[0]) - anchor_year + age
+    # if count == 6:
+    patient_info_dict["gender"] = gender
+    # TODO: Remove age should be in admissions table
+    patient_info_dict["patient age"] = age
+    patient_info_dict["age of death"] = dod_age
+    return patient_info_dict
+
+
 def main():
     count = 0
     for idx, patient in df.iterrows():
-        patient_admissions_dict = {}
-        patient_info_dict = {}
         count += 1
         if pd.isna(patient["subject_id"]):
             continue
 
         patient_id = patient["subject_id"]
-        gender = patient["gender"] if not pd.isna(patient["gender"]) else "Unknown"
-        anchor_year = int(patient["anchor_year"]) if not pd.isna(patient["anchor_year"]) else "Unknown"
-        age = int(patient["anchor_age"]) if not pd.isna(patient["anchor_age"]) else "Unknown"
-        if pd.isna(patient['dod']) or anchor_year == "Unknown" or age == "Unknown":
-            dod_age = None
-        else:
-            dod_age = int(patient["dod"].split("-")[0]) - anchor_year + age
-        # if count == 6:
-        patient_info_dict["gender"] = gender
-        # TODO: Remove age should be in admissions table
-        patient_info_dict["patient age"] = age
-        patient_info_dict["age of death"] = dod_age
-        # TODO: improve efficiency of this 
+        patient_info_dict = generate_patient_info_table(patient)
+        
         patient_admissions = admissions[admissions['subject_id'] == patient_id]
         if not patient_admissions.empty:
             patient_info_dict["race"] = patient_admissions.iloc[0]["race"]
-            # TODO: add relavent information to patient_admissions_dict {hadm_id1: {}, hadm_id2: {}}
-            for idx, admission in patient_admissions.iterrows():
-                hadm_id = admission["hadm_id"]
-                patient_admissions_dict[hadm_id] = {}
-                admission_diagnoses = get_diagnoses(hadm_id)
-                # Sahithi Comment --> I think we can just set to empty list if nothing present?  
-                if admission_diagnoses:
-                    patient_admissions_dict[hadm_id]["diagnoses"] = admission_diagnoses
-                else:
-                    pass
-                    # TODO: need to handle this?
-
-
-                 # no hadm_id in labs events chart, so going based off admit time and admission time
-                patient_admissions_dict[hadm_id]['lab events'] = get_labs(patient_id, admission['admittime'], admission['dischtime'])
-                patient_admissions_dict[hadm_id]['procedures'] = get_procedures(hadm_id)
-
+            patient_admissions_dict = generate_patient_admission_table(patient_admissions)
+        
             # diagnosis_codes
         else:
             patient_info_dict["race"] = "Unknown"
@@ -118,7 +129,6 @@ def main():
         print(patient_info_dict)
         print(patient_admissions_dict)
         break
-
 
 
 main()
