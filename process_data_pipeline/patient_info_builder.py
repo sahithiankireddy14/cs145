@@ -3,8 +3,8 @@ import os
 pd.set_option("display.max_columns", None) 
 
 # path to hosp folder
-#data_base = "/Users/psehgal/Documents/physionet.org/files/mimiciv/3.1/hosp"
-data_base = "/Users/sahithi/Desktop/Research/physionet.org/files/mimiciv/3.1/hosp"
+data_base = "/Users/psehgal/Documents/physionet.org/files/mimiciv/3.1/hosp"
+# data_base = "/Users/sahithi/Desktop/Research/physionet.org/files/mimiciv/3.1/hosp"
 
 
 # read relavant csv's
@@ -22,7 +22,6 @@ all_patient_procedures =  pd.read_csv(os.path.join(data_base, "procedures_icd.cs
 all_patient_labs = pd.read_csv(os.path.join(data_base, "labevents.csv.gz"))
 all_patient_prescriptions = pd.read_csv(os.path.join(data_base, "prescriptions.csv.gz"))
                                         
-
     
 def get_diagnoses(hadm_id):
     admission_codes = diagnosis_codes[diagnosis_codes["hadm_id"] == hadm_id]
@@ -35,12 +34,35 @@ def get_diagnoses(hadm_id):
                 admission_diagnoses.append(diagnosis_name["long_title"].iloc[0])
     return admission_diagnoses
 
+
 def get_hcpcsevents(hadm_id):
     admission_codes = hcpcsevents[hcpcsevents["hadm_id"] == hadm_id]
     if not admission_codes.empty:
-        # Sahithi Question: I don't see a icd code attribute, are we adding this as new attribute? 
-        icd_codes = admission_codes["icd_code"]
-        # real world events 
+        admission_procedures = []
+        for idx, row in admission_codes.iterrows():
+            admission_procedure = {}
+            if not pd.isna(row["short_description"]):
+                admission_procedure["actual short description"] = row["short_description"]
+            if not pd.isna(row["hcpcs_cd"]):
+                procedure_code = row["hcpcs_cd"]
+                procedure_desc = d_hcpcs[d_hcpcs["code"] == procedure_code]
+                if not procedure_desc.empty:
+                    long_desc = procedure_desc["long_description"].iloc[0]
+                    official_short_desc = procedure_desc["short_description"].iloc[0]
+                    if not pd.isna(official_short_desc):
+                        admission_procedure["official short description of encoded procedure"] = official_short_desc
+                    if not pd.isna(long_desc):
+                        admission_procedure["official long description of encoded procedure"] = long_desc
+            if not pd.isna(row["seq_num"]):
+                admission_procedure["sequence number"] = int(row["seq_num"])
+            elif pd.isna(row["seq_num"]) and admission_procedure:
+                admission_procedure["sequence number"] = LARGE_NUMBER
+            if admission_procedure:
+                admission_procedures.append(admission_procedure)
+            # TODO: WHAT TO DO WITH CHART DATE
+            # TODO: assuming every hadm_id is unique across all patients
+        sorted_data = sorted(admission_procedures, key=lambda x: x["sequence number"])
+        return sorted_data
 
 
 
@@ -83,8 +105,6 @@ def get_labs(pid, admit_time, discharge_time):
     return []
                    
 
-
-
 def generate_patient_admission_table(patient_admissions, patient_id):
     patient_admissions_dict = {}
     # TODO: add relavent information to patient_admissions_dict {hadm_id1: {}, hadm_id2: {}}
@@ -92,13 +112,12 @@ def generate_patient_admission_table(patient_admissions, patient_id):
         hadm_id = admission["hadm_id"]
         patient_admissions_dict[hadm_id] = {}
         admission_diagnoses = get_diagnoses(hadm_id)
+        hcpcs_events = get_hcpcsevents(hadm_id)
         # Sahithi Comment --> I think we can just set to empty list if nothing present?  
         if admission_diagnoses:
             patient_admissions_dict[hadm_id]["diagnoses"] = admission_diagnoses
-        else:
-            pass
-            # TODO: need to handle this?
-
+        if hcpcs_events:
+            patient_admissions_dict[hadm_id]["hcpcs events"] = hcpcs_events
 
             # no hadm_id in labs events chart, so going based off admit time and admission time
         patient_admissions_dict[hadm_id]['lab events'] = get_labs(patient_id, admission['admittime'], admission['dischtime'])
@@ -117,10 +136,13 @@ def generate_patient_info_table(patient):
     else:
         dod_age = int(patient["dod"].split("-")[0]) - anchor_year + age
     # if count == 6:
-    patient_info_dict["gender"] = gender
+    if gender != "Unknown":
+        patient_info_dict["gender"] = gender 
     # TODO: Remove age should be in admissions table
-    patient_info_dict["patient age"] = age
-    patient_info_dict["age of death"] = dod_age
+    if age != "Unknown":
+        patient_info_dict["patient age"] = age 
+    if dod_age != "Unknown":
+        patient_info_dict["age of death"] = dod_age 
     return patient_info_dict
 
 
@@ -137,8 +159,6 @@ def main():
         patient_admissions = admissions[admissions['subject_id'] == patient_id]
         if not patient_admissions.empty:
             patient_info_dict["race"] = patient_admissions.iloc[0]["race"]
-            patient_info_dict["martial status"] = patient_admissions.iloc[0]["marital status"]
-            
             patient_admissions_dict = generate_patient_admission_table(patient_admissions, patient_id)
         
             # diagnosis_codes
@@ -153,5 +173,3 @@ def main():
 
 # TODO: base path passed in as arg, fine for now 
 main()
-
-
