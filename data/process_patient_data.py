@@ -69,7 +69,7 @@ def get_labs(pid, admit_time, discharge_time):
 
 
 
-def generate_patient_admission_table(patient_admissions):
+def generate_patient_admission_table(patient_admissions, patient_id):
     patient_admissions_dict = {}
     # TODO: add relavent information to patient_admissions_dict {hadm_id1: {}, hadm_id2: {}}
     for idx, admission in patient_admissions.iterrows():
@@ -120,7 +120,7 @@ def main():
         patient_admissions = admissions[admissions['subject_id'] == patient_id]
         if not patient_admissions.empty:
             patient_info_dict["race"] = patient_admissions.iloc[0]["race"]
-            patient_admissions_dict = generate_patient_admission_table(patient_admissions)
+            patient_admissions_dict = generate_patient_admission_table(patient_admissions, patient_id)
         
             # diagnosis_codes
         else:
