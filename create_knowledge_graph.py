@@ -2,12 +2,13 @@ import networkx as nx
 import matplotlib.pyplot as plt
 import pandas as pd 
 import openai
+import os
 
 graph_list = []
 csv_file = "patient_data.csv"
 df = pd.read_csv(csv_file)
 
-openai.api_key = 'your_openai_api_key'
+openai.api_key = os.getenv("OPENAI_API_KEY")
 
 def query_llm(prompt: str, model="gpt-4") -> str:
     response = openai.ChatCompletion.create(
