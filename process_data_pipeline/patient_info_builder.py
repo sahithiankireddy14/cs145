@@ -1,11 +1,13 @@
 import pandas as pd
 import os
+
 pd.set_option("display.max_columns", None) 
 
 # path to hosp folder
-data_base = "/Users/psehgal/Documents/physionet.org/files/mimiciv/3.1/hosp"
-# data_base = "/Users/sahithi/Desktop/Research/physionet.org/files/mimiciv/3.1/hosp"
+#data_base = "/Users/psehgal/Documents/physionet.org/files/mimiciv/3.1/hosp"
+data_base = "/Users/sahithi/Desktop/Research/physionet.org/files/mimiciv/3.1/hosp"
 
+LARGE_NUMBER = 1000000000000
 
 # read relavant csv's
 df = pd.read_csv(os.path.join(data_base, "patients.csv.gz"))
@@ -45,7 +47,7 @@ def get_hcpcsevents(hadm_id):
                 admission_procedure["actual short description"] = row["short_description"]
             if not pd.isna(row["hcpcs_cd"]):
                 procedure_code = row["hcpcs_cd"]
-                procedure_desc = d_hcpcs[d_hcpcs["code"] == procedure_code]
+                procedure_desc = hcpcs_codes[hcpcs_codes["code"] == procedure_code]
                 if not procedure_desc.empty:
                     long_desc = procedure_desc["long_description"].iloc[0]
                     official_short_desc = procedure_desc["short_description"].iloc[0]
