@@ -13,4 +13,27 @@ Patient Admissions Dictionary:
 - diagnosis related group
     - [{drg 1 details}, {drg 2 details}, {drg 3 details}]
     - {drg 1 details} -> {"type": "", "description": "", "severity": ""} 
+- physician order entry
+    - Example output:
+            [
+                {
+                    "version": "1",
+                    "order_description": "Vancomycin 1g IV q12h",
+                    "order_type": "Medication",
+                    "order_status": "Active",
+                    "transaction_type": "New",
+                    "order_time": "2022-01-01 08:00:00",
+                    "ordered_by": "Provider_9021"
+                },
+
+                {
+                    "version": "2",
+                    "order_description": "Vancomycin 750mg IV q12h",
+                    "order_type": "Medication",
+                    "order_status": "Discontinued",
+                    "transaction_type": "Discontinue",
+                    "order_time": "2022-01-01 12:00:00",
+                    "ordered_by": "Provider_9021"
+                }
+            ]
 

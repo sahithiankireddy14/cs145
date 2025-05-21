@@ -1,7 +1,18 @@
 import pandas as pd
 import os
+# install pyarrow
                                         
 class PatientInfoBuilder:
+    def chunk_file(self, file_path):
+        # TODO: may not be most optimal
+        chunksize = 74103
+        reader = pd.read_csv(file_path, chunksize=chunksize)
+        chunk1 = next(reader)
+        chunk2 = next(reader)
+        chunk3 = next(reader)
+        chunk4 = next(reader)
+        return chunk1, chunk2, chunk3, chunk4
+
     def __init__(self):
         pd.set_option("display.max_columns", None) 
         # path to hosp folder
@@ -16,13 +27,14 @@ class PatientInfoBuilder:
         self.hcpcsevents = pd.read_csv(os.path.join(self.data_base, "hcpcsevents.csv.gz"))
         self.admissions = pd.read_csv(os.path.join(self.data_base, "admissions.csv.gz"))
         self.drgcodes = pd.read_csv(os.path.join(self.data_base, "drgcodes.csv.gz"))
-        # self.emar_detail = pd.read_csv(os.path.join(self.data_base, "emar_detail.csv.gz"), low_memory=False)
-
-        self.lab_codes = pd.read_csv(os.path.join(self.data_base, "d_labitems.csv.gz"))
-        self.procedure_codes =  pd.read_csv(os.path.join(self.data_base, "d_icd_procedures.csv.gz"))
-        self.all_patient_procedures =  pd.read_csv(os.path.join(self.data_base, "procedures_icd.csv.gz"))
-        self.all_patient_labs = pd.read_csv(os.path.join(self.data_base, "labevents.csv.gz"))
-        self.all_patient_prescriptions = pd.read_csv(os.path.join(self.data_base, "prescriptions.csv.gz"))
+        self.poe_chunks = self.chunk_file(os.path.join(self.data_base, "poe.csv.gz"))
+        # self.emar_chunks = self.chunk_file(os.path.join(self.data_base, "emar.csv.gz"))
+        
+        # self.lab_codes = pd.read_csv(os.path.join(self.data_base, "d_labitems.csv.gz"))
+        # self.procedure_codes =  pd.read_csv(os.path.join(self.data_base, "d_icd_procedures.csv.gz"))
+        # self.all_patient_procedures =  pd.read_csv(os.path.join(self.data_base, "procedures_icd.csv.gz"))
+        # self.all_patient_labs = pd.read_csv(os.path.join(self.data_base, "labevents.csv.gz"))
+        # self.all_patient_prescriptions = pd.read_csv(os.path.join(self.data_base, "prescriptions.csv.gz"))
 
     def get_diagnoses(self, hadm_id):
         admission_codes = self.diagnosis_codes[self.diagnosis_codes["hadm_id"] == hadm_id]
@@ -30,7 +42,6 @@ class PatientInfoBuilder:
             admission_codes = admission_codes["icd_code"].dropna().tolist()
             admission_diagnoses = []
             for admission_code in admission_codes:
-                print(admission_code)
                 diagnosis_name = self.diagnosis_names[self.diagnosis_names["icd_code"] == admission_code]
                 if not diagnosis_name.empty:
                     admission_diagnoses.append(diagnosis_name["long_title"].iloc[0])
@@ -80,13 +91,9 @@ class PatientInfoBuilder:
             sorted_data = sorted(admission_procedures, key=lambda x: x["sequence number"])
             return sorted_data
 
-
-
     def symptoms(self, pid):
         # TODO : extract symptoms for clinical notes 
         pass
-
-
 
     def get_prescriptions(self, hadm_id):
         # all drugs given to patient per admision are returned
@@ -130,6 +137,7 @@ class PatientInfoBuilder:
             admission_diagnoses = self.get_diagnoses(hadm_id)
             hcpcs_events = self.get_hcpcsevents(hadm_id)
             drg = self.get_drg(hadm_id)
+            poe = self.get_poe(hadm_id)
             # Sahithi Comment --> I think we can just set to empty list if nothing present?  
             if admission_diagnoses:
                 patient_admissions_dict[hadm_id]["diagnoses"] = admission_diagnoses
@@ -137,13 +145,74 @@ class PatientInfoBuilder:
                 patient_admissions_dict[hadm_id]["hcpcs events"] = hcpcs_events
             if drg:
                 patient_admissions_dict[hadm_id]["diagnosis related group"] = drg
+            if poe:
+                patient_admissions_dict[hadm_id]["physician order entry"] = poe
 
             # no hadm_id in labs events chart, so going based off admit time and admission time
-            patient_admissions_dict[hadm_id]['lab events'] = get_labs(patient_id, admission['admittime'], admission['dischtime'])
-            patient_admissions_dict[hadm_id]['procedures'] = get_procedures(hadm_id)
-            patient_admissions_dict[hadm_id]['prescriptions'] = get_prescriptions(hadm_id)
+            # patient_admissions_dict[hadm_id]['lab events'] = get_labs(patient_id, admission['admittime'], admission['dischtime'])
+            # patient_admissions_dict[hadm_id]['procedures'] = get_procedures(hadm_id)
+            # patient_admissions_dict[hadm_id]['prescriptions'] = get_prescriptions(hadm_id)
         return patient_admissions_dict
     
+    def get_poe(self, hadm_id):
+        # TODO: do poe details
+        # TODO: can map by change, discontinued, etc, types 
+        # TODO: make sure to map discontinued and discontinues 
+        filtered_chunks = []
+        for chunk in self.poe_chunks:
+            matches = chunk[chunk["hadm_id"] == hadm_id]
+            if not matches.empty:
+                filtered_chunks.append(matches)
+        if not filtered_chunks:
+            return []
+        admission_poes = pd.concat(filtered_chunks, ignore_index=True)
+        admission_poes = admission_poes.sort_values("poe_seq")
+        poe_events = []
+        for _, row in admission_poes.iterrows():
+            event = {}
+            if pd.notna(row["order_type"]):
+                event["order type"] = row["order_type"]
+            if pd.notna(row["order_status"]):
+                event["order status"] = row["order_status"]
+            if pd.notna(row["transaction_type"]):
+                event["transaction type"] = row["transaction_type"]
+            if pd.notna(row["ordertime"]):
+                event["order time"] = str(row["ordertime"])
+            if pd.notna(row["poe_seq"]):
+                event["sequence number"] = int(row["poe_seq"])
+            if pd.notna(row["order_provider_id"]):
+                event["ordered by"] = f"Provider_{row['order_provider_id']}"
+            if pd.notna(row["discontinue_of_poe_id"]):
+                event["discontinues the following sequence number for the same patient"] = int(row["discontinue_of_poe_id"].split("-")[1])
+            if pd.notna(row["discontinued_by_poe_id"]):
+                event["discontinued by the following sequence number for the same patient"] = int(row["discontinued_by_poe_id"].split("-")[1])
+            if event:
+                poe_events.append(event)
+        return poe_events
+
+            
+
+    # def get_emar(self):
+    #     # TODO: do emar details
+    #     filtered_chunks = []
+    #     for chunk in self.emar_chunks:
+    #         matches = chunk[chunk["hadm_id"] == hadm_id]
+    #         if not matches.empty:
+    #             filtered_chunks.append(matches)
+    #     admission_emars = pd.concat(filtered_chunks, ignore_index=True) 
+    #     if not admission_emars.empty:
+    #         emar_outputs = []
+    #         for _, row in admission_emars.iterrows():
+    #             emar_output = {}
+    #             if not pd.isna(row["emar_id"]):
+    #                 emar_id = row["emar_id"]
+    #             if not pd.isna(row["emar_seq"]):
+    #                 emar_output["sequence number"] = row["emar_seq"]
+    #                 poe_output = self.get_poe(poe_id)
+    #                 if poe_output:
+    #                     emar_output["Physicial Order Entry"] = poe_output
+    #                 if
+
 
     def generate_patient_info_table(self, patient):
         patient_info_dict = {}
@@ -184,7 +253,7 @@ class PatientInfoBuilder:
                 patient_info_dict["race"] = "Unknown"
                 patient_info_dict["marital status"] = "Unknown"
                 
-            # print(self.emar)
+            # print(self.poe_chunks[0][0:35])
             print(patient_info_dict)
             print(patient_admissions_dict)
             break
