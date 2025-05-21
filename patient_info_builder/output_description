@@ -10,3 +10,7 @@ Patient Admissions Dictionary:
 - hcpcs events [sorted list of procedures, where each procedure is a dictionary (procedures with no given order are placed randomly at the end)] 
     - [{procedure 1 details}, {procedure 2 details}, {procedure 3 details}]
     - {procedure 1 details} -> {"actual short description" : "", "official short description of encoded procedure": "", "official long description of encoded procedure": "", "sequence number": ""}
+- diagnosis related group
+    - [{drg 1 details}, {drg 2 details}, {drg 3 details}]
+    - {drg 1 details} -> {"type": "", "description": "", "severity": ""} 
+
