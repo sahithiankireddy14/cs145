@@ -1,5 +1,7 @@
 import pandas as pd
 import os
+from image_utils import * 
+from clinical_text_extractor import *
 # install pyarrow
                                         
 class PatientInfoBuilder:
@@ -16,8 +18,9 @@ class PatientInfoBuilder:
     def __init__(self):
         pd.set_option("display.max_columns", None) 
         # path to hosp folder
-        self.data_base = "/Users/psehgal/Documents/physionet.org/files/mimiciv/3.1/hosp"
-        # data_base = "/Users/sahithi/Desktop/Research/physionet.org/files/mimiciv/3.1/hosp"
+        #self.data_base = "/Users/psehgal/Documents/physionet.org/files/mimiciv/3.1/hosp"
+        self.clinical_data_base = "/Users/sahithi/Desktop/Research/physionet.org/files/mimic-iv-note/2.2"
+        self.data_base = "/Users/sahithi/Desktop/Research/physionet.org/files/mimiciv/3.1/hosp"
 
     # read relavant csv's
         self.df = pd.read_csv(os.path.join(self.data_base, "patients.csv.gz"))
@@ -28,9 +31,11 @@ class PatientInfoBuilder:
         self.admissions = pd.read_csv(os.path.join(self.data_base, "admissions.csv.gz"))
         self.drgcodes = pd.read_csv(os.path.join(self.data_base, "drgcodes.csv.gz"))
         self.poe_chunks = self.chunk_file(os.path.join(self.data_base, "poe.csv.gz"))
+        self.discharge_notes  = pd.read_csv(os.path.join(self.clinical_data_base, "discharge.csv.gz"))
         # self.emar_chunks = self.chunk_file(os.path.join(self.data_base, "emar.csv.gz"))
         
-        # self.lab_codes = pd.read_csv(os.path.join(self.data_base, "d_labitems.csv.gz"))
+        #self.lab_codes = pd.read_csv(os.path.join(self.data_base, "d_labitems.csv.gz"))
+        #self.lab_codes_chunks = self.chunk_file(os.path.join(self.data_base, "d_labitems.csv.gz"),)
         # self.procedure_codes =  pd.read_csv(os.path.join(self.data_base, "d_icd_procedures.csv.gz"))
         # self.all_patient_procedures =  pd.read_csv(os.path.join(self.data_base, "procedures_icd.csv.gz"))
         # self.all_patient_labs = pd.read_csv(os.path.join(self.data_base, "labevents.csv.gz"))
@@ -91,9 +96,18 @@ class PatientInfoBuilder:
             sorted_data = sorted(admission_procedures, key=lambda x: x["sequence number"])
             return sorted_data
 
-    def symptoms(self, pid):
-        # TODO : extract symptoms for clinical notes 
-        pass
+    def symptoms(self, hadm_id):
+        discharge_note = self.discharge_notes[self.discharge_notes['hadm_id'] == hadm_id]['text']
+        symptoms = extract_symptoms(discharge_note)
+        return symptoms
+
+    def images(self, hadm_id):
+        discharge_note = self.discharge_notes[self.discharge_notes['hadm_id'] == hadm_id]['text']
+        pass 
+
+
+
+        
 
     def get_prescriptions(self, hadm_id):
         # all drugs given to patient per admision are returned
@@ -138,6 +152,7 @@ class PatientInfoBuilder:
             hcpcs_events = self.get_hcpcsevents(hadm_id)
             drg = self.get_drg(hadm_id)
             poe = self.get_poe(hadm_id)
+            
             # Sahithi Comment --> I think we can just set to empty list if nothing present?  
             if admission_diagnoses:
                 patient_admissions_dict[hadm_id]["diagnoses"] = admission_diagnoses
@@ -149,9 +164,10 @@ class PatientInfoBuilder:
                 patient_admissions_dict[hadm_id]["physician order entry"] = poe
 
             # no hadm_id in labs events chart, so going based off admit time and admission time
-            # patient_admissions_dict[hadm_id]['lab events'] = get_labs(patient_id, admission['admittime'], admission['dischtime'])
-            # patient_admissions_dict[hadm_id]['procedures'] = get_procedures(hadm_id)
-            # patient_admissions_dict[hadm_id]['prescriptions'] = get_prescriptions(hadm_id)
+            patient_admissions_dict[hadm_id]['lab events'] = self.get_labs(patient_id, admission['admittime'], admission['dischtime'])
+            patient_admissions_dict[hadm_id]['procedures'] = self.get_procedures(hadm_id)
+            patient_admissions_dict[hadm_id]['prescriptions'] = self.get_prescriptions(hadm_id)
+            patient_admissions_dict[hadm_id]['symptoms'] = self.symptoms(hadm_id)
         return patient_admissions_dict
     
     def get_poe(self, hadm_id):
