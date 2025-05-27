@@ -28,6 +28,7 @@ class PatientInfoBuilder:
         self.admissions = pd.read_csv(os.path.join(self.data_base, "admissions.csv.gz"))
         self.drgcodes = pd.read_csv(os.path.join(self.data_base, "drgcodes.csv.gz"))
         self.poe_chunks = self.chunk_file(os.path.join(self.data_base, "poe.csv.gz"))
+        self.pharmacy_chunks = self.chunk_file(os.path.join(self.data_base, "pharmacy.csv.gz")) 
         # self.emar_chunks = self.chunk_file(os.path.join(self.data_base, "emar.csv.gz"))
         
         # self.lab_codes = pd.read_csv(os.path.join(self.data_base, "d_labitems.csv.gz"))
@@ -138,15 +139,13 @@ class PatientInfoBuilder:
             hcpcs_events = self.get_hcpcsevents(hadm_id)
             drg = self.get_drg(hadm_id)
             poe = self.get_poe(hadm_id)
-            # Sahithi Comment --> I think we can just set to empty list if nothing present?  
-            if admission_diagnoses:
-                patient_admissions_dict[hadm_id]["diagnoses"] = admission_diagnoses
-            if hcpcs_events:
-                patient_admissions_dict[hadm_id]["hcpcs events"] = hcpcs_events
-            if drg:
-                patient_admissions_dict[hadm_id]["diagnosis related group"] = drg
-            if poe:
-                patient_admissions_dict[hadm_id]["physician order entry"] = poe
+            pharmacy = self.get_pharmacy(hadm_id)
+            patient_admissions_dict[hadm_id]["diagnoses"] = admission_diagnoses
+            patient_admissions_dict[hadm_id]["hcpcs events"] = hcpcs_events
+            patient_admissions_dict[hadm_id]["diagnosis related group"] = drg
+            patient_admissions_dict[hadm_id]["physician order entry"] = poe
+            patient_admissions_dict[hadm_id]["pharmacy"] = pharmacy
+
 
             # no hadm_id in labs events chart, so going based off admit time and admission time
             # patient_admissions_dict[hadm_id]['lab events'] = get_labs(patient_id, admission['admittime'], admission['dischtime'])
@@ -154,43 +153,79 @@ class PatientInfoBuilder:
             # patient_admissions_dict[hadm_id]['prescriptions'] = get_prescriptions(hadm_id)
         return patient_admissions_dict
     
-    def get_poe(self, hadm_id):
-        # TODO: do poe details
-        # TODO: can map by change, discontinued, etc, types 
-        # TODO: make sure to map discontinued and discontinues 
+    def get_filtered_chunks(self, keyword, hadm_id, chunks):
         filtered_chunks = []
-        for chunk in self.poe_chunks:
-            matches = chunk[chunk["hadm_id"] == hadm_id]
+        for chunk in chunks:
+            matches = chunk[chunk[keyword] == hadm_id]
             if not matches.empty:
                 filtered_chunks.append(matches)
         if not filtered_chunks:
             return []
-        admission_poes = pd.concat(filtered_chunks, ignore_index=True)
-        admission_poes = admission_poes.sort_values("poe_seq")
-        poe_events = []
-        for _, row in admission_poes.iterrows():
-            event = {}
-            if pd.notna(row["order_type"]):
-                event["order type"] = row["order_type"]
-            if pd.notna(row["order_status"]):
-                event["order status"] = row["order_status"]
-            if pd.notna(row["transaction_type"]):
-                event["transaction type"] = row["transaction_type"]
-            if pd.notna(row["ordertime"]):
-                event["order time"] = str(row["ordertime"])
-            if pd.notna(row["poe_seq"]):
-                event["sequence number"] = int(row["poe_seq"])
-            if pd.notna(row["order_provider_id"]):
-                event["ordered by"] = f"Provider_{row['order_provider_id']}"
-            if pd.notna(row["discontinue_of_poe_id"]):
-                event["discontinues the following sequence number for the same patient"] = int(row["discontinue_of_poe_id"].split("-")[1])
-            if pd.notna(row["discontinued_by_poe_id"]):
-                event["discontinued by the following sequence number for the same patient"] = int(row["discontinued_by_poe_id"].split("-")[1])
-            if event:
-                poe_events.append(event)
-        return poe_events
+        return filtered_chunks
+    
+    def get_poe(self, hadm_id):
+        # TODO: do poe details
+        # TODO: can map by change, discontinued, etc, types 
+        # TODO: make sure to map discontinued and discontinues 
+        filtered_chunks = self.get_filtered_chunks("hadm_id", hadm_id, self.poe_chunks)
+        if filtered_chunks:
+            admission_poes = pd.concat(filtered_chunks, ignore_index=True)
+            admission_poes = admission_poes.sort_values("poe_seq")
+            poe_events = []
+            for _, row in admission_poes.iterrows():
+                event = {}
+                if pd.isna(row["poe_id"]):
+                    continue
+                poe_id = row["poe_id"]
+                event["poe id"] = poe_id
+
+                if pd.notna(row["order_type"]):
+                    event["order type"] = row["order_type"]
+                if pd.notna(row["order_status"]):
+                    event["order status"] = row["order_status"]
+                if pd.notna(row["transaction_type"]):
+                    event["transaction type"] = row["transaction_type"]
+                if pd.notna(row["ordertime"]):
+                    event["order time"] = str(row["ordertime"])
+                if pd.notna(row["poe_seq"]):
+                    event["sequence number"] = int(row["poe_seq"])
+                if pd.notna(row["order_provider_id"]):
+                    event["ordered by"] = f"Provider_{row['order_provider_id']}"
+                if pd.notna(row["discontinue_of_poe_id"]):
+                    event["discontinues the following sequence number for the same patient"] = int(row["discontinue_of_poe_id"].split("-")[1])
+                if pd.notna(row["discontinued_by_poe_id"]):
+                    event["discontinued by the following sequence number for the same patient"] = int(row["discontinued_by_poe_id"].split("-")[1])
+                if event:
+                    poe_events.append(event)
+            return poe_events
 
             
+    def get_pharmacy(self, hadm_id):
+        filtered_chunks = self.get_filtered_chunks("hadm_id", hadm_id, self.pharmacy_chunks)
+        if filtered_chunks:
+            pharmacy = pd.concat(filtered_chunks, ignore_index=True)
+            pharmacy_events = []
+            for _, row in pharmacy.iterrows():
+                excluded = ["subject_id", "hadm_id", "pharmacy_id"]
+                row = row.drop(labels=excluded)
+                start = row["starttime"]
+                end = row["stoptime"]
+                length = -1
+                if not pd.isna(start) and not pd.isna(end):
+                    start = pd.to_datetime(start)
+                    end = pd.to_datetime(end)
+                    length = end - start
+                    length = length.total_seconds() / 60
+                if length <= 0:
+                    length = None
+                row["duration (time between start and stop)"] = length
+                # TODO: do processing with one of these
+                row = row.drop("stoptime")
+                pharm_dict = row.to_dict()
+                pharmacy_events.append(pharm_dict)
+            return pharmacy_events
+
+
 
     # def get_emar(self):
     #     # TODO: do emar details
@@ -215,7 +250,6 @@ class PatientInfoBuilder:
 
 
     def generate_patient_info_table(self, patient):
-        patient_info_dict = {}
         gender = patient["gender"] if not pd.isna(patient["gender"]) else "Unknown"
         anchor_year = int(patient["anchor_year"]) if not pd.isna(patient["anchor_year"]) else "Unknown"
         age = int(patient["anchor_age"]) if not pd.isna(patient["anchor_age"]) else "Unknown"
@@ -225,39 +259,32 @@ class PatientInfoBuilder:
             dod_age = int(patient["dod"].split("-")[0]) - anchor_year + age
         # if count == 6:
         if gender != "Unknown":
-            patient_info_dict["gender"] = gender 
+            self.patient_info_dict["gender"] = gender 
         # TODO: Remove age should be in admissions table
         if age != "Unknown":
-            patient_info_dict["patient age"] = age 
+            self.patient_info_dict["patient age"] = age 
         if dod_age != "Unknown":
-            patient_info_dict["age of death"] = dod_age 
-        return patient_info_dict
+            self.patient_info_dict["age of death"] = dod_age 
+        return self.patient_info_dict
 
+    def patient_loop(self, patient):
+        if pd.isna(patient["subject_id"]):
+            continue
 
-    def main(self):
-        for _, patient in self.df.iterrows():
-            # count += 1
-            if pd.isna(patient["subject_id"]):
-                continue
+        patient_id = patient["subject_id"]
+        patient_info_dict = self.generate_patient_info_table(patient)
 
-            patient_id = patient["subject_id"]
-            patient_info_dict = self.generate_patient_info_table(patient)
+        patient_admissions = self.admissions[self.admissions['subject_id'] == patient_id]
+        if not patient_admissions.empty:
+            patient_info_dict["race"] = patient_admissions.iloc[0]["race"]
+            patient_admissions_dict = self.generate_patient_admission_table(patient_admissions, patient_id)
+
+            # diagnosis_codes
+        else:
+            patient_info_dict["race"] = "Unknown"
+            patient_info_dict["marital status"] = "Unknown"
             
-            patient_admissions = self.admissions[self.admissions['subject_id'] == patient_id]
-            if not patient_admissions.empty:
-                patient_info_dict["race"] = patient_admissions.iloc[0]["race"]
-                patient_admissions_dict = self.generate_patient_admission_table(patient_admissions, patient_id)
-            
-                # diagnosis_codes
-            else:
-                patient_info_dict["race"] = "Unknown"
-                patient_info_dict["marital status"] = "Unknown"
-                
-            # print(self.poe_chunks[0][0:35])
-            print(patient_info_dict)
-            print(patient_admissions_dict)
-            break
-
-# TODO: base path passed in as arg, fine for now 
-pi = PatientInfoBuilder()
-pi.main()
+        # print(self.pharmacy_chunks[0][0:35])
+        # print(patient_info_dict)
+        # print(patient_admissions_dict)
+        return patient_info_dict, patient_admissions_dict
