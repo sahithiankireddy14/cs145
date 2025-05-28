@@ -1,0 +1,50 @@
+{
+    "patient_number": {
+      "patient_age": "The age of the patient at the time of the anchor year.",
+      "race": "The recorded race or ethnicity of the patient.",
+      "gender": "The gender of the patient (e.g., Male, Female).",
+      "age_of_death": "Age at which the patient died, if applicable."
+    },
+    "admission_number": {
+      "diagnosis": "A list of diagnoses descriptions associated with the admission.",
+      "hcpcs_events": {
+        "description": "A sorted list of procedures based on sequence number; procedures with no order appear at the end. Each list element is a dictionary with the details listed below.",
+        "dictionary_details": {
+          "actual_short_description": "Short description from events file (free text).",
+          "official_short_description": "Short description from standardized HCPCS code reference.",
+          "official_long_description": "Long, detailed description from the HCPCS code reference.",
+          "sequence_number": "The order in which the procedure occurred during the admission."
+        }
+      },
+      "diagnosis_related_group": {
+        "description": "List of DRG's (Diagnosis Related Groups) assigned during the admission. Each list element is a dictionary with the details listed below.",
+        "dictionary_details": {
+          "type": "The type or category of DRG used.",
+          "description": "A textual description of the DRG.",
+          "severity": "Severity level associated with the DRG."
+        }
+      },
+      "physician_order_entry": {
+        "description": "List of physician-entered orders for medications or procedures.Each list element is a dictionary with the details listed below. Don't forget to connect the poe's to the correct admission",
+        "dictionary_details": {
+          "poe_id": "Unique identifier for this physician order;  be used to link related pharmacy records.",
+          "sequence_number": "sequence number of the poe event.",
+          "order_type": "Type of order (e.g., Medication, Lab Test).",
+          "order_status": "Current status of the order (e.g., Active, Discontinued).",
+          "transaction_type": "The nature of the transaction (New, Discontinue, etc.).",
+          "order_time": "Timestamp when the order was placed.",
+          "ordered_by": "Identifier of the provider who placed the order.",
+          "discontinue_of": "discontinues the following poe_id number for the same patient. connect this to the correct physician order entry based on the id",
+          "discontinue_by": "discontinued by the following poe_id number for the same patient. connect this to the correct physician order entry based on the id"
+        }
+      },
+      "pharmacy": {
+        "description": "List of pharmacy dispensing records, which should be linked to physician order entries if available. Each list element is a dictionary with the details listed below. Pharmacy order dictionaries will include additional aside from those provided below in the dictionary details section.",
+        "dictionary_details": {
+          "poe_id": "Link the pharmacy order to the original physician order entry based on the id, if available.",
+          "medication": "Name or identifier of the dispensed medication.",
+          "duration": "Duration time is between starttime and stoptime in the dataset."
+        }
+      }
+    }
+  }  
