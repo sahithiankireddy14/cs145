@@ -41,12 +41,12 @@ class PatientInfoBuilder:
         self.discharge_notes  = pd.read_csv(os.path.join(self.clinical_data_base, "discharge.csv.gz"))
         # self.emar_chunks = self.chunk_file(os.path.join(self.data_base, "emar.csv.gz"))
         
-        #self.lab_codes = pd.read_csv(os.path.join(self.data_base, "d_labitems.csv.gz"))
-        self.lab_codes_chunks = self.chunk_file(os.path.join(self.data_base, "d_labitems.csv.gz"),)
-        # self.procedure_codes =  pd.read_csv(os.path.join(self.data_base, "d_icd_procedures.csv.gz"))
-        # self.all_patient_procedures =  pd.read_csv(os.path.join(self.data_base, "procedures_icd.csv.gz"))
-        # self.all_patient_labs = pd.read_csv(os.path.join(self.data_base, "labevents.csv.gz"))
-        # self.all_patient_prescriptions = pd.read_csv(os.path.join(self.data_base, "prescriptions.csv.gz"))
+        self.lab_codes = pd.read_csv(os.path.join(self.data_base, "d_labitems.csv.gz"))
+        self.procedure_codes =  pd.read_csv(os.path.join(self.data_base, "d_icd_procedures.csv.gz"))
+        self.all_patient_procedures =  pd.read_csv(os.path.join(self.data_base, "procedures_icd.csv.gz"))
+        #self.all_patient_labs = pd.read_csv(os.path.join(self.data_base, "labevents.csv.gz"))
+        self.all_patient_labs_chunks = self.chunk_file(os.path.join(self.data_base, "labevents.csv.gz"))
+        self.all_patient_prescriptions = pd.read_csv(os.path.join(self.data_base, "prescriptions.csv.gz"))
 
     def get_diagnoses(self, hadm_id):
         admission_codes = self.diagnosis_codes[self.diagnosis_codes["hadm_id"] == hadm_id]
@@ -137,7 +137,9 @@ class PatientInfoBuilder:
               
          
     def get_labs(self, pid, admit_time, discharge_time):
-        patient_events = self.all_patient_labs[self.all_patient_labs['subject_id'] == pid]
+
+        patient_events = self.get_filtered_chunks("'subject_id'", pid, self.all_patient_labs_chunks)
+        #patient_events = self.all_patient_labs[self.all_patient_labs['subject_id'] == pid]
         patient_events_in_range = patient_events[
             (pd.to_datetime(patient_events['charttime']) >= pd.to_datetime(admit_time)) &
             (pd.to_datetime(patient_events['charttime']) <= pd.to_datetime(discharge_time))
@@ -174,6 +176,7 @@ class PatientInfoBuilder:
             patient_admissions_dict[hadm_id]['symptoms'] = self.symptoms(hadm_id)
         return patient_admissions_dict
     
+
     def get_filtered_chunks(self, keyword, hadm_id, chunks):
         filtered_chunks = []
         for chunk in chunks:
@@ -309,3 +312,8 @@ class PatientInfoBuilder:
         # print(patient_info_dict)
         # print(patient_admissions_dict)
         return patient_info_dict, patient_admissions_dict
+    
+
+
+
+
