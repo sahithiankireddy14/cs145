@@ -36,4 +36,6 @@ Patient Admissions Dictionary:
                     "ordered_by": "Provider_9021"
                 }
             ]
-
+- pharmacy. please link this to physician order entry if physician order entry is present. 
+    - [{pharmacy order 1 details}, {pharmacy order 2 details}, {pharmace 3 details}]
+    - {pharmacy 1 details} -> {"poe_id":, "", "medication": "", "duration": ""} 
