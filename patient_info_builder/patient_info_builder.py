@@ -6,14 +6,20 @@ from clinical_text_extractor import *
                                         
 class PatientInfoBuilder:
     def chunk_file(self, file_path):
-        # TODO: may not be most optimal
-        chunksize = 74103
+        chunksize = 100000  
         reader = pd.read_csv(file_path, chunksize=chunksize)
-        chunk1 = next(reader)
-        chunk2 = next(reader)
-        chunk3 = next(reader)
-        chunk4 = next(reader)
-        return chunk1, chunk2, chunk3, chunk4
+        
+        chunks = []
+        while True:
+            try:
+                chunk = next(reader)
+                chunks.append(chunk)
+            except StopIteration:
+                break
+        
+        return chunks
+        
+
 
     def __init__(self):
         pd.set_option("display.max_columns", None) 
@@ -35,7 +41,7 @@ class PatientInfoBuilder:
         # self.emar_chunks = self.chunk_file(os.path.join(self.data_base, "emar.csv.gz"))
         
         #self.lab_codes = pd.read_csv(os.path.join(self.data_base, "d_labitems.csv.gz"))
-        #self.lab_codes_chunks = self.chunk_file(os.path.join(self.data_base, "d_labitems.csv.gz"),)
+        self.lab_codes_chunks = self.chunk_file(os.path.join(self.data_base, "d_labitems.csv.gz"),)
         # self.procedure_codes =  pd.read_csv(os.path.join(self.data_base, "d_icd_procedures.csv.gz"))
         # self.all_patient_procedures =  pd.read_csv(os.path.join(self.data_base, "procedures_icd.csv.gz"))
         # self.all_patient_labs = pd.read_csv(os.path.join(self.data_base, "labevents.csv.gz"))
