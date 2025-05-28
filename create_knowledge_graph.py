@@ -6,6 +6,7 @@ import os
 import json
 from patient_info_builder.patient_info_builder import PatientInfoBuilder
 import ast
+import pickle
 from graphviz import Digraph
 import json
 import re
@@ -34,7 +35,10 @@ class KnowledgeGraph:
             triple_list = json.loads(raw)
 
             if isinstance(triple_list, list) and all(isinstance(t, list) and len(t) == 3 for t in triple_list):
-                return [tuple(t) for t in triple_list]
+                ans = [tuple(t) for t in triple_list]
+                with open("patient_similarity_results.pkl", "wb") as f:
+                     pickle.dump(ans, f)
+                return ans
             else:
                 raise ValueError("Expected list of 3-element lists.")
         except Exception as e:

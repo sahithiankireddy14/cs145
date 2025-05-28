@@ -43,12 +43,12 @@ class PatientInfoBuilder:
         # self.discharge_notes  = pd.read_csv(os.path.join(self.clinical_data_base, "discharge.csv.gz"))
         # self.emar_chunks = self.chunk_file(os.path.join(self.data_base, "emar.csv.gz"))
         
-        self.lab_codes = pd.read_csv(os.path.join(self.data_base, "d_labitems.csv.gz"))
-        self.procedure_codes =  pd.read_csv(os.path.join(self.data_base, "d_icd_procedures.csv.gz"))
-        self.all_patient_procedures =  pd.read_csv(os.path.join(self.data_base, "procedures_icd.csv.gz"))
+        # self.lab_codes = pd.read_csv(os.path.join(self.data_base, "d_labitems.csv.gz"))
+        # self.procedure_codes =  pd.read_csv(os.path.join(self.data_base, "d_icd_procedures.csv.gz"))
+        # self.all_patient_procedures =  pd.read_csv(os.path.join(self.data_base, "procedures_icd.csv.gz"))
         #self.all_patient_labs = pd.read_csv(os.path.join(self.data_base, "labevents.csv.gz"))
-        self.all_patient_labs_chunks = self.chunk_file(os.path.join(self.data_base, "labevents.csv.gz"))
-        self.all_patient_prescriptions = pd.read_csv(os.path.join(self.data_base, "prescriptions.csv.gz"))
+        # self.all_patient_labs_chunks = self.chunk_file(os.path.join(self.data_base, "labevents.csv.gz"))
+        # self.all_patient_prescriptions = pd.read_csv(os.path.join(self.data_base, "prescriptions.csv.gz"))
 
     def get_diagnoses(self, hadm_id):
         admission_codes = self.diagnosis_codes[self.diagnosis_codes["hadm_id"] == hadm_id]
@@ -227,7 +227,10 @@ class PatientInfoBuilder:
             pharmacy = pd.concat(filtered_chunks, ignore_index=True)
             pharmacy_events = []
             for _, row in pharmacy.iterrows():
-                excluded = ["subject_id", "hadm_id", "pharmacy_id"]
+                poe_id = None
+                if pd.notna(row["poe_id"]):
+                    poe_id = row["poe_id"]
+                excluded = ["subject_id", "hadm_id", "pharmacy_id", "poe_id"]
                 row = row.drop(labels=excluded)
                 start = row["starttime"]
                 end = row["stoptime"]
@@ -243,6 +246,8 @@ class PatientInfoBuilder:
                 # TODO: do processing with one of these
                 row = row.drop("stoptime")
                 pharm_dict = row.to_dict()
+                if poe_id:
+                    pharm_dict = {poe_id: pharm_dict}
                 pharmacy_events.append(pharm_dict)
             return pharmacy_events
 
