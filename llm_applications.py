@@ -25,11 +25,19 @@ def query_llm(prompt: str, model="gpt-4") -> str:
     return response.choices[0].message.content.strip()
 
 
-  
+# array of arrays, where each array has all triples for one patient
+def create_patient_triples_string(knowldege_graph_triples):
+    master_triple_string = ""
+    for i, triple in enumerate(knowldege_graph_triples):
+        master_triple_string += f"\n Patient {i + 1} Information: \n"
+        master_triple_string += "\n".join([f"{s} {p} {o}" for s, p, o in triple])
+    return master_triple_string
 
+ 
 def patient_similarity(knowldege_graph_triples):
 
-    print(knowldege_graph_triples)
+    triples = create_patient_triples_string([knowldege_graph_triples, knowldege_graph_triples])
+    print(triples)
     base_prompt = """
 
         I am modeling clinical interactions between patients, providers, drugs, prescriptions and more. 
@@ -71,7 +79,7 @@ def patient_similarity(knowldege_graph_triples):
         """
 
 
-    print(base_prompt + "\n" + prompt)
+    #print(base_prompt + "\n" + prompt)
     #query_llm(base_prompt + "\n" + prompt)
 
 
@@ -80,8 +88,5 @@ def patient_similarity(knowldege_graph_triples):
 
 knowldege_graph_triples = pickle.load(open("patient_similarity_results.pkl", "rb"))
 
-        
-
-
-
+    
 patient_similarity(knowldege_graph_triples)
