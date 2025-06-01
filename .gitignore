@@ -2,3 +2,4 @@
 mimic_kg/*
 __pycache__/*
 patient_info_builder/__pycache__/*
+env/
