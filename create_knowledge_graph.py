@@ -16,7 +16,8 @@ from pyvis.network import Network
 
 class KnowledgeGraph:
     def __init__(self):
-        data_base = "/Users/psehgal/Documents/physionet.org/files/mimiciv/3.1/hosp"
+        #data_base = "/Users/psehgal/Documents/physionet.org/files/mimiciv/3.1/hosp"
+        data_base = "/Users/sahithi/Desktop/Research/physionet.org/files/mimiciv/3.1/hosp"
         self.df = pd.read_csv(os.path.join(data_base, "patients.csv.gz"))
         self.graph_list = []
         openai.api_key = os.getenv("OPENAI_API_KEY")
@@ -36,8 +37,6 @@ class KnowledgeGraph:
 
             if isinstance(triple_list, list) and all(isinstance(t, list) and len(t) == 3 for t in triple_list):
                 ans = [tuple(t) for t in triple_list]
-                with open("patient_similarity_results.pkl", "wb") as f:
-                     pickle.dump(ans, f)
                 return ans
             else:
                 raise ValueError("Expected list of 3-element lists.")
@@ -78,7 +77,7 @@ class KnowledgeGraph:
                     labels = self.get_triple({admission: {col_name: data}}, output_desc)
                     # generally the keys should be 
                     self.graph_list.extend(labels)
-            break
+            #break
     
     def process_info(self, patient, patient_info_dict):
         for col_name, info in patient_info_dict.items():
@@ -94,7 +93,7 @@ class KnowledgeGraph:
 
     def iter_patients(self):
         pi = PatientInfoBuilder()
-        for _, patient in self.df.iterrows():
+        for index, patient in self.df.iterrows():
             if pd.isna(patient["subject_id"]):
                 continue
             patient_info_dict, patient_admissions_dict = pi.patient_loop(patient)
@@ -104,7 +103,9 @@ class KnowledgeGraph:
             print("patient admissions dict: ", patient_admissions_dict)
             self.process_admissions(patient_id, patient_admissions_dict)
             print("Graph list: ", self.graph_list)
-            break
+            if index > 100:
+                break
+            #break
             # TODO: base path passed in as arg, fine for now 
                 
     def query_llm(self, prompt: str, model="gpt-4") -> str:
@@ -121,6 +122,8 @@ class KnowledgeGraph:
 
     def show_graph_pyvis(self):
         graph_list = self.graph_list
+        with open("knowledege_graph_triples.pkl", "wb") as f:
+                    pickle.dump(graph_list, f)
         net = Network(height="800px", width="100%", directed=True, notebook=False)
         G = nx.DiGraph()
         for source, label, target in graph_list:

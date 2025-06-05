@@ -44,8 +44,6 @@ test_triples_patient_2 = [
 
 
 
-
-    
 def query_llm(prompt: str, model="gpt-4o-2024-08-06") -> str:
     client = openai.OpenAI()  
    
@@ -96,10 +94,8 @@ def patient_similarity(formatted_relation_triples):
         {formatted_relation_triples}
 
      """
-    base_prompt = base_prompt.format(triples = formatted_relation_triples)
+    base_prompt = base_prompt.format(formatted_relation_triples = formatted_relation_triples)
     similarity_prompt = """ 
-    
-
 
         Given the above knowledge graph relation triples, perform a comprehensive similarity analysis between patients.
         Your objective is to evaluate how similar each patient pair is across key clinical dimensions, including diagnoses, prescriptions, medical procedures, symptoms, and other relevant medical factors.
@@ -107,22 +103,22 @@ def patient_similarity(formatted_relation_triples):
         Use the relation types in the knowledge graph triples to determine which category each item belongs to.
         For each category, assign a similarity score between 0 and 1 by analyzing overlapping items. If a category is missing for either patient or if there are no overlapping items, assign a similarity score of 0 for that category.
 
-        Then, compute an overall similarity score by averaging the individual category scores. Additionally, list the key contributors that explain the observed similarities. 
+        Then, compute an overall similarity score by adding all scores and then dividing by the number of individual category scores, which is 4 here. Additionally, list the key contributors that explain the observed similarities. 
         If a cateogry has no key contributors, then the cateogry similarity score should accordingly be 0.
         
         Perform this analysis for every possible pair of patients, not just a single pair.
 
         First, explain your reasoning and then transfer results to following json format. Ensure to use the same cateogory fields in the final json.
-
       
             [
             {
                 "patient_1": "Patient ID",
                 "patient_2": "Patient ID",
                 "sub_similarities": {
-                "diagnosis_similarity": 0.9,
-                "prescription_similarity": 0.75,
-                "procedure_similarity": 0.7
+                    "diagnosis_similarity": 0.9,
+                    "prescription_similarity": 0.75,
+                    "procedure_similarity": 0.7, 
+                    "symptom_similarity": 0.7
                 },
                 "overall_similarity": 0.82,
                 "key_contributors": ["diabetes diagnosis", "shared insulin prescription"]
@@ -130,7 +126,7 @@ def patient_similarity(formatted_relation_triples):
             ...
             ]
 
-        
+
         """
    
     response = query_llm(base_prompt + "\n" + similarity_prompt)
@@ -141,37 +137,129 @@ def patient_similarity(formatted_relation_triples):
             data = json.loads(result)
             json.dump(data, f)
 
-        return result
+            return data
     return response
     
 
-
+# TODO: another metric
+def get_top_k_patients():
+    pass
    
+
+def diagnosis_gt_similarity(gt_diag):
+
+    base_prompt = """
+
+       Here is diagnosis information related to patients. 
+
+        {gt_diag}
+
+     """
+    diagnosis_similarity = """ 
+
+        Given the list of diagnoses for each patient, compute a similarity score based on how similar their combination of diagnoses is for each pair of patients. Think through the process step by step—consider factors like exact diagnosis matches, related conditions, or number of overlapping categories. Then, return a final similarity score between 0 and 1.
+        Ensure to do this for each pairwise combination of patients. 
+        
+        After reasoning step by step, present the results in the following JSON format. Ensure you use the exact same field names in the final JSON output:
+
+            [
+            {
+                "patient_1": "Patient ID",
+                "patient_2": "Patient ID",
+                "overall_similarity": 0.82,
+                
+            },
+            ...
+            ]
+
+
+        """
+    
+    base_prompt = base_prompt.format(gt_diag = gt_diag)
+    response = query_llm(base_prompt + "\n" + diagnosis_similarity)
+
+    match = re.search(r"```json(.*?)```", response, re.DOTALL)
+    if match:
+        result = match.group(1)
+        with open("groundtruth_sim.json", "w") as f:
+            data = json.loads(result)
+            json.dump(data, f)
+            return data
+    return response
+    
+    
+
+
+
+def compare_similarities(sim_reports, gt_reports):
+    gt_lookup = {
+        (gt["patient_1"], gt["patient_2"]): gt["overall_similarity"]
+        for gt in gt_reports
+    }
+
+    formatted_results = []
+    for sim in sim_reports:
+        p1 = sim["patient_1"]
+        p2 = sim["patient_2"]
+        pred_sim = sim["overall_similarity"]
+        gt_sim = gt_lookup.get((p1, p2), None)
+
+        if gt_sim is None:
+            match_score = "N/A"
+        else:
+            diff = abs(pred_sim - gt_sim)
+            if diff <= 0.1:
+                match_score = "Full"
+            elif diff <= 0.4:
+                match_score ="Partial"
+            else:
+                match_score = "No Match"
+
+        formatted_string = (
+            f"Patient [{p1}] vs [{p2}]\n"
+            f"Predicted similarity: {pred_sim}\n"
+            f"Ground truth similarity: {gt_sim}\n"
+            f"Match: {match_score}\n"
+        )
+        formatted_results.append(formatted_string)
+
+    return "\n".join(formatted_results)
+
+
+
 
 
 def evaluate(formatted_relation_triples):
      
-     # remove diaganosis info
+     # remove diagnosis info
      formatted_stripped_data = []
+     diagnosis_info = []
      lines = formatted_relation_triples.strip().split("\n")
      for line in lines:
          if "diagnosed_with" in line.lower():
-             continue
+             diagnosis_info.append(line)
          else:
              formatted_stripped_data.append(line)
      formatted_stripped_data = "/n".join(formatted_stripped_data)
+     diagnosis_info = "\n".join(diagnosis_info)
 
-     print(formatted_stripped_data)
+     
+     # patient similarity without diagnosis 
+     patient_sim = patient_similarity(formatted_stripped_data)
 
-     similarity= patient_similarity(formatted_stripped_data)
+     # ground truth similarity with only diagnosis 
+     gt_sim = diagnosis_gt_similarity(diagnosis_info)
+    
+     final_result = compare_similarities(patient_sim, gt_sim)
 
-     # TODO: another call to evalute the similarity with ground truth
+     return final_result
      
 
+    
 
 
 
-knowldege_graph_data= pickle.load(open("patient_similarity_results.pkl", "rb"))
+knowldege_graph_data= pickle.load(open("/Users/sahithi/Desktop/Research/cs145/patient_similarity_results.pkl", "rb"))
 formatted_relation_triples = create_patient_triples_string([knowldege_graph_data])
-# print(patient_similarity(formatted_relation_triples))
-evaluate(formatted_relation_triples)
+#print(patient_similarity(formatted_relation_triples))
+print(evaluate(formatted_relation_triples))
