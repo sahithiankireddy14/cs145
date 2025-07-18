@@ -24,9 +24,9 @@ class PatientInfoBuilder:
     def __init__(self):
         pd.set_option("display.max_columns", None) 
         # path to hosp folder
-        #data_base = "/Users/psehgal/Documents/physionet.org/files/mimiciv/3.1/hosp"
+        data_base = "/Users/psehgal/Documents/physionet.org/files/mimiciv/3.1/hosp"
         # self.clinical_data_base = "/Users/sahithi/Desktop/Research/physionet.org/files/mimic-iv-note/2.2"
-        data_base = "/Users/sahithi/Desktop/Research/physionet.org/files/mimiciv/3.1/hosp"
+        # data_base = "/Users/sahithi/Desktop/Research/physionet.org/files/mimiciv/3.1/hosp"
 
     # read relavant csv's
         self.df = pd.read_csv(os.path.join(data_base, "patients.csv.gz"))
@@ -304,6 +304,7 @@ class PatientInfoBuilder:
         else:
             patient_info_dict["race"] = "Unknown"
             patient_info_dict["marital status"] = "Unknown"
+            patient_admissions_dict = {}
             
         # print(self.pharmacy_chunks[0][0:35])
         # print(patient_info_dict)

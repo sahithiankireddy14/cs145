@@ -12,22 +12,26 @@ import json
 import re
 import pyvis
 from pyvis.network import Network
+import time
 
+from tiktoken import encoding_for_model
 
 class KnowledgeGraph:
     def __init__(self):
-        #data_base = "/Users/psehgal/Documents/physionet.org/files/mimiciv/3.1/hosp"
-        data_base = "/Users/sahithi/Desktop/Research/physionet.org/files/mimiciv/3.1/hosp"
+        data_base = "/Users/psehgal/Documents/physionet.org/files/mimiciv/3.1/hosp"
+        # data_base = "/Users/sahithi/Desktop/Research/physionet.org/files/mimiciv/3.1/hosp"
         self.df = pd.read_csv(os.path.join(data_base, "patients.csv.gz"))
         self.graph_list = []
         openai.api_key = os.getenv("OPENAI_API_KEY")
         with open("patient_info_builder/output_description.txt", "r") as file:
             content = file.read()
+        print("hi")
         self.dictionary_description = content
         json_path = os.path.join(os.path.dirname(__file__), "patient_info_builder", "output_description.json")
         with open(json_path, "r") as f:
             output_description = json.load(f)
         self.json = output_description
+        print("hi2")
 
     def safe_parse_json_triples(self, text):
         try:
@@ -44,9 +48,13 @@ class KnowledgeGraph:
             print("Failed to parse GPT output:\n", text)
             return []
 
-
+    def estimate_tokens(self, text, model):
+        enc = encoding_for_model(model)
+        return len(enc.encode(text))
+    
     def get_triple(self, data, output_desc):
-        raw_output = self.query_llm(f"""
+        time.sleep(0.876)
+        prompt = f"""
         You are an expert creating a knowledge graph for the MIMIC-IV dataset.
 
         Given the following data: {data}
@@ -58,10 +66,13 @@ class KnowledgeGraph:
         [["node1", "relation", "node2"], ...]
 
         Do not include any explanation or commentary. If there are no relationships, return [].
-        """)
+        """
+        if self.estimate_tokens(prompt, model="gpt-4") > 8000:
+            print("Skipping admission: prompt is too long")
+            return []
+        raw_output = self.query_llm(prompt)
         return self.safe_parse_json_triples(raw_output)
-
-        
+ 
     
     def process_admissions(self, patient, patient_admissions_dict):
         for admission, info in patient_admissions_dict.items():
@@ -92,17 +103,20 @@ class KnowledgeGraph:
                 self.graph_list.extend(labels)
 
     def iter_patients(self):
+        print("hi3")
         pi = PatientInfoBuilder()
+        print("hi4")
         for index, patient in self.df.iterrows():
+            print(index)
             if pd.isna(patient["subject_id"]):
                 continue
             patient_info_dict, patient_admissions_dict = pi.patient_loop(patient)
             patient_id = patient["subject_id"]
             self.process_info(patient_id, patient_info_dict)
             # print("here3")
-            print("patient admissions dict: ", patient_admissions_dict)
+            # print("patient admissions dict: ", patient_admissions_dict)
             self.process_admissions(patient_id, patient_admissions_dict)
-            print("Graph list: ", self.graph_list)
+            # print("Graph list: ", self.graph_list)
             if index > 100:
                 break
             #break

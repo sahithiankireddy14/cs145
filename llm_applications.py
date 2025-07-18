@@ -9,7 +9,7 @@ from typing import List, Dict
 
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
-TEST = True
+TEST = False
 test_triples_patient_1 = [
     "99384712 diagnosed_with Congestive Heart Failure",
     "99384712 diagnosed_with Chronic Kidney Disease",
@@ -72,10 +72,13 @@ def create_patient_triples_string(knowldege_graph_triples):
         master_triple_string += "\n".join(test_triples_patient_2)
 
     else: 
-    
         for i, triple in enumerate(knowldege_graph_triples):
+            print(triple)
             master_triple_string += f"\n Patient {i + 1} Information: \n"
             master_triple_string += "\n".join([f"{s} {p} {o}" for s, p, o in triple])
+            if i >= 60:
+                print("Breaking at 100")
+                break
 
     
     
@@ -89,7 +92,6 @@ def patient_similarity(formatted_relation_triples):
         I am modeling clinical interactions between patients, providers, drugs, prescriptions and more. 
         To do so, I am using a knowledge graph. This knowledge graph will then be used for various downstream 
         applications. Here are all the relation triples part of the knowledge graph
-
 
         {formatted_relation_triples}
 
@@ -133,6 +135,7 @@ def patient_similarity(formatted_relation_triples):
     match = re.search(r"```json(.*?)```", response, re.DOTALL)
     if match:
         result = match.group(1)
+        print(result)
         with open("patient_similarity_output.json", "w") as f:
             data = json.loads(result)
             json.dump(data, f)
@@ -255,11 +258,8 @@ def evaluate(formatted_relation_triples):
      return final_result
      
 
-    
-
-
-
-knowldege_graph_data= pickle.load(open("/Users/sahithi/Desktop/Research/cs145/patient_similarity_results.pkl", "rb"))
+# knowldege_graph_data= pickle.load(open("/Users/sahithi/Desktop/Research/cs145/patient_similarity_results.pkl", "rb"))
+knowldege_graph_data= pickle.load(open("/Users/psehgal/Documents/cs145/patient_similarity_results.pkl", "rb"))
 formatted_relation_triples = create_patient_triples_string([knowldege_graph_data])
 #print(patient_similarity(formatted_relation_triples))
 print(evaluate(formatted_relation_triples))
