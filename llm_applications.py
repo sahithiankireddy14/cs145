@@ -72,20 +72,28 @@ def create_patient_triples_string(knowldege_graph_triples):
         master_triple_string += "\n".join(test_triples_patient_2)
 
     else: 
-        for i, triple in enumerate(knowldege_graph_triples):
+        patient_number = -1
+        patient_count = 0
+        for triple in knowldege_graph_triples:
             print(triple)
-            master_triple_string += f"\n Patient {i + 1} Information: \n"
-            master_triple_string += "\n".join([f"{s} {p} {o}" for s, p, o in triple])
-            if i >= 60:
-                print("Breaking at 100")
-                break
+            s, p, o = triple
+            if triple[1] == "has_admission" and patient_number != triple[0]:
+                patient_number = triple[0]
+                patient_count += 1
+                print(patient_count)
+                master_triple_string += f"\n Patient {patient_count} Information: \n"
+                master_triple_string += "\n".join(patient_list)
+                patient_list = []
+            patient_list.append(f"{s} {p} {o}")
 
-    
-    
+            # if patient_count > 100:
+            #     print("Breaking at 100")
+            #     break
+
     return master_triple_string
 
  
-def patient_similarity(formatted_relation_triples):
+def patient_similarity(formatted_relation_triples, patient=None):
 
     base_prompt = """
 
@@ -97,10 +105,46 @@ def patient_similarity(formatted_relation_triples):
 
      """
     base_prompt = base_prompt.format(formatted_relation_triples = formatted_relation_triples)
-    similarity_prompt = """ 
 
-        Given the above knowledge graph relation triples, perform a comprehensive similarity analysis between patients.
-        Your objective is to evaluate how similar each patient pair is across key clinical dimensions, including diagnoses, prescriptions, medical procedures, symptoms, and other relevant medical factors.
+    if not patient:
+        similarity_prompt = """ 
+
+            Given the above knowledge graph relation triples, perform a comprehensive similarity analysis between patients.
+            Your objective is to evaluate how similar each patient pair is across key clinical dimensions, including prescriptions, medical procedures, symptoms, and other relevant medical factors.
+
+            Use the relation types in the knowledge graph triples to determine which category each item belongs to.
+            For each category, assign a similarity score between 0 and 1 by analyzing overlapping items. If a category is missing for either patient or if there are no overlapping items, assign a similarity score of 0 for that category.
+
+            Then, compute an overall similarity score by adding all scores and then dividing by the number of individual category scores, which is 4 here. Additionally, list the key contributors that explain the observed similarities. 
+            If a cateogry has no key contributors, then the cateogry similarity score should accordingly be 0.
+            
+            Perform this analysis for every possible pair of patients, not just a single pair.
+
+            First, explain your reasoning and then transfer results to following json format. Ensure to use the same cateogory fields in the final json.
+        
+                [
+                {
+                    "patient_1": "Patient ID",
+                    "patient_2": "Patient ID",
+                    "sub_similarities": {
+                        "prescription_similarity": 0.75,
+                        "procedure_similarity": 0.7, 
+                        "symptom_similarity": 0.7
+                    },
+                    "overall_similarity": 0.82,
+                    "key_contributors": ["high blood pressure", "shared insulin prescription"]
+                },
+                ...
+                ]
+
+
+         """
+        
+    else:
+        similarity_prompt = f""" 
+
+        Given the above knowledge graph relation triples, perform a comprehensive similarity analysis between {patient} and all of the other patients in the knoledge graph.
+        Your objective is to evaluate how similar each patient pair is across key clinical dimensions, including prescriptions, medical procedures, symptoms, and other relevant medical factors.
 
         Use the relation types in the knowledge graph triples to determine which category each item belongs to.
         For each category, assign a similarity score between 0 and 1 by analyzing overlapping items. If a category is missing for either patient or if there are no overlapping items, assign a similarity score of 0 for that category.
@@ -117,19 +161,19 @@ def patient_similarity(formatted_relation_triples):
                 "patient_1": "Patient ID",
                 "patient_2": "Patient ID",
                 "sub_similarities": {
-                    "diagnosis_similarity": 0.9,
                     "prescription_similarity": 0.75,
                     "procedure_similarity": 0.7, 
                     "symptom_similarity": 0.7
                 },
                 "overall_similarity": 0.82,
-                "key_contributors": ["diabetes diagnosis", "shared insulin prescription"]
+                "key_contributors": ["high blood pressure", "shared insulin prescription"]
             },
             ...
             ]
 
 
         """
+        
    
     response = query_llm(base_prompt + "\n" + similarity_prompt)
     match = re.search(r"```json(.*?)```", response, re.DOTALL)
@@ -139,10 +183,10 @@ def patient_similarity(formatted_relation_triples):
         with open("patient_similarity_output.json", "w") as f:
             data = json.loads(result)
             json.dump(data, f)
-
             return data
     return response
     
+
 
 # TODO: another metric
 def get_top_k_patients():
@@ -158,6 +202,8 @@ def diagnosis_gt_similarity(gt_diag):
         {gt_diag}
 
      """
+    
+
     diagnosis_similarity = """ 
 
         Given the list of diagnoses for each patient, compute a similarity score based on how similar their combination of diagnoses is for each pair of patients. Think through the process step by step—consider factors like exact diagnosis matches, related conditions, or number of overlapping categories. Then, return a final similarity score between 0 and 1.
@@ -229,11 +275,7 @@ def compare_similarities(sim_reports, gt_reports):
     return "\n".join(formatted_results)
 
 
-
-
-
 def evaluate(formatted_relation_triples):
-     
      # remove diagnosis info
      formatted_stripped_data = []
      diagnosis_info = []
@@ -245,15 +287,16 @@ def evaluate(formatted_relation_triples):
              formatted_stripped_data.append(line)
      formatted_stripped_data = "/n".join(formatted_stripped_data)
      diagnosis_info = "\n".join(diagnosis_info)
-
      
      # patient similarity without diagnosis 
-     patient_sim = patient_similarity(formatted_stripped_data)
-
+    #  patient_sim = patient_similarity(formatted_stripped_data)
+     patient_sim = patient_similarity(formatted_stripped_data, patient)
      # ground truth similarity with only diagnosis 
      gt_sim = diagnosis_gt_similarity(diagnosis_info)
     
      final_result = compare_similarities(patient_sim, gt_sim)
+
+
 
      return final_result
      
