@@ -23,6 +23,7 @@ class KnowledgeGraph:
         self.df = pd.read_csv(os.path.join(data_base, "patients.csv.gz"))
         self.graph_list = []
         openai.api_key = os.getenv("OPENAI_API_KEY")
+        
         with open("patient_info_builder/output_description.txt", "r") as file:
             content = file.read()
         print("hi")
@@ -56,18 +57,20 @@ class KnowledgeGraph:
         time.sleep(0.876)
         prompt = f"""
         You are an expert creating a knowledge graph for the MIMIC-IV dataset.
+        Your task is to convert structured patient information into semantic triples.
+
 
         Given the following data: {data}
         And the following field descriptions: {output_desc}
 
         Output all of the relationships in the provided data above.
 
-        ONLY output a JSON array of triples like:
+        ONLY output a JSON array of tripless like:
         [["node1", "relation", "node2"], ...]
 
-        Do not include any explanation or commentary. If there are no relationships, return [].
+        Do not include any explanation or commentary.
         """
-        if self.estimate_tokens(prompt, model="gpt-4") > 8000:
+        if self.estimate_tokens(prompt, model="gpt-4-turbo") > 8000:
             print("Skipping admission: prompt is too long")
             return []
         raw_output = self.query_llm(prompt)
@@ -113,16 +116,17 @@ class KnowledgeGraph:
             patient_info_dict, patient_admissions_dict = pi.patient_loop(patient)
             patient_id = patient["subject_id"]
             self.process_info(patient_id, patient_info_dict)
+
             # print("here3")
             # print("patient admissions dict: ", patient_admissions_dict)
             self.process_admissions(patient_id, patient_admissions_dict)
             # print("Graph list: ", self.graph_list)
-            if index > 100:
+            if index > 40:
                 break
             #break
             # TODO: base path passed in as arg, fine for now 
                 
-    def query_llm(self, prompt: str, model="gpt-4") -> str:
+    def query_llm(self, prompt: str, model="gpt-4-turbo") -> str:
             client = openai.OpenAI()  # Uses the API key in env or config
             response = client.chat.completions.create(
                 model=model,
@@ -204,8 +208,13 @@ class KnowledgeGraph:
         # nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels)
         # plt.title("Patient Data Graph")
         # plt.show()
-
+    def save_graph(self):
+        graph_list = self.graph_list
+        with open("knowledege_graph_triples.pkl", "wb") as f:
+            pickle.dump(graph_list, f)
+    
 kg = KnowledgeGraph()
 kg.iter_patients()
 kg.show_graph_graphviz()
+kg.save_graph()
 

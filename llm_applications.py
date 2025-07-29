@@ -145,9 +145,9 @@ def patient_similarity(formatted_relation_triples, patient=None):
          """
         
     else:
-        similarity_prompt = f""" 
+        similarity_prompt = """ 
 
-        Given the above knowledge graph relation triples, perform a comprehensive similarity analysis between {patient} and all of the other patients in the knoledge graph.
+        Given the above knowledge graph relation triples, perform a comprehensive similarity analysis between """ + str(patient) + """ and all of the other patients in the knowledge graph.
         Your objective is to evaluate how similar each patient pair is across key clinical dimensions, including prescriptions, medical procedures, symptoms, and other relevant medical factors.
 
         Use the relation types in the knowledge graph triples to determine which category each item belongs to.
@@ -197,7 +197,7 @@ def get_top_k_patients():
     pass
    
 
-def diagnosis_gt_similarity(gt_diag):
+def diagnosis_gt_similarity(gt_diag, patient=None):
 
     base_prompt = """
 
@@ -207,26 +207,47 @@ def diagnosis_gt_similarity(gt_diag):
 
      """
     
+    if not patient:
+        diagnosis_similarity = """ 
 
-    diagnosis_similarity = """ 
+            Given the list of diagnoses for each patient, compute a similarity score based on how similar their combination of diagnoses is for each pair of patients. Think through the process step by step—consider factors like exact diagnosis matches, related conditions, or number of overlapping categories. Then, return a final similarity score between 0 and 1.
+            Ensure to do this for each pairwise combination of patients. 
+            
+            After reasoning step by step, present the results in the following JSON format. Ensure you use the exact same field names in the final JSON output:
 
-        Given the list of diagnoses for each patient, compute a similarity score based on how similar their combination of diagnoses is for each pair of patients. Think through the process step by step—consider factors like exact diagnosis matches, related conditions, or number of overlapping categories. Then, return a final similarity score between 0 and 1.
-        Ensure to do this for each pairwise combination of patients. 
+                [
+                {
+                    "patient_1": "Patient ID",
+                    "patient_2": "Patient ID",
+                    "overall_similarity": 0.82,
+                    
+                },
+                ...
+                ]
+
+
+            """
         
-        After reasoning step by step, present the results in the following JSON format. Ensure you use the exact same field names in the final JSON output:
+    else:
+        diagnosis_similarity = """ 
 
-            [
-            {
-                "patient_1": "Patient ID",
-                "patient_2": "Patient ID",
-                "overall_similarity": 0.82,
-                
-            },
-            ...
-            ]
+            Given the list of diagnoses for each patient, compute a similarity score based on how similar """ + str(patient) + """ is to all of the other patients in the knowledge graph.. Think through the process step by step—consider factors like exact diagnosis matches, related conditions, or number of overlapping categories. Then, return a final similarity score between 0 and 1.
+            Ensure to do this for each pairwise combination of patients. 
+            
+            After reasoning step by step, present the results in the following JSON format. Ensure you use the exact same field names in the final JSON output:
+
+                [
+                {
+                    "patient_1": "Patient ID",
+                    "patient_2": "Patient ID",
+                    "overall_similarity": 0.82,
+                    
+                },
+                ...
+                ]
 
 
-        """
+            """
     
     base_prompt = base_prompt.format(gt_diag = gt_diag)
     response = query_llm(base_prompt + "\n" + diagnosis_similarity)
@@ -242,8 +263,6 @@ def diagnosis_gt_similarity(gt_diag):
     
     
 
-
-
 def compare_similarities(sim_reports, gt_reports):
     gt_lookup = {
         (gt["patient_1"], gt["patient_2"]): gt["overall_similarity"]
@@ -251,6 +270,9 @@ def compare_similarities(sim_reports, gt_reports):
     }
 
     formatted_results = []
+    full_count = 0
+    partial_count = 0
+    no_match_count = 0
     for sim in sim_reports:
         p1 = sim["patient_1"]
         p2 = sim["patient_2"]
@@ -263,11 +285,13 @@ def compare_similarities(sim_reports, gt_reports):
             diff = abs(pred_sim - gt_sim)
             if diff <= 0.1:
                 match_score = "Full"
+                full_count += 1
             elif diff <= 0.4:
                 match_score ="Partial"
+                partial_count += 1
             else:
                 match_score = "No Match"
-
+                no_match_count += 1
         formatted_string = (
             f"Patient [{p1}] vs [{p2}]\n"
             f"Predicted similarity: {pred_sim}\n"
@@ -275,9 +299,14 @@ def compare_similarities(sim_reports, gt_reports):
             f"Match: {match_score}\n"
         )
         formatted_results.append(formatted_string)
+        
+
 
     with open("patient_similarity_output.txt", 'w') as f:
         f.write("\n".join(formatted_results))
+        f.write(f"Full matches: {full_count}\nPartial matches: {partial_count}\nNo matches: {no_match_count}\n")
+
+
     return "\n".join(formatted_results)
 
 
