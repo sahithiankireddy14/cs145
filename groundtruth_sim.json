@@ -1,1 +1,1 @@
-[{"patient_1": "Patient_001", "patient_2": "Patient_002", "overall_similarity": 0.82}, {"patient_1": "Patient_001", "patient_2": "Patient_003", "overall_similarity": 0.67}, {"patient_1": "Patient_002", "patient_2": "Patient_003", "overall_similarity": 0.74}]
+[{"patient_1": "PatientA", "patient_2": "PatientB", "overall_similarity": 0.82}, {"patient_1": "PatientA", "patient_2": "PatientC", "overall_similarity": 0.75}, {"patient_1": "PatientB", "patient_2": "PatientC", "overall_similarity": 0.69}]

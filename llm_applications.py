@@ -63,34 +63,38 @@ def query_llm(prompt: str, model="gpt-4o-2024-08-06") -> str:
 
 
 def create_patient_triples_string(knowldege_graph_triples):
-    master_triple_string = ""
-    if TEST:
-        master_triple_string+=f"\n Patient 1  Information: \n"
-        master_triple_string += "\n".join(test_triples_patient_1)
+        patient_number = None
+        patient_list = []
+        master_triple_string = ""
 
-        master_triple_string+=f"\n Patient 2 Information: \n"
-        master_triple_string += "\n".join(test_triples_patient_2)
-
-    else: 
-        patient_number = -1
-        patient_count = 0
         for triple in knowldege_graph_triples:
-            print(triple)
-            s, p, o = triple
-            if triple[1] == "has_admission" and patient_number != triple[0]:
-                patient_number = triple[0]
-                patient_count += 1
-                print(patient_count)
-                master_triple_string += f"\n Patient {patient_count} Information: \n"
-                master_triple_string += "\n".join(patient_list)
-                patient_list = []
+            s, p, o = triple[0], triple[1], triple[2]
+            
+            
+            if (p == "has_admission" or p =="has_gender") and (patient_number != s or (isinstance(s, str) and patient_number != s.split("_")[-1])):
+                
+                # Dump previous patient's data
+                if len(patient_list) > 0:
+                    master_triple_string += "\n".join(patient_list) + "\n"
+                    patient_list = []
+
+                # Start new patient section
+                master_triple_string += f"\nPatient {s}\n"
+
+                if isinstance(s, str) and "_" in s:
+                    patient_number = s.split("_")[-1]
+                else:
+                    patient_number = s
+
+
             patient_list.append(f"{s} {p} {o}")
 
-            # if patient_count > 100:
-            #     print("Breaking at 100")
-            #     break
+        # Dump any remaining triples
+        if patient_list:
+            master_triple_string += "\n".join(patient_list) + "\n"
 
-    return master_triple_string
+
+        return master_triple_string
 
  
 def patient_similarity(formatted_relation_triples, patient=None):
@@ -152,7 +156,7 @@ def patient_similarity(formatted_relation_triples, patient=None):
         Then, compute an overall similarity score by adding all scores and then dividing by the number of individual category scores, which is 4 here. Additionally, list the key contributors that explain the observed similarities. 
         If a cateogry has no key contributors, then the cateogry similarity score should accordingly be 0.
         
-        Perform this analysis for every possible pair of patients, not just a single pair.
+        Perform this pairwise similairty analysis between {patient} and all other patients found in the knowledge graph relation triples. 
 
         First, explain your reasoning and then transfer results to following json format. Ensure to use the same cateogory fields in the final json.
       
@@ -272,6 +276,8 @@ def compare_similarities(sim_reports, gt_reports):
         )
         formatted_results.append(formatted_string)
 
+    with open("patient_similarity_output.txt", 'w') as f:
+        f.write("\n".join(formatted_results))
     return "\n".join(formatted_results)
 
 
@@ -290,7 +296,7 @@ def evaluate(formatted_relation_triples):
      
      # patient similarity without diagnosis 
     #  patient_sim = patient_similarity(formatted_stripped_data)
-     patient_sim = patient_similarity(formatted_stripped_data, patient)
+     patient_sim = patient_similarity(formatted_stripped_data, patient=None)
      # ground truth similarity with only diagnosis 
      gt_sim = diagnosis_gt_similarity(diagnosis_info)
     
@@ -301,8 +307,10 @@ def evaluate(formatted_relation_triples):
      return final_result
      
 
-# knowldege_graph_data= pickle.load(open("/Users/sahithi/Desktop/Research/cs145/patient_similarity_results.pkl", "rb"))
-knowldege_graph_data= pickle.load(open("/Users/psehgal/Documents/cs145/patient_similarity_results.pkl", "rb"))
-formatted_relation_triples = create_patient_triples_string([knowldege_graph_data])
-#print(patient_similarity(formatted_relation_triples))
-print(evaluate(formatted_relation_triples))
+knowldege_graph_data= pickle.load(open("/Users/sahithi/Desktop/Research/cs145/knowledege_graph_triples.pkl", "rb"))
+#print(knowldege_graph_data)
+#knowldege_graph_data= pickle.load(open("/Users/psehgal/Documents/cs145/patient_similarity_results.pkl", "rb"))
+formatted_relation_triples = create_patient_triples_string(knowldege_graph_data)
+#print(formatted_relation_triples)
+
+evaluate(formatted_relation_triples)
