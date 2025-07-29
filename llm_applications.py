@@ -66,25 +66,32 @@ def create_patient_triples_string(knowldege_graph_triples):
         patient_number = None
         patient_list = []
         master_triple_string = ""
+        patient_count = 0
 
         for triple in knowldege_graph_triples:
             s, p, o = triple[0], triple[1], triple[2]
-            
-            
-            if (p == "has_admission" or p =="has_gender") and (patient_number != s or (isinstance(s, str) and patient_number != s.split("_")[-1])):
-                
+            # if (isinstance(s, str) and "10000980" in s and "-" not in s) or s == 10000980:
+            #     print(triple)
+            #     print(patient_number)
+            #     print(type(patient_number))
+            #     print(s)
+            #     print(type(s))
+
+            if (p == "has_admission" or p =="has_gender") and (patient_number != s or (isinstance(s, str) and (str(patient_number) != s.split("_")[-1]))):
                 # Dump previous patient's data
                 if len(patient_list) > 0:
                     master_triple_string += "\n".join(patient_list) + "\n"
                     patient_list = []
 
                 # Start new patient section
+                # TODO: This may have empty sections 
                 master_triple_string += f"\nPatient {s}\n"
+                patient_count += 1
 
                 if isinstance(s, str) and "_" in s:
-                    patient_number = s.split("_")[-1]
+                    patient_number = int(s.split("_")[-1])
                 else:
-                    patient_number = s
+                    patient_number = int(s)
 
 
             patient_list.append(f"{s} {p} {o}")
@@ -93,7 +100,8 @@ def create_patient_triples_string(knowldege_graph_triples):
         if patient_list:
             master_triple_string += "\n".join(patient_list) + "\n"
 
-
+        print("Master triple: ", master_triple_string)
+        print("patient count: ", patient_count)
         return master_triple_string
 
  
@@ -122,7 +130,7 @@ def patient_similarity(formatted_relation_triples, patient=None):
             Then, compute an overall similarity score by adding all scores and then dividing by the number of individual category scores, which is 4 here. Additionally, list the key contributors that explain the observed similarities. 
             If a cateogry has no key contributors, then the cateogry similarity score should accordingly be 0.
             
-            Perform this analysis for every possible pair of patients, not just a single pair.
+            Perform this analysis for every possible pair of patients, not just a single pair. Give me every single one of these pairs.
 
             First, explain your reasoning and then transfer results to following json format. Ensure to use the same cateogory fields in the final json.
         
@@ -140,8 +148,6 @@ def patient_similarity(formatted_relation_triples, patient=None):
                 },
                 ...
                 ]
-
-
          """
         
     else:
@@ -156,7 +162,7 @@ def patient_similarity(formatted_relation_triples, patient=None):
         Then, compute an overall similarity score by adding all scores and then dividing by the number of individual category scores, which is 4 here. Additionally, list the key contributors that explain the observed similarities. 
         If a cateogry has no key contributors, then the cateogry similarity score should accordingly be 0.
         
-        Perform this pairwise similairty analysis between {patient} and all other patients found in the knowledge graph relation triples. 
+        Perform this pairwise similairty analysis between {patient} and all other patients found in the knowledge graph relation triples. Output all of these pairs.
 
         First, explain your reasoning and then transfer results to following json format. Ensure to use the same cateogory fields in the final json.
       
@@ -210,17 +216,18 @@ def diagnosis_gt_similarity(gt_diag, patient=None):
     if not patient:
         diagnosis_similarity = """ 
 
-            Given the list of diagnoses for each patient, compute a similarity score based on how similar their combination of diagnoses is for each pair of patients. Think through the process step by step—consider factors like exact diagnosis matches, related conditions, or number of overlapping categories. Then, return a final similarity score between 0 and 1.
-            Ensure to do this for each pairwise combination of patients. 
+            Given the list of diagnoses for each patient: {gt_diag}, compute a similarity score based on how similar their combination of diagnoses is for each pair of patients. Think through the process step by step—consider factors like exact diagnosis matches, related conditions, or number of overlapping categories. Then, return a final similarity score between 0 and 1.
+            Ensure to do this for each pairwise combination of patients. Output all of these pairs.
             
-            After reasoning step by step, present the results in the following JSON format. Ensure you use the exact same field names in the final JSON output:
+            After reasoning step by step, present the results in the following JSON format. Ensure you use the exact same field names in the final JSON output and include no explanations or description:
 
                 [
                 {
                     "patient_1": "Patient ID",
+                    "patient_1": "Diagnosis",
                     "patient_2": "Patient ID",
-                    "overall_similarity": 0.82,
-                    
+                    "patient_2": "Diagnosis",
+                    "overall_similarity": 0.82, 
                 },
                 ...
                 ]
@@ -232,14 +239,16 @@ def diagnosis_gt_similarity(gt_diag, patient=None):
         diagnosis_similarity = """ 
 
             Given the list of diagnoses for each patient, compute a similarity score based on how similar """ + str(patient) + """ is to all of the other patients in the knowledge graph.. Think through the process step by step—consider factors like exact diagnosis matches, related conditions, or number of overlapping categories. Then, return a final similarity score between 0 and 1.
-            Ensure to do this for each pairwise combination of patients. 
+            Ensure to do this for each pairwise combination of patients. Output all of these pairs.
             
-            After reasoning step by step, present the results in the following JSON format. Ensure you use the exact same field names in the final JSON output:
+            After reasoning step by step, present the results in the following JSON format. Ensure you use the exact same field names in the final JSON output and include no explanations or description:
 
                 [
                 {
                     "patient_1": "Patient ID",
+                    "patient_1": "Diagnosis",
                     "patient_2": "Patient ID",
+                    "patient_2": "Diagnosis",
                     "overall_similarity": 0.82,
                     
                 },
@@ -315,17 +324,25 @@ def evaluate(formatted_relation_triples):
      formatted_stripped_data = []
      diagnosis_info = []
      lines = formatted_relation_triples.strip().split("\n")
+     patient_number = None
      for line in lines:
-         if "diagnosed_with" in line.lower():
+         if re.search(r"Patient \d+", line):
+             diagnosis_info.append(line)
+         else:
+             pass
+        #  TODO: the line below is a little sus ngl
+         if " description " in line.lower():
              diagnosis_info.append(line)
          else:
              formatted_stripped_data.append(line)
-     formatted_stripped_data = "/n".join(formatted_stripped_data)
+     formatted_stripped_data = "\n".join(formatted_stripped_data)
      diagnosis_info = "\n".join(diagnosis_info)
+    #  print("Regular info: ", formatted_stripped_data)
+    #  print("Diagnosis info: ", diagnosis_info)
      
      # patient similarity without diagnosis 
-    #  patient_sim = patient_similarity(formatted_stripped_data)
-     patient_sim = patient_similarity(formatted_stripped_data, patient=None)
+     patient_sim = patient_similarity(formatted_stripped_data)
+    #  patient_sim = patient_similarity(formatted_stripped_data, patient=None)
      # ground truth similarity with only diagnosis 
      gt_sim = diagnosis_gt_similarity(diagnosis_info)
     
@@ -336,9 +353,9 @@ def evaluate(formatted_relation_triples):
      return final_result
      
 
-knowldege_graph_data= pickle.load(open("/Users/sahithi/Desktop/Research/cs145/knowledege_graph_triples.pkl", "rb"))
+# knowldege_graph_data= pickle.load(open("/Users/sahithi/Desktop/Research/cs145/knowledege_graph_triples.pkl", "rb"))
 #print(knowldege_graph_data)
-#knowldege_graph_data= pickle.load(open("/Users/psehgal/Documents/cs145/patient_similarity_results.pkl", "rb"))
+knowldege_graph_data= pickle.load(open("/Users/psehgal/Documents/cs145/knowledege_graph_triples.pkl", "rb"))
 formatted_relation_triples = create_patient_triples_string(knowldege_graph_data)
 #print(formatted_relation_triples)
 
