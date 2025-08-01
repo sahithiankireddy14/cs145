@@ -1,0 +1,514 @@
+
+Patient 10000032
+10000032 has_gender F
+Patient_10000032 has_age 52
+Patient_10000032 age_of_death 52
+10000032 has_race WHITE
+10000032 has_admission 22595853
+22595853 has_DRG DRG1
+DRG1 type APR
+DRG1 description OTHER DISORDERS OF THE LIVER
+DRG1 severity 2.0
+22595853 has_DRG DRG2
+DRG2 type HCFA
+DRG2 description DISORDERS OF LIVER EXCEPT MALIG,CIRR,ALC HEPA W CC
+10000032-13 discontinued_by 10000032-14
+10000032-14 discontinue_of 10000032-13
+10000032-24 discontinued_by 10000032-46
+10000032-30 discontinued_by 10000032-52
+10000032-49 discontinued_by 10000032-51
+10000032-51 discontinue_of 10000032-49
+10000032-35 discontinued_by 10000032-55
+10000032-55 discontinue_of 10000032-35
+10000032-38 discontinued_by 10000032-56
+10000032-56 discontinue_of 10000032-38
+10000032-58 discontinued_by 10000032-59
+10000032-59 discontinue_of 10000032-58
+22595853 has_medication Furosemide
+22595853 has_medication Ipratropium Bromide Neb
+22595853 has_medication Potassium Chloride
+22595853 has_medication Sodium Chloride 0.9% Flush
+22595853 has_medication Raltegravir
+22595853 has_medication Spironolactone
+22595853 has_medication Acetaminophen
+22595853 has_medication Influenza Vaccine Quadrivalent
+22595853 has_medication Albuterol Inhaler
+22595853 has_medication Emtricitabine-Tenofovir (Truvada)
+22595853 has_medication Heparin
+22595853 has_medication Nicotine Patch
+10000032-55 administered_via PO/NG
+10000032-42 administered_via IH
+10000032-35 administered_via PO/NG
+10000032-41 administered_via PO
+10000032-27 administered_via IV
+10000032-37 administered_via PO
+10000032-56 administered_via PO/NG
+10000032-39 administered_via PO/NG
+10000032-23 administered_via IM
+10000032-33 administered_via IH
+10000032-34 administered_via PO
+10000032-38 administered_via PO/NG
+10000032-32 administered_via SC
+10000032-36 administered_via TD
+22595853 has_order 10000032-55
+22595853 has_order 10000032-42
+22595853 has_order 10000032-35
+22595853 has_order 10000032-41
+22595853 has_order 10000032-27
+22595853 has_order 10000032-37
+22595853 has_order 10000032-56
+22595853 has_order 10000032-39
+22595853 has_order 10000032-23
+22595853 has_order 10000032-33
+22595853 has_order 10000032-34
+22595853 has_order 10000032-38
+22595853 has_order 10000032-32
+22595853 has_order 10000032-36
+10000032-55 medication_status Discontinued via patient discharge
+10000032-42 medication_status Discontinued via patient discharge
+10000032-35 medication_status Inactive (Due to a change order)
+10000032-41 medication_status Discontinued
+10000032-27 medication_status Discontinued via patient discharge
+10000032-37 medication_status Discontinued via patient discharge
+10000032-56 medication_status Discontinued via patient discharge
+10000032-39 medication_status Discontinued via patient discharge
+10000032-23 medication_status Discontinued via patient discharge
+10000032-33 medication_status Discontinued via patient discharge
+10000032-34 medication_status Discontinued via patient discharge
+10000032-38 medication_status Inactive (Due to a change order)
+10000032-32 medication_status Discontinued via patient discharge
+10000032-36 medication_status Discontinued via patient discharge
+10000032 has_admission 22841357
+22841357 has_DRG DRG22841357_1
+DRG22841357_1 type APR
+DRG22841357_1 description HEPATIC COMA AND OTHER MAJOR ACUTE LIVER DISORDERS
+DRG22841357_1 severity 3.0
+22841357 has_DRG DRG22841357_2
+DRG22841357_2 type HCFA
+DRG22841357_2 description DISORDERS OF LIVER EXCEPT MALIG,CIRR,ALC HEPA W CC
+10000032-66 discontinued_by 10000032-68
+10000032-68 discontinue_of 10000032-66
+10000032-80 discontinued_by 10000032-109
+10000032-94 discontinued_by 10000032-108
+10000032-108 discontinue_of 10000032-94
+10000032-98 discontinued_by 10000032-107
+10000032-107 discontinue_of 10000032-98
+10000032-114 discontinued_by 10000032-115
+10000032-115 discontinue_of 10000032-114
+22841357 has_medication Furosemide
+22841357 has_medication Rifaximin
+22841357 has_medication Sodium Chloride 0.9% Flush
+22841357 has_medication Albuterol Inhaler
+22841357 has_medication Calcium Carbonate
+22841357 has_medication Acetaminophen
+22841357 has_medication Influenza Vaccine Quadrivalent
+22841357 has_medication Albumin 25% (12.5g / 50mL)
+22841357 has_medication Tiotropium Bromide
+22841357 has_medication Emtricitabine-Tenofovir (Truvada)
+22841357 has_medication Lactulose
+22841357 has_medication Raltegravir
+22841357 has_medication Heparin
+22841357 has_medication Sulfameth/Trimethoprim DS
+Furosemide has_duration 900.0
+Rifaximin has_duration 1440.0
+Sodium Chloride 0.9% Flush has_duration 1500.0
+Albuterol Inhaler has_duration 1440.0
+Calcium Carbonate has_duration 1440.0
+Influenza Vaccine Quadrivalent has_duration 1500.0
+Albumin 25% (12.5g / 50mL) has_duration 300.0
+Tiotropium Bromide has_duration 1440.0
+Emtricitabine-Tenofovir (Truvada) has_duration 1440.0
+Lactulose has_duration 1440.0
+Raltegravir has_duration 1440.0
+Heparin has_duration 1500.0
+Sulfameth/Trimethoprim DS has_duration 1440.0
+10000032 has_admission 25742920
+25742920 has_diagnosis_related_group DRG1
+DRG1 is_a APR
+DRG1 description OTHER DISORDERS OF THE LIVER
+DRG1 severity 3.0
+25742920 has_diagnosis_related_group DRG2
+DRG2 is_a HCFA
+DRG2 description DISORDERS OF LIVER EXCEPT MALIG,CIRR,ALC HEPA W CC
+25742920 has_record 10000032-238
+10000032-238 medication Sodium Chloride 0.9% Flush
+10000032-238 status Discontinued via patient discharge
+10000032-238 route IV
+10000032-238 frequency Q8H
+10000032-238 dispensation Floor Stock Item
+10000032-238 doses_per_24_hrs 3.0
+10000032-238 duration 2580.0
+10000032-238 expiration_value 36.0
+10000032-238 expiration_unit Hours
+25742920 has_record 10000032-276
+10000032-276 medication Calcium Gluconate
+10000032-276 status Discontinued
+10000032-276 route IV
+10000032-276 frequency ONCE
+10000032-276 dispensation Omnicell
+10000032-276 doses_per_24_hrs 1.0
+10000032-276 duration 120.0
+10000032-276 expiration_value 36.0
+10000032-276 expiration_unit Hours
+25742920 has_record 10000032-271
+10000032-271 medication Furosemide
+10000032-271 status Discontinued via patient discharge
+10000032-271 route PO/NG
+10000032-271 frequency DAILY
+10000032-271 dispensation Omnicell
+10000032-271 doses_per_24_hrs 1.0
+10000032-271 duration 840.0
+10000032-271 expiration_value 36.0
+10000032-271 expiration_unit Hours
+25742920 has_record 10000032-252
+10000032-252 medication Albuterol Inhaler
+10000032-252 status Discontinued via patient discharge
+10000032-252 route IH
+10000032-252 frequency Q4H:PRN
+10000032-252 dispensation Bulk Item
+10000032-252 duration 2580.0
+10000032-252 expiration_value 36.0
+10000032-252 expiration_unit Hours
+25742920 has_record 10000032-261
+10000032-261 medication Sodium Polystyrene Sulfonate
+10000032-261 status Discontinued
+10000032-261 route PO/NG
+10000032-261 frequency ONCE
+10000032-261 dispensation Omnicell
+10000032-261 doses_per_24_hrs 1.0
+10000032-261 duration 120.0
+10000032-261 expiration_value 36.0
+10000032-261 expiration_unit Hours
+25742920 has_record 10000032-283
+10000032-283 medication Zolpidem Tartrate
+10000032-283 status Discontinued via patient discharge
+10000032-283 route PO
+10000032-283 frequency ONCE
+10000032-283 dispensation Omnicell
+10000032-283 doses_per_24_hrs 1.0
+10000032-283 duration 1500.0
+10000032-283 expiration_value 36.0
+10000032-283 expiration_unit Hours
+10000032 has_admission 29079034
+29079034 has_diagnosis_related_group DRG_29079034_1
+DRG_29079034_1 type APR
+DRG_29079034_1 description OTHER CIRCULATORY SYSTEM DIAGNOSES
+DRG_29079034_1 severity 3.0
+29079034 has_diagnosis_related_group DRG_29079034_2
+DRG_29079034_2 type HCFA
+DRG_29079034_2 description SYNCOPE & COLLAPSE
+29079034 has_medication Bisacodyl
+29079034 has_medication Senna
+29079034 has_medication Calcium Carbonate
+29079034 has_medication Raltegravir
+29079034 has_medication Fluticasone Propionate 110mcg
+29079034 has_medication Docusate Sodium (Liquid)
+29079034 has_medication Albuterol 0.083% Neb Soln
+29079034 has_medication Influenza Vaccine Quadrivalent
+29079034 has_medication Sodium Chloride 0.9%  Flush
+29079034 has_medication Lactulose
+29079034 has_medication Albuterol Inhaler
+29079034 has_medication Rifaximin
+29079034 has_medication Albumin 25% (12.5g / 50mL)
+29079034 has_medication TraMADOL (Ultram)
+29079034 has_medication Heparin
+29079034 has_medication Emtricitabine-Tenofovir (Truvada)
+29079034 has_medication Tiotropium Bromide
+29079034 has_medication Albumin 25% (12.5g / 50mL)
+
+Patient 10000048
+10000048 has_gender Female
+Patient_10000048 has_age 23
+10000048 age_of_death None
+10000048 has_race Unknown
+
+Patient 10000058
+10000058 has_gender Female
+Patient_10000058 has_age 33
+10000058 age_of_death None
+10000058 hasRace Unknown
+
+Patient 10000068
+10000068 has_gender Female
+Patient_10000068 has_age 19
+10000068 age_of_death None
+10000068 hasRace WHITE
+10000068 has_admission 25022803
+25022803 has_procedure Hospital observation services
+Hospital observation services sequence_number 1
+Hospital observation services actual_description Hospital observation services
+Hospital observation services official_description Hospital observation services
+25022803 has_order 10000068-9
+10000068-9 order_type ADT orders
+10000068-9 order_status Inactive
+10000068-9 transaction_type New
+10000068-9 order_time 2160-03-03 23:56:36
+10000068-9 ordered_by Provider_P96BWA
+10000068-9 sequence_number 9
+25022803 has_order 10000068-10
+10000068-10 order_type IV therapy
+10000068-10 order_status Inactive
+10000068-10 transaction_type New
+10000068-10 order_time 2160-03-03 23:56:36
+10000068-10 ordered_by Provider_P96BWA
+10000068-10 sequence_number 10
+25022803 has_order 10000068-11
+10000068-11 order_type Medications
+10000068-11 order_status Inactive
+10000068-11 transaction_type New
+10000068-11 order_time 2160-03-03 23:56:36
+10000068-11 ordered_by Provider_P96BWA
+10000068-11 sequence_number 11
+25022803 has_order 10000068-12
+10000068-12 order_type General Care
+10000068-12 order_status Inactive
+10000068-12 transaction_type New
+10000068-12 order_time 2160-03-03 23:56:36
+10000068-12 ordered_by Provider_P96BWA
+10000068-12 sequence_number 12
+25022803 has_order 10000068-13
+10000068-13 order_type General Care
+10000068-13 order_status Inactive
+10000068-13 transaction_type New
+10000068-13 order_time 2160-03-03 23:56:36
+10000068-13 ordered_by Provider_P96BWA
+10000068-13 sequence_number 13
+25022803 has_order 10000068-14
+10000068-14 order_type Nutrition
+10000068-14 order_status Inactive
+10000068-14 transaction_type New
+10000068-14 order_time 2160-03-03 23:56:36
+10000068-14 ordered_by Provider_P96BWA
+10000068-14 sequence_number 14
+
+Patient 10000084
+10000084 has_gender M
+Patient_10000084 has_age 72
+10000084 age_of_death 73
+10000084 has_race WHITE
+10000084 has_admission 23052089
+23052089 has_diagnosis_related_group DRG1
+DRG1 type APR
+DRG1 description DEGENERATIVE NERVOUS SYSTEM DISORDERS EXCEPT MULTIPLE SCLEROSIS
+DRG1 severity 1.0
+23052089 has_diagnosis_related_group DRG2
+DRG2 type HCFA
+DRG2 description DEGENERATIVE NERVOUS SYSTEM DISORDERS W/O MCC
+23052089 has_pharmacy_order 10000084-49
+10000084-49 medication_is Pramipexole
+10000084-49 status_is Discontinued via patient discharge
+10000084-49 route_is PO/NG
+10000084-49 frequency_is TID
+10000084-49 dispensation_is Omnicell
+10000084-49 duration_is 6600.0
+23052089 has_pharmacy_order 10000084-48
+10000084-48 medication_is Pravastatin
+10000084-48 status_is Discontinued via patient discharge
+10000084-48 route_is PO
+10000084-48 frequency_is QPM
+10000084-48 dispensation_is Omnicell
+10000084-48 duration_is 5700.0
+23052089 has_pharmacy_order 10000084-51
+10000084-51 medication_is rivastigmine
+10000084-51 status_is Inactive (Due to a change order)
+10000084-51 route_is TRANSDERMAL
+10000084-51 frequency_is DAILY
+10000084-51 dispensation_is PATIENT MAY TAKE OWN
+23052089 has_pharmacy_order 10000084-51
+10000084-51 medication_is rivastigmine
+10000084-51 status_is Discontinued via patient discharge
+10000084-51 route_is TRANSDERMAL
+10000084-51 frequency_is DAILY
+10000084-51 dispensation_is PATIENT MAY TAKE OWN
+10000084-51 duration_is 1680.0
+23052089 has_pharmacy_order 10000084-43
+10000084-43 medication_is Senna
+10000084-43 status_is Discontinued via patient discharge
+10000084-43 route_is PO/NG
+10000084-43 frequency_is BID:PRN
+10000084-43 dispensation_is Omnicell
+10000084-43 duration_is 6660.0
+23052089 has_pharmacy_order 10000084-43
+10000084-43 medication_is Senna
+10000084-43 status_is Discontinued via patient discharge
+10000084-43 route_is PO/NG
+10000084-43 frequency_is BID:PRN
+10000084-43 dispensation_is Omnicell
+10000084-43 duration_is 6660.0
+23052089 has_pharmacy_order 10000084-73
+10000084-73 medication_is QUEtiapine Fumarate
+10000084-73 status_is Inactive (Due to a change order)
+10000084-73 route_is PO/NG
+10000084-73 frequency_is QHS
+10000084-73 dispensation_is Omnicell
+10000084-73 duration_is 900.0
+23052089 has_pharmacy_order 10000084-76
+10000084-76 medication_is QUEtiapine Fumarate
+10000084-76 status_is Discontinued via patient discharge
+10000084-76 route_is PO/NG
+10000084-76 frequency_is QHS
+10000084-76 dispensation_is Omnicell
+10000084-76 duration_is 2700.0
+23052089 has_pharmacy_order 10000084-38
+10000084-38 medication_is Sodium Chloride 0.9%  Flush
+10000084-38 status_is Discontinued
+10000084-38 route_is IV
+10000084-38 frequency_is Q8H
+10000084-38 dispensation_is Floor Stock Item
+10000084-38 duration_is 1740.0
+23052089 has_pharmacy_order 10000084-34
+10000084-34 medication_is Heparin
+10000084-34 status_is Discontinued via patient discharge
+10000084-34 route_is SC
+10000084-34 frequency_is BID
+10000084-34 dispensation_is Omnicell
+10000084-34 duration_is 6660.0
+23052089 has_pharmacy_order 10000084-47
+10000084-47 medication_is Rasagiline
+10000084-47 status_is Discontinued via patient discharge
+10000084-47 route_is PO/NG
+10000084-47 frequency_is DAILY
+10000084-47 dispensation_is Omnicell
+10000084-47 duration_is 6600.0
+23052089 has_pharmacy_order 10000084-45
+10000084-45 medication_is Polyethylene Glycol
+10000084-45 status_is Discontinued via patient discharge
+10000084-45 route_is PO/NG
+10000084-45 frequency_is DAILY:PRN
+10000084-45 dispensation_is Omnicell
+10000084-45 duration_is 6660.0
+10000084 has_admission 29888819
+29888819 has_hcpcs_event Hospital observation per hr
+Hospital observation per hr has_actual_short_description Hospital observation per hr
+Hospital observation per hr has_official_short_description Hospital observation per hr
+Hospital observation per hr has_official_long_description Hospital observation service, per hour
+Hospital observation per hr has_sequence_number 1
+10000084-90 order_type Lab
+10000084-90 order_status Inactive
+10000084-90 transaction_type New
+10000084-90 order_time 2160-12-28 03:56:07
+10000084-90 sequence_number 90
+10000084-90 ordered_by Provider_P247RQ
+10000084-90 discontinued_by 96
+10000084-91 order_type Lab
+10000084-91 order_status Inactive
+10000084-91 transaction_type New
+10000084-91 order_time 2160-12-28 03:56:07
+10000084-91 sequence_number 91
+10000084-91 ordered_by Provider_P247RQ
+10000084-91 discontinued_by 97
+10000084-93 order_type Medications
+10000084-93 order_status Inactive
+10000084-93 transaction_type New
+10000084-93 order_time 2160-12-28 03:59:38
+10000084-93 sequence_number 93
+10000084-93 ordered_by Provider_P247RQ
+10000084-94 order_type Lab
+10000084-94 order_status Inactive
+10000084-94 transaction_type New
+10000084-94 order_time 2160-12-28 04:11:52
+10000084-94 sequence_number 94
+10000084-94 ordered_by Provider_P037PT
+10000084-95 order_type Lab
+10000084-95 order_status Inactive
+10000084-95 transaction_type New
+10000084-95 order_time 2160-12-28 04:11:52
+10000084-95 sequence_number 95
+10000084-95 ordered_by Provider_P037PT
+10000084-96 order_type Lab
+10000084-96 order_status Inactive
+10000084-96 transaction_type D/C
+10000084-96 order_time 2160-12-28 04:13:21
+10000084-96 sequence_number 96
+10000084-96 ordered_by Provider_P037PT
+10000084-96 discontinue_of 90
+10000084-97 order_type Lab
+10000084-97 order_status Inactive
+10000084-97 transaction_type D/C
+10000084-97 order_time 2160-12-28 04:13:21
+10000084-97 sequence_number 97
+10000084-97 ordered_by Provider_P037PT
+10000084-97 discontinue_of 91
+10000084-98 order_type ADT orders
+10000084-98 order_status Inactive
+10000084-98 transaction_type New
+10000084-98 order_time 2160-12-28 05:27:13
+10000084-98 sequence_number 98
+10000084-98 ordered_by Provider_P247RQ
+10000084-99 order_type IV therapy
+10000084-99 order_status Inactive
+10000084-99 transaction_type New
+10000084-99 order_time 2160-12-28 05:27:13
+10000084-99 sequence_number 99
+10000084-99 ordered_by Provider_P247RQ
+10000084-100 order_type General Care
+10000084-100 order_status Inactive
+10000084-100 transaction_type New
+10000084-100 order_time 2160-12-28 05:27:13
+10000084-100 sequence_number 100
+10000084-100 ordered_by Provider_P247RQ
+10000084-101 order_type General Care
+10000084-101 order_status Inactive
+10000084-101 transaction_type New
+10000084-101 order_time 2160-12-28 05:27:13
+10000084-101 sequence_number 101
+10000084-101 ordered_by Provider_P247RQ
+10000084-102 order_type General Care
+10000084-102 order_status Inactive
+10000084-102 transaction_type New
+10000084-102 order_time 2160-12-28 05:27:13
+10000084-102 sequence_number 102
+10000084-102 ordered_by Provider_P247RQ
+10000084-103 order_type Nutrition
+10000084-103 order_status Inactive
+10000084-103 transaction_type New
+10000084-103 order_time 2160-12-28 05:27:13
+10000084-103 sequence_number 103
+10000084-103 ordered_by Provider_P247RQ
+10000084-104 order_type Medications
+10000084-104 order_status Inactive
+10000084-104 transaction_type New
+10000084-104 order_time 2160-12-28 06:41:41
+10000084-104 sequence_number 104
+10000084-104 ordered_by Provider_P247RQ
+10000084-105 order_type Medications
+10000084-105 order_status Inactive
+10000084-105 transaction_type New
+10000084-105 order_time 2160-12-28 06:41:41
+10000084-105 sequence_number 105
+10000084-105 ordered_by Provider_P247RQ
+
+Patient 10000102
+10000102 has_gender Female
+Patient_10000102 has_age 27
+10000102 age_of_death None
+10000102 has_race Unknown
+
+Patient Patient_10000108
+Patient_10000108 has_gender Male
+Patient_10000108 has_age 25
+10000108 age_of_death None
+10000108 hasRace WHITE
+10000108 has_admission 27250926
+27250926 has_hcpcs_event hcpcs_event_1
+hcpcs_event_1 has_actual_short_description Hospital observation services
+hcpcs_event_1 has_official_short_description Hospital observation services
+hcpcs_event_1 has_sequence_number 1
+10000108-18 has_order_type Radiology
+10000108-18 has_order_status Inactive
+10000108-18 has_transaction_type New
+10000108-18 has_order_time 2163-09-27 17:33:58
+10000108-18 has_sequence_number 18
+10000108-18 ordered_by Provider_P45R8Z
+10000108-19 has_order_type Lab
+10000108-19 has_order_status Inactive
+10000108-19 has_transaction_type New
+10000108-19 has_order_time 2163-09-27 18:09:42
+10000108-19 has_sequence_number 19
+10000108-19 ordered_by Provider_P40JML
+10000108-20 has_order_type General Care
+10000108-20 has_order_status Inactive
+10000108-20 has_transaction_type New
+10000108-20 has_order_time 2163-09-27 18:09:42
+10000108-20 has_sequence_number 20
+10000108-20 ordered_by Provider_P40JML

@@ -20,3 +20,5 @@ def query_llm(prompt: str, system_prompt:str, model="gpt-4") -> str:
                   {"role": "user", "content": prompt}]
     )
     return response.choices[0].message.content.strip()
+
+
