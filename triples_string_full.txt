@@ -1,198 +1,465 @@
-Here's the detailed and structured summary based on the provided triples:
+
+**Patient 10000032**
+
+- **Gender:** F
+- **Age:** 52
+- **Age of Death:** 52
+- **Race:** WHITE
+
+  **Admission 22595853**
+  - **DRGs:**
+    - DRG1: APR - OTHER DISORDERS OF THE LIVER (Severity 2.0)
+    - DRG2: HCFA - DISORDERS OF LIVER EXCEPT MALIG,CIRR,ALC HEPA W CC
+  - **Medications:**
+    - Furosemide
+    - Ipratropium Bromide Neb
+    - Potassium Chloride
+    - Sodium Chloride 0.9% Flush
+    - Raltegravir
+    - Spironolactone
+    - Acetaminophen
+    - Influenza Vaccine Quadrivalent
+    - Albuterol Inhaler
+    - Emtricitabine-Tenofovir (Truvada)
+    - Heparin
+    - Nicotine Patch
+  - **Orders:**
+    - 10000032-55: PO/NG, Discontinued via patient discharge
+    - 10000032-42: IH, Discontinued via patient discharge
+    - 10000032-35: PO/NG, Inactive (Due to a change order)
+    - 10000032-41: PO, Discontinued
+    - 10000032-27: IV, Discontinued via patient discharge
+    - 10000032-37: PO, Discontinued via patient discharge
+    - 10000032-56: PO/NG, Discontinued via patient discharge
+    - 10000032-39: PO/NG, Discontinued via patient discharge
+    - 10000032-23: IM, Discontinued via patient discharge
+    - 10000032-33: IH, Discontinued via patient discharge
+    - 10000032-34: PO, Discontinued via patient discharge
+    - 10000032-38: PO/NG, Inactive (Due to a change order)
+    - 10000032-32: SC, Discontinued via patient discharge
+    - 10000032-36: TD, Discontinued via patient discharge
+
+  **Admission 22841357**
+  - **DRGs:**
+    - DRG22841357_1: APR - HEPATIC COMA AND OTHER MAJOR ACUTE LIVER DISORDERS (Severity 3.0)
+    - DRG22841357_2: HCFA - DISORDERS OF LIVER EXCEPT MALIG,CIRR,ALC HEPA W CC
+  - **Medications:**
+    - Furosemide
+    - Rifaximin
+    - Sodium Chloride 0.9% Flush
+    - Albuterol Inhaler
+    - Calcium Carbonate
+    - Acetaminophen
+    - Influenza Vaccine Quadrivalent
+    - Albumin 25% (12.5g / 50mL)
+    - Tiotropium Bromide
+    - Emtricitabine-Tenofovir (Truvada)
+    - Lactulose
+    - Raltegravir
+    - Heparin
+    - Sulfameth/Trimethoprim DS
+
+  **Admission 25742920**
+  - **DRGs:**
+    - DRG1: APR - OTHER DISORDERS OF THE LIVER (Severity 3.0)
+    - DRG2: HCFA - DISORDERS OF LIVER EXCEPT MALIG,CIRR,ALC HEPA W CC
+  - **Orders:**
+    - 10000032-238: IV, Discontinued via patient discharge
+    - 10000032-276: IV, Discontinued
+    - 10000032-271: PO/NG, Discontinued via patient discharge
+    - 10000032-252: IH, Discontinued via patient discharge
+    - 10000032-261: PO/NG, Discontinued
+    - 10000032-283: PO, Discontinued via patient discharge
+
+  **Admission 29079034**
+  - **DRGs:**
+    - DRG_29079034_1: APR - OTHER CIRCULATORY SYSTEM DIAGNOSES (Severity 3.0)
+    - DRG_29079034_2: HCFA - SYNCOPE & COLLAPSE
+  - **Medications:**
+    - Bisacodyl
+    - Senna
+    - Calcium Carbonate
+    - Raltegravir
+    - Fluticasone Propionate 110mcg
+    - Docusate Sodium (Liquid)
+    - Albuterol 0.083% Neb Soln
+    - Influenza Vaccine Quadrivalent
+    - Sodium Chloride 0.9% Flush
+    - Lactulose
+    - Albuterol Inhaler
+    - Rifaximin
+    - Albumin 25% (12.5g / 50mL)
+    - TraMADOL (Ultram)
+    - Heparin
+    - Emtricitabine-Tenofovir (Truvada)
+    - Tiotropium Bromide
+    - Albumin 25% (12.5g / 50mL)
 
 ---
 
-### Patient 10000032  
-- **Gender:** F  
-- **Age:** 52  
-- **Age of Death:** 52  
-- **Race:** WHITE  
+**Patient 10000048**
 
-#### Admission 22595853  
-- **DRGs:**  
-  - DRG1: APR - OTHER DISORDERS OF THE LIVER (Severity 2.0)  
-  - DRG2: HCFA - DISORDERS OF LIVER EXCEPT MALIG,CIRR,ALC HEPA W CC  
-- **Medications:**  
-  - Furosemide  
-  - Ipratropium Bromide Neb  
-  - Potassium Chloride  
-  - Sodium Chloride 0.9% Flush  
-  - Raltegravir  
-  - Spironolactone  
-  - Acetaminophen  
-  - Influenza Vaccine Quadrivalent  
-  - Albuterol Inhaler  
-  - Emtricitabine-Tenofovir (Truvada)  
-  - Heparin  
-  - Nicotine Patch  
-- **Orders:**  
-  - 10000032-55: PO/NG, Discontinued via patient discharge  
-  - 10000032-42: IH, Discontinued via patient discharge  
-  - 10000032-35: PO/NG, Inactive (Due to a change order)  
-  - 10000032-41: PO, Discontinued  
-  - 10000032-27: IV, Discontinued via patient discharge  
-  - 10000032-37: PO, Discontinued via patient discharge  
-  - 10000032-56: PO/NG, Discontinued via patient discharge  
-  - 10000032-39: PO/NG, Discontinued via patient discharge  
-  - 10000032-23: IM, Discontinued via patient discharge  
-  - 10000032-33: IH, Discontinued via patient discharge  
-  - 10000032-34: PO, Discontinued via patient discharge  
-  - 10000032-38: PO/NG, Inactive (Due to a change order)  
-  - 10000032-32: SC, Discontinued via patient discharge  
-  - 10000032-36: TD, Discontinued via patient discharge  
-
-#### Admission 22841357  
-- **DRGs:**  
-  - DRG22841357_1: APR - HEPATIC COMA AND OTHER MAJOR ACUTE LIVER DISORDERS (Severity 3.0)  
-  - DRG22841357_2: HCFA - DISORDERS OF LIVER EXCEPT MALIG,CIRR,ALC HEPA W CC  
-- **Medications:**  
-  - Furosemide  
-  - Rifaximin  
-  - Sodium Chloride 0.9% Flush  
-  - Albuterol Inhaler  
-  - Calcium Carbonate  
-  - Acetaminophen  
-  - Influenza Vaccine Quadrivalent  
-  - Albumin 25% (12.5g / 50mL)  
-  - Tiotropium Bromide  
-  - Emtricitabine-Tenofovir (Truvada)  
-  - Lactulose  
-  - Raltegravir  
-  - Heparin  
-  - Sulfameth/Trimethoprim DS  
-
-#### Admission 25742920  
-- **DRGs:**  
-  - DRG1: APR - OTHER DISORDERS OF THE LIVER (Severity 3.0)  
-  - DRG2: HCFA - DISORDERS OF LIVER EXCEPT MALIG,CIRR,ALC HEPA W CC  
-- **Medications:**  
-  - Sodium Chloride 0.9% Flush  
-  - Calcium Gluconate  
-  - Furosemide  
-  - Albuterol Inhaler  
-  - Sodium Polystyrene Sulfonate  
-  - Zolpidem Tartrate  
-- **Orders:**  
-  - 10000032-238: IV, Discontinued via patient discharge  
-  - 10000032-276: IV, Discontinued  
-  - 10000032-271: PO/NG, Discontinued via patient discharge  
-  - 10000032-252: IH, Discontinued via patient discharge  
-  - 10000032-261: PO/NG, Discontinued  
-  - 10000032-283: PO, Discontinued via patient discharge  
-
-#### Admission 29079034  
-- **DRGs:**  
-  - DRG_29079034_1: APR - OTHER CIRCULATORY SYSTEM DIAGNOSES (Severity 3.0)  
-  - DRG_29079034_2: HCFA - SYNCOPE & COLLAPSE  
-- **Medications:**  
-  - Bisacodyl  
-  - Senna  
-  - Calcium Carbonate  
-  - Raltegravir  
-  - Fluticasone Propionate 110mcg  
-  - Docusate Sodium (Liquid)  
-  - Albuterol 0.083% Neb Soln  
-  - Influenza Vaccine Quadrivalent  
-  - Sodium Chloride 0.9% Flush  
-  - Lactulose  
-  - Albuterol Inhaler  
-  - Rifaximin  
-  - Albumin 25% (12.5g / 50mL)  
-  - TraMADOL (Ultram)  
-  - Heparin  
-  - Emtricitabine-Tenofovir (Truvada)  
-  - Tiotropium Bromide  
-  - Albumin 25% (12.5g / 50mL)  
-
-### Patient 10000048  
-- **Gender:** Female  
-- **Age:** 23  
-- **Age of Death:** None  
-- **Race:** Unknown  
-
-### Patient 10000058  
-- **Gender:** Female  
-- **Age:** 33  
-- **Age of Death:** None  
-- **Race:** Unknown  
-
-### Patient 10000068  
-- **Gender:** Female  
-- **Age:** 19  
-- **Age of Death:** None  
-- **Race:** WHITE  
-
-#### Admission 25022803  
-- **Procedures:**  
-  - Hospital observation services: Hospital observation services  
-- **Orders:**  
-  - 10000068-9: ADT orders, Inactive  
-  - 10000068-10: IV therapy, Inactive  
-  - 10000068-11: Medications, Inactive  
-  - 10000068-12: General Care, Inactive  
-  - 10000068-13: General Care, Inactive  
-  - 10000068-14: Nutrition, Inactive  
-
-### Patient 10000084  
-- **Gender:** M  
-- **Age:** 72  
-- **Age of Death:** 73  
-- **Race:** WHITE  
-
-#### Admission 23052089  
-- **DRGs:**  
-  - DRG1: APR - DEGENERATIVE NERVOUS SYSTEM DISORDERS EXCEPT MULTIPLE SCLEROSIS (Severity 1.0)  
-  - DRG2: HCFA - DEGENERATIVE NERVOUS SYSTEM DISORDERS W/O MCC  
-- **Orders:**  
-  - 10000084-49: Pramipexole, PO/NG, Discontinued via patient discharge  
-  - 10000084-48: Pravastatin, PO, Discontinued via patient discharge  
-  - 10000084-51: rivastigmine, TRANSDERMAL, Discontinued via patient discharge  
-  - 10000084-43: Senna, PO/NG, Discontinued via patient discharge  
-  - 10000084-73: QUEtiapine Fumarate, PO/NG, Inactive (Due to a change order)  
-  - 10000084-76: QUEtiapine Fumarate, PO/NG, Discontinued via patient discharge  
-  - 10000084-38: Sodium Chloride 0.9% Flush, IV, Discontinued  
-  - 10000084-34: Heparin, SC, Discontinued via patient discharge  
-  - 10000084-47: Rasagiline, PO/NG, Discontinued via patient discharge  
-  - 10000084-45: Polyethylene Glycol, PO/NG, Discontinued via patient discharge  
-
-#### Admission 29888819  
-- **Orders:**  
-  - 10000084-90: Lab, Inactive  
-  - 10000084-91: Lab, Inactive  
-  - 10000084-93: Medications, Inactive  
-  - 10000084-94: Lab, Inactive  
-  - 10000084-95: Lab, Inactive  
-  - 10000084-96: Lab, Inactive  
-  - 10000084-97: Lab, Inactive  
-  - 10000084-98: ADT orders, Inactive  
-  - 10000084-99: IV therapy, Inactive  
-  - 10000084-100: General Care, Inactive  
-  - 10000084-101: General Care, Inactive  
-  - 10000084-102: General Care, Inactive  
-  - 10000084-103: Nutrition, Inactive  
-  - 10000084-104: Medications, Inactive  
-  - 10000084-105: Medications, Inactive  
-
-### Patient 10000102  
-- **Gender:** Female  
-- **Age:** 27  
-- **Age of Death:** None  
-- **Race:** Unknown  
-
-### Patient 10000108  
-- **Gender:** Male  
-- **Age:** 25  
-- **Age of Death:** None  
-- **Race:** WHITE  
-
-#### Admission 27250926  
-- **Procedures:**  
-  - Hospital observation services: Hospital observation services  
-- **Orders:**  
-  - 10000108-18: Radiology, Inactive  
-  - 10000108-19: Lab, Inactive  
-  - 10000108-20: General Care, Inactive  
+- **Gender:** Female
+- **Age:** 23
+- **Age of Death:** None
+- **Race:** Unknown
 
 ---
 
-This comprehensive summary is organized by patient, breaking down each patient's admissions, diagnoses, medications, and orders.
+**Patient 10000058**
+
+- **Gender:** Female
+- **Age:** 33
+- **Age of Death:** None
+- **Race:** Unknown
+
+---
+
+**Patient 10000068**
+
+- **Gender:** Female
+- **Age:** 19
+- **Age of Death:** None
+- **Race:** WHITE
+
+  **Admission 25022803**
+  - **Procedures:**
+    - Hospital observation services
+  - **Orders:**
+    - 10000068-9: ADT orders, Inactive
+    - 10000068-10: IV therapy, Inactive
+    - 10000068-11: Medications, Inactive
+    - 10000068-12: General Care, Inactive
+    - 10000068-13: General Care, Inactive
+    - 10000068-14: Nutrition, Inactive
+
+---
+
+**Patient 10000084**
+
+- **Gender:** M
+- **Age:** 72
+- **Age of Death:** 73
+- **Race:** WHITE
+
+  **Admission 23052089**
+  - **DRGs:**
+    - DRG1: APR - DEGENERATIVE NERVOUS SYSTEM DISORDERS EXCEPT MULTIPLE SCLEROSIS (Severity 1.0)
+    - DRG2: HCFA - DEGENERATIVE NERVOUS SYSTEM DISORDERS W/O MCC
+  - **Medications:**
+    - Pramipexole
+    - Pravastatin
+    - Rivastigmine
+    - Senna
+    - QUEtiapine Fumarate
+    - Sodium Chloride 0.9% Flush
+    - Heparin
+    - Rasagiline
+    - Polyethylene Glycol
+  - **Orders:**
+    - 10000084-49: PO/NG, Discontinued via patient discharge
+    - 10000084-48: PO, Discontinued via patient discharge
+    - 10000084-51: TRANSDERMAL, Discontinued via patient discharge
+    - 10000084-43: PO/NG, Discontinued via patient discharge
+    - 10000084-73: PO/NG, Inactive (Due to a change order)
+    - 10000084-76: PO/NG, Discontinued via patient discharge
+    - 10000084-34: SC, Discontinued via patient discharge
+    - 10000084-47: PO/NG, Discontinued via patient discharge
+    - 10000084-45: PO/NG, Discontinued via patient discharge
+    - 10000084-38: IV, Discontinued
+
+  **Admission 29888819**
+  - **Procedures:**
+    - Hospital observation per hr
+  - **Orders:**
+    - 10000084-90: Lab, Inactive
+    - 10000084-91: Lab, Inactive
+    - 10000084-93: Medications, Inactive
+    - 10000084-94: Lab, Inactive
+    - 10000084-95: Lab, Inactive
+    - 10000084-96: Lab, Inactive (D/C)
+    - 10000084-97: Lab, Inactive (D/C)
+    - 10000084-98: ADT orders, Inactive
+    - 10000084-99: IV therapy, Inactive
+    - 10000084-100: General Care, Inactive
+    - 10000084-101: General Care, Inactive
+    - 10000084-102: General Care, Inactive
+    - 10000084-103: Nutrition, Inactive
+    - 10000084-104: Medications, Inactive
+    - 10000084-105: Medications, Inactive
+
+---
+
+**Patient 10000102**
+
+- **Gender:** Female
+- **Age:** 27
+- **Age of Death:** None
+- **Race:** Unknown
+
+---
+
+**Patient Patient_10000108**
+
+- **Gender:** Male
+- **Age:** 25
+- **Age of Death:** None
+- **Race:** WHITE
+
+  **Admission 27250926**
+  - **Procedures:**
+    - Hospital observation services
+  - **Orders:**
+    - 10000108-18: Radiology, Inactive
+    - 10000108-19: Lab, Inactive
+    - 10000108-20: General Care, Inactive
+    - 10000108-21: Medications, Inactive
+    - 10000108-22: Medications, Inactive
+    - 10000108-23: Lab, Inactive (D/C)
+    - 10000108-24: Lab, Inactive (D/C)
+    - 10000108-25: Lab, Inactive
+    - 10000108-26: Medications, Inactive
+    - 10000108-27: Medications, Inactive
+    - 10000108-28: ADT orders, Inactive
+    - 10000108-29: IV therapy, Inactive
+    - 10000108-30: Medications, Inactive
+    - 10000108-31: General Care, Inactive
+    - 10000108-32: General Care, Inactive
+    - 10000108-33: Nutrition, Inactive
+    - 10000108-34: Medications, Inactive
+
+---
+
+**Patient 10000115**
+
+- **Gender:** M
+- **Age:** 24
+- **Age of Death:** None
+- **Race:** Unknown
+
+---
+
+**Patient Patient_10000117**
+
+- **Gender:** Female
+- **Age:** 48
+- **Age of Death:** None
+- **Race:** WHITE
+
+  **Admission 22927623**
+  - **Procedures:**
+    - Digestive system
+    - Hospital observation per hr
+  - **Orders:**
+    - 10000117-36: SC, Discontinued via patient discharge
+    - 10000117-30: IV, Discontinued via patient discharge
+
+  **Admission 27988844**
+  - **DRGs:**
+    - DRG1: APR - HIP AND FEMUR FRACTURE REPAIR (Severity 1.0)
+    - DRG2: HCFA - HIP & FEMUR PROCEDURES EXCEPT MAJOR JOINT W/O CC/MCC
+  - **Medications:**
+    - CeFAZolin
+    - Vitamin D
+    - Acetaminophen IV
+    - Multivitamins
+    - Bisacodyl
+    - Acetaminophen
+    - Multivitamins
+    - Cepacol (Sore Throat Lozenge)
+    - OxyCODONE (Immediate Release)
+    - Docusate Sodium
+    - Ondansetron
+    - Senna
+    - Acetaminophen
+    - Enoxaparin Sodium
+    - OxyCODONE (Immediate Release)
+    - Docusate Sodium
+    - Sodium Chloride 0.9% Flush
+    - Morphine Sulfate
+    - Acetaminophen
+    - Influenza Vaccine Quadrivalent
+
+---
+
+**Patient 10000161**
+
+- **Gender:** M
+- **Age:** 60
+- **Age of Death:** None
+- **Race:** WHITE
+
+  **Admission 22148160**
+  - **Procedures:**
+    - Hospital observation services
+  - **Orders:**
+    - 10000161-21: ADT orders, Inactive
+    - 10000161-22: IV therapy, Inactive
+    - 10000161-23: Medications, Inactive
+    - 10000161-24: General Care, Inactive
+    - 10000161-25: General Care, Inactive
+    - 10000161-26: General Care, Inactive
+    - 10000161-27: Nutrition, Inactive
+    - 10000161-28: Medications, Inactive
+    - 10000161-29: Lab, Inactive
+    - 10000161-30: Medications, Inactive
+    - 10000161-31: Medications, Inactive
+    - 10000161-32: Medications, Inactive
+    - 10000161-33: Medications, Inactive
+
+---
+
+**Patient 10000178**
+
+- **Gender:** F
+- **Age:** 59
+- **Age of Death:** None
+- **Race:** Unknown
+
+---
+
+**Patient Patient_10000248**
+
+- **Gender:** Male
+- **Age:** 34
+- **Race:** WHITE
+
+  **Admission 20600184**
+  - **Procedures:**
+    - Hospital observation services
+  - **Orders:**
+    - 10000248-40: ADT orders, Inactive
+    - 10000248-41: General Care, Inactive
+    - 10000248-42: General Care, Inactive
+    - 10000248-43: Nutrition, Inactive
+    - 10000248-44: Medications, Inactive
+    - 10000248-45: ADT orders, Inactive (Change)
+    - 10000248-46: IV therapy, Inactive
+    - 10000248-47: Medications, Inactive
+    - 10000248-48: General Care, Inactive
+    - 10000248-49: General Care, Inactive
+    - 10000248-50: General Care, Inactive
+    - 10000248-51: Nutrition, Inactive
+    - 10000248-52: Medications, Inactive
+    - 10000248-53: Medications, Inactive
+    - 10000248-54: Lab, Inactive
+
+  - **Medications:**
+    - OxyCODONE (Immediate Release)
+    - Acetaminophen
+    - Sodium Chloride 0.9% Flush
+    - Influenza Vaccine Quadrivalent
+
+---
+
+**Patient 10000280**
+
+- **Gender:** M
+- **Age:** 20
+- **Age of Death:** None
+- **Race:** OTHER
+
+  **Admission 25852320**
+  - **Procedures:**
+    - Hospital observation services
+  - **Orders:**
+    - 10000280-16: ADT orders, Inactive
+    - 10000280-17: IV therapy, Inactive
+    - 10000280-18: Medications, Inactive
+    - 10000280-19: General Care, Inactive
+    - 10000280-20: General Care, Inactive
+    - 10000280-21: Nutrition, Inactive
+    - 10000280-22: Medications, Inactive
+
+---
+
+**Patient 10000285**
+
+- **Gender:** M
+- **Age:** 34
+- **Age of Death:** None
+- **Race:** Unknown
+
+---
+
+**Patient 10000459**
+
+- **Gender:** M
+- **Age:** 63
+- **Age of Death:** None
+- **Race:** Unknown
+
+---
+
+**Patient 10000473**
+
+- **Gender:** M
+- **Age:** 81
+- **Race:** Unknown
+
+---
+
+**Patient 10000492**
+
+- **Gender:** M
+- **Age:** 22
+- **Age of Death:** None
+- **Race:** Unknown
+
+---
+
+**Patient 10000507**
+
+- **Gender:** M
+- **Age:** 19
+- **Age of Death:** None
+- **Race:** Unknown
+
+---
+
+**Patient 10000526**
+
+- **Gender:** Female
+- **Age:** 30
+- **Age of Death:** None
+- **Race:** Unknown
+
+---
+
+**Patient 10000560**
+
+- **Gender:** F
+- **Age:** 53
+- **Age of Death:** None
+- **Race:** WHITE
+
+  **Admission 28979390**
+  - **DRGs:**
+    - APR_KIDNEY_AND_URINARY_TRACT_PROCEDURES_FOR_MALIGNANCY: APR - KIDNEY AND URINARY TRACT PROCEDURES FOR MALIGNANCY (Severity 1.0)
+    - HCFA_KIDNEY_URETER_PROCEDURES_FOR_NEOPLASM_W_O_CC_MCC: HCFA - KIDNEY & URETER PROCEDURES FOR NEOPLASM W/O CC/MCC
+  - **Medications:**
+    - Acetaminophen
+    - Lorazepam
+    - Metoclopramide
+    - Ondansetron
+    - Promethazine
+    - HYDROmorphone (Dilaudid)
+    - Docusate Sodium
+    - Aluminum-Magnesium Hydrox.-Simethicone
+    - Scopolamine Patch
+    - DiphenhydrAMINE
+    - Sodium Chloride 0.9% Flush
+    - Ketorolac
+    - Hydrocodone-Acetaminophen
+    - Lorazepam
+    - Status: Discontinued via patient discharge, Expired, Inactive (Due to a change order)
+
+---
+
+**Patient 10000594**
+
+- **Gender:** (Demographic data not provided) 
+
+---
+
+This format gives a structured overview for each patient, listing demographic details followed by admissions, which include DRGs, medications, procedures, and orders. Patients without admissions only display demographic information.

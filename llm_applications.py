@@ -45,7 +45,6 @@ test_triples_patient_2 = [
 ]
 
 
-
 def query_llm(prompt: str, model="gpt-4o-2024-08-06") -> str:
     client = openai.OpenAI()  
    
@@ -64,13 +63,101 @@ def query_llm(prompt: str, model="gpt-4o-2024-08-06") -> str:
 
 
 
+def generate_benchmark():
+
+
+    prompt = """
+    Generate Benchmark Dataset for Patient Similarity
+
+    You are generating a JSON benchmark dataset to evaluate patient similarity algorithms using clinical knowledge graph triples. Each patient is described using a list of subject–predicate–object triples that represent their clinical features, such as diagnoses, symptoms, and treatments.
+
+    Triple Format:
+    - Subject: Patient ID (a unique numerical identifier)
+    - Predicate: One of the following:
+        - diagnosed_with — a diagnosis or medical condition
+        - has_symptom — a symptom experienced
+        - treated_with — a medication or procedure administered
+    - Object: A valid medical concept (diagnosis, symptom, or treatment)
+
+    ✏️ Task:
+    1. Generate structured clinical knowledge graph triples data for exactly **20 unique patients**.
+    - Each patient should have 10-15 triples.
+    - Ensure diversity in clinical profiles across patients, including:
+        - Common chronic conditions (e.g., diabetes, hypertension, asthma)
+        - Acute conditions (e.g., pneumonia, injury)
+        - Psychological conditions (e.g., depression, anxiety)
+        - Varied symptom presentations and treatments
+
+    2. Then compute **pairwise similarity** between all unique pairs of patients (total of 190 pairs).
+    - Use a ground truth similarity score between **0 and 1**:
+        - `1.0` = nearly identical profiles
+        - `0.0` = completely dissimilar
+        - Intermediate values (e.g., 0.25, 0.5, 0.75) represent partial overlaps based on:
+        - Shared diagnoses
+        - Overlapping symptoms
+        - Common treatments
+        - Related clinical presentations or comorbidities
+
+    3. Ensure:
+    - A diverse spread of similarity scores across the full range [0.0–1.0]
+    - Consistent terminology and formatting (no typos or fabricated medical terms)
+
+    Output Format:
+
+    ```json
+    {
+    "patients": {
+        "10000001": [
+        (10000001, diagnosed_with, Hypertension),
+        (10000001, has_symptom, Headache),
+        (10000001, treated_with, Lisinopril),
+        ...
+        ],
+        ...
+    },
+    "pairwise_similarity": [
+        {
+        "patient_1": "10000001",
+        "patient_2": "10000002",
+        "ground_truth_similarity": 0.75
+        },
+        {
+        "patient_1": "10000001",
+        "patient_2": "10000003",
+        "ground_truth_similarity": 0.25
+        },
+        ...
+    ]
+    }
+
+    Guidelines:
+    - Use only realistic and commonly used clinical terms.
+    - Format each triple clearly and consistently.
+    - Capture a wide variety of realistic clinical scenarios, including some with:
+    - Similar diagnoses but different symptoms
+    - Shared medications but different underlying diseases
+    - Psychological vs physical conditions
+
+    Output as JSON as shown above. Only use format accepted by JSON.
+    """
+
+    response = query_llm(prompt=prompt)
+    match = re.search(r"```json(.*?)```", response, re.DOTALL)
+    if match:
+        result = match.group(1)
+        with open("benchmark.json", "w") as f:
+            data = json.loads(result)
+            json.dump(data, f)
+
+
+
 def create_patient_triples_string(knowldege_graph_triples):
         patient_number = None
         patient_list = []
         master_triple_string = ""
         patient_count = 0
 
-        for triple in knowldege_graph_triples[:600]:
+        for triple in knowldege_graph_triples:
             s, p, o = triple[0], triple[1], triple[2]
             # if (isinstance(s, str) and "10000980" in s and "-" not in s) or s == 10000980:
             #     print(triple)
@@ -79,7 +166,7 @@ def create_patient_triples_string(knowldege_graph_triples):
             #     print(s)
             #     print(type(s))
 
-            if (p == "has_admission" or p =="has_gender") and (patient_number != s or (isinstance(s, str) and (str(patient_number) != s.split("_")[-1]))):
+            if (p == "has_admission" or p =="has_gender" or p == "diagnosed_with") and (patient_number != s or (isinstance(s, str) and (str(patient_number) != s.split("_")[-1]))):
                 # Dump previous patient's data
                 if len(patient_list) > 0:
                     master_triple_string += "\n".join(patient_list) + "\n"
@@ -97,6 +184,8 @@ def create_patient_triples_string(knowldege_graph_triples):
 
 
             patient_list.append(f"{s} {p} {o}")
+            if patient_count >= 20:
+             return master_triple_string
 
         # Dump any remaining triples
         if patient_list:
@@ -104,6 +193,7 @@ def create_patient_triples_string(knowldege_graph_triples):
 
         #print("Master triple: ", master_triple_string)
         print("patient count: ", patient_count)
+        
         return master_triple_string
 
 
@@ -421,21 +511,48 @@ def evaluate(formatted_relation_triples):
      # ground truth similarity with only diagnosis 
      gt_sim = diagnosis_gt_similarity(diagnosis_info)
 
+     print(gt_sim)
+     print(patient_sim)
+
      final_result = compare_similarities(patient_sim, gt_sim)
 
      return final_result
      
 
-# knowldege_graph_data= pickle.load(open("/Users/sahithi/Desktop/Research/cs145/knowledege_graph_triples.pkl", "rb"))
 
-knowldege_graph_data= pickle.load(open("/Users/psehgal/Documents/cs145/knowledege_graph_triples.pkl", "rb"))
-formatted_relation_triples = create_patient_triples_string(knowldege_graph_data)
+def run_benchmark():
+    generate_benchmark()
+    with open('benchmark.json', 'r') as f:
+        data = json.load(f)  # load() expects a file object
+    triples = []
+    for pid_data in data['patients'].values():
+        triples.extend(list(pid_data))
+    
+    # formatted_relation_triples = create_patient_triples_string(triples)
+    # print(formatted_relation_triples)
 
-formatted_relation_triples = reformat(formatted_relation_triples)
+    # formatted_relation_triples = reformat(formatted_relation_triples)
+    # print(formatted_relation_triples)
+   
+    
+
+#knowldege_graph_data= pickle.load(open("/Users/sahithi/Desktop/Research/cs145/knowledege_graph_triples.pkl", "rb"))
+
+#knowldege_graph_data= pickle.load(open("/Users/psehgal/Documents/cs145/knowledege_graph_triples.pkl", "rb"))
+# formatted_relation_triples = create_patient_triples_string(knowldege_graph_data)
+
+# formatted_relation_triples = reformat(formatted_relation_triples)
 
 
 # with open("triples_string_full.txt", 'w') as f:
 #     f.write(formatted_relation_triples)
 
 
-final = evaluate(formatted_relation_triples)
+# the structured patient triples string for 20 patients (so we don't need to keep regenerating)
+# with open('triples_string_full.txt', 'r') as file:
+#     formatted_relation_triples = file.read()  
+
+
+# final = evaluate(formatted_relation_triples)
+
+run_benchmark()
