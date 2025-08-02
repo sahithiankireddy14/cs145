@@ -1,52 +1,107 @@
 Patient [10000032] vs [10000048]
-Predicted similarity: 0
-Ground truth similarity: None
-Match: N/A
+Predicted similarity: 0.0
+Ground truth similarity: 0
+Match: Full
 
 Patient [10000032] vs [10000058]
-Predicted similarity: 0
-Ground truth similarity: None
-Match: N/A
+Predicted similarity: 0.0
+Ground truth similarity: 0
+Match: Full
 
 Patient [10000032] vs [10000068]
-Predicted similarity: 0.0625
-Ground truth similarity: None
-Match: N/A
+Predicted similarity: 0.0
+Ground truth similarity: 0
+Match: Full
 
 Patient [10000032] vs [10000084]
-Predicted similarity: 0.45
-Ground truth similarity: None
-Match: N/A
+Predicted similarity: 0.1
+Ground truth similarity: 0
+Match: Full
+
+Patient [10000032] vs [10000102]
+Predicted similarity: 0.0
+Ground truth similarity: 0
+Match: Full
+
+Patient [10000032] vs [10000108]
+Predicted similarity: 0.09
+Ground truth similarity: 0
+Match: Full
 
 Patient [10000048] vs [10000058]
-Predicted similarity: 0.125
-Ground truth similarity: None
-Match: N/A
+Predicted similarity: 0.0
+Ground truth similarity: 0
+Match: Full
 
 Patient [10000048] vs [10000068]
-Predicted similarity: 0.0625
-Ground truth similarity: None
-Match: N/A
+Predicted similarity: 0.0
+Ground truth similarity: 0
+Match: Full
 
 Patient [10000048] vs [10000084]
-Predicted similarity: 0
-Ground truth similarity: None
-Match: N/A
+Predicted similarity: 0.0
+Ground truth similarity: 0
+Match: Full
+
+Patient [10000048] vs [10000102]
+Predicted similarity: 0.0
+Ground truth similarity: 0
+Match: Full
+
+Patient [10000048] vs [10000108]
+Predicted similarity: 0.0
+Ground truth similarity: 0
+Match: Full
 
 Patient [10000058] vs [10000068]
-Predicted similarity: 0.0625
-Ground truth similarity: None
-Match: N/A
+Predicted similarity: 0.0
+Ground truth similarity: 0
+Match: Full
 
 Patient [10000058] vs [10000084]
-Predicted similarity: 0
-Ground truth similarity: None
-Match: N/A
+Predicted similarity: 0.0
+Ground truth similarity: 0
+Match: Full
+
+Patient [10000058] vs [10000102]
+Predicted similarity: 0.0
+Ground truth similarity: 0
+Match: Full
+
+Patient [10000058] vs [10000108]
+Predicted similarity: 0.0
+Ground truth similarity: 0
+Match: Full
 
 Patient [10000068] vs [10000084]
-Predicted similarity: 0.0625
-Ground truth similarity: None
-Match: N/A
-Full matches: 0
-Partial matches: 0
+Predicted similarity: 0.125
+Ground truth similarity: 0
+Match: Partial
+
+Patient [10000068] vs [10000102]
+Predicted similarity: 0.0
+Ground truth similarity: 0
+Match: Full
+
+Patient [10000068] vs [10000108]
+Predicted similarity: 0.25
+Ground truth similarity: 0
+Match: Partial
+
+Patient [10000084] vs [10000102]
+Predicted similarity: 0.0
+Ground truth similarity: 0
+Match: Full
+
+Patient [10000084] vs [10000108]
+Predicted similarity: 0.125
+Ground truth similarity: 0
+Match: Partial
+
+Patient [10000102] vs [10000108]
+Predicted similarity: 0.0
+Ground truth similarity: 0
+Match: Full
+Full matches: 18
+Partial matches: 3
 No matches: 0

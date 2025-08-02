@@ -5,6 +5,8 @@ import json
 import re
 from pydantic import BaseModel
 from typing import List, Dict
+import numpy as np
+from scipy.stats import pearsonr
 
 
 openai.api_key = os.getenv("OPENAI_API_KEY")
@@ -68,7 +70,7 @@ def create_patient_triples_string(knowldege_graph_triples):
         master_triple_string = ""
         patient_count = 0
 
-        for triple in knowldege_graph_triples[:500]:
+        for triple in knowldege_graph_triples[:600]:
             s, p, o = triple[0], triple[1], triple[2]
             # if (isinstance(s, str) and "10000980" in s and "-" not in s) or s == 10000980:
             #     print(triple)
@@ -234,7 +236,7 @@ def get_top_k_patients():
    
 
 def diagnosis_gt_similarity(gt_diag, patient=None):
-
+    print("GT Diag: ", gt_diag)
     base_prompt = """
 
        Here is diagnosis information related to patients. 
@@ -254,9 +256,7 @@ def diagnosis_gt_similarity(gt_diag, patient=None):
                 [
                 {
                     "patient_1": "Patient ID",
-                    "patient_1": "Diagnosis",
                     "patient_2": "Patient ID",
-                    "patient_2": "Diagnosis",
                     "overall_similarity": 0.82, 
                 },
                 ...
@@ -297,27 +297,51 @@ def diagnosis_gt_similarity(gt_diag, patient=None):
         with open("groundtruth_sim.json", "w") as f:
             data = json.loads(result)
             json.dump(data, f)
+            print("Diagnosis dataaa: ", data)
             return data
     return response
     
     
+def get_correlation(pred_list, gt_list):
+    print("Pred list: ", pred_list)
+    print("G list: ", gt_list)
+    print("Getting Correlation")
+    corr, p_value = pearsonr(pred_list, gt_list)
+    print(f"Pearson correlation: {corr:.4f}")
+    print(f"P-value: {p_value:.4g}")
+
+
+
+
 
 def compare_similarities(sim_reports, gt_reports):
-    gt_lookup = {
-        (gt["patient_1"], gt["patient_2"]): gt["overall_similarity"]
-        for gt in gt_reports
-    }
+    gt_lookup = {}
+    print(gt_reports)
+    for gt in gt_reports:
+        print((gt["patient_1"], gt["patient_2"]))
+        if "patient_1" in gt and "patient_2" in gt:
+            gt_lookup[(gt["patient_1"], gt["patient_2"])] = gt["overall_similarity"]
+
+    print(gt_lookup)
 
     formatted_results = []
     full_count = 0
     partial_count = 0
     no_match_count = 0
+    pred_sim_list = []
+    gt_sim_list = []
     for sim in sim_reports:
         p1 = sim["patient_1"]
         p2 = sim["patient_2"]
         pred_sim = sim["overall_similarity"]
-        gt_sim = gt_lookup.get((p1, p2), None)
-
+        gt_sim = gt_lookup.get((p1, p2), gt_lookup.get((p2, p1), None))
+        print("Patient 1: ", p1)
+        print("Patient 2: ", p2)
+        print("P sim: ", pred_sim)
+        print("G sim: ", gt_sim)
+        if gt_sim is not None:
+            pred_sim_list.append(pred_sim)
+            gt_sim_list.append(gt_sim)
         if gt_sim is None:
             match_score = "N/A"
         else:
@@ -338,14 +362,12 @@ def compare_similarities(sim_reports, gt_reports):
             f"Match: {match_score}\n"
         )
         formatted_results.append(formatted_string)
-        
-
+    
 
     with open("patient_similarity_output.txt", 'w') as f:
         f.write("\n".join(formatted_results))
         f.write(f"Full matches: {full_count}\nPartial matches: {partial_count}\nNo matches: {no_match_count}\n")
-
-
+    get_correlation(pred_sim_list, gt_sim_list)
     return "\n".join(formatted_results)
 
 
@@ -398,15 +420,15 @@ def evaluate(formatted_relation_triples):
 
      # ground truth similarity with only diagnosis 
      gt_sim = diagnosis_gt_similarity(diagnosis_info)
-    
+
      final_result = compare_similarities(patient_sim, gt_sim)
 
      return final_result
      
 
-knowldege_graph_data= pickle.load(open("/Users/sahithi/Desktop/Research/cs145/knowledege_graph_triples.pkl", "rb"))
+# knowldege_graph_data= pickle.load(open("/Users/sahithi/Desktop/Research/cs145/knowledege_graph_triples.pkl", "rb"))
 
-#knowldege_graph_data= pickle.load(open("/Users/psehgal/Documents/cs145/knowledege_graph_triples.pkl", "rb"))
+knowldege_graph_data= pickle.load(open("/Users/psehgal/Documents/cs145/knowledege_graph_triples.pkl", "rb"))
 formatted_relation_triples = create_patient_triples_string(knowldege_graph_data)
 
 formatted_relation_triples = reformat(formatted_relation_triples)
