@@ -166,7 +166,7 @@ def create_patient_triples_string(knowldege_graph_triples):
             #     print(s)
             #     print(type(s))
 
-            if (p == "has_admission" or p =="has_gender" or p == "diagnosed_with") and (patient_number != s or (isinstance(s, str) and (str(patient_number) != s.split("_")[-1]))):
+            if (p == "has_admission" or p =="has_gender" or p == "diagnosed_with") and (patient_number != int(s) or (isinstance(s, str) and (str(patient_number) != s.split("_")[-1]))):
                 # Dump previous patient's data
                 if len(patient_list) > 0:
                     master_triple_string += "\n".join(patient_list) + "\n"
@@ -184,8 +184,6 @@ def create_patient_triples_string(knowldege_graph_triples):
 
 
             patient_list.append(f"{s} {p} {o}")
-            if patient_count >= 20:
-             return master_triple_string
 
         # Dump any remaining triples
         if patient_list:
@@ -220,7 +218,7 @@ def reformat(formatted_relation_triples):
             Here is the list of triples:
             {formatted_relation_triples}
 
-            Now return the fully grouped and formatted output as specified. If the patient has no admission, only display demographic details (e.g., gender, age, race)
+            Now return the fully grouped and formatted output as specified. If the patient has no admission, then don't display it and display demographic details (e.g., gender, age, race) or all other relevant info.
     """
 
     prompt = prompt.format(formatted_relation_triples = formatted_relation_triples)
@@ -310,20 +308,18 @@ def patient_similarity(formatted_relation_triples, patient=None):
    
     response = query_llm(base_prompt + "\n" + similarity_prompt)
     match = re.search(r"```json(.*?)```", response, re.DOTALL)
-    if match:
-        result = match.group(1)
-        with open("patient_similarity_output.json", "w") as f:
-            data = json.loads(result)
-            json.dump(data, f)
-            return data
+    print("Predicted Response: ")
+    print(response)
+    # if match:
+    #     result = match.group(1)
+    #     with open("patient_similarity_output.json", "w") as f:
+    #         data = json.loads(result)
+    #         json.dump(data, f)
+    #         return data
     return response
     
 
 
-# TODO: another metric
-def get_top_k_patients():
-    pass
-   
 
 def diagnosis_gt_similarity(gt_diag, patient=None):
     print("GT Diag: ", gt_diag)
@@ -380,16 +376,17 @@ def diagnosis_gt_similarity(gt_diag, patient=None):
     
     base_prompt = base_prompt.format(gt_diag = gt_diag)
     response = query_llm(base_prompt + "\n" + diagnosis_similarity)
-
-    match = re.search(r"```json(.*?)```", response, re.DOTALL)
-    if match:
-        result = match.group(1)
-        with open("groundtruth_sim.json", "w") as f:
-            data = json.loads(result)
-            json.dump(data, f)
-            print("Diagnosis dataaa: ", data)
-            return data
-    return response
+    print("Diagnosis Response: ")
+    print(response)
+    # match = re.search(r"```json(.*?)```", response, re.DOTALL)
+    # if match:
+    #     result = match.group(1)
+    #     with open("groundtruth_sim.json", "w") as f:
+    #         data = json.loads(result)
+    #         json.dump(data, f)
+    #         print("Diagnosis dataaa: ", data)
+    #         return data
+    # return response
     
     
 def get_correlation(pred_list, gt_list):
@@ -457,7 +454,7 @@ def compare_similarities(sim_reports, gt_reports):
     with open("patient_similarity_output.txt", 'w') as f:
         f.write("\n".join(formatted_results))
         f.write(f"Full matches: {full_count}\nPartial matches: {partial_count}\nNo matches: {no_match_count}\n")
-    get_correlation(pred_sim_list, gt_sim_list)
+    #get_correlation(pred_sim_list, gt_sim_list)
     return "\n".join(formatted_results)
 
 
@@ -482,10 +479,10 @@ def evaluate(formatted_relation_triples):
     #  response = query_llm(prompt=prompt.format(formatted_relation_triples = formatted_relation_triples))
 
 
-     diagnosis_keywords = re.compile(
-        r"\b(DRG\d+|DRG_\d+|has_diagnosis_related_group|diagnosis|severity|description|type|is_a)\b",
-        re.IGNORECASE
-    )
+    #  diagnosis_keywords = re.compile(
+    #     r"\b(DRG\d+|DRG_\d+|has_diagnosis_related_group|diagnosis|severity|description|type|is_a)\b",
+    #     re.IGNORECASE
+    # )
      other_info = []
      diagnosis_info = []
      lines = formatted_relation_triples.strip().split("\n")
@@ -493,16 +490,17 @@ def evaluate(formatted_relation_triples):
      for line in lines:
          if re.search(r"Patient \d+", line):
              diagnosis_info.append(line)
-         else:
-             pass
-         if diagnosis_keywords.search(line):
+             other_info.append(line)
+        #  else:
+        #      pass
+         if "diagnosed_with" in line:
              diagnosis_info.append(line)
          else:
             other_info.append(line)
      other_info = "\n".join(other_info)
      diagnosis_info = "\n".join(diagnosis_info)
-    #  print("Regular info: ", formatted_stripped_data)
-    #  print("Diagnosis info: ", diagnosis_info)
+     print("Regular info: ", other_info)
+     print("Diagnosis info: ", diagnosis_info)
      
      # patient similarity without diagnosis 
      patient_sim = patient_similarity(other_info)
@@ -521,18 +519,22 @@ def evaluate(formatted_relation_triples):
 
 
 def run_benchmark():
-    generate_benchmark()
+    # generate_benchmark()
     with open('benchmark.json', 'r') as f:
         data = json.load(f)  # load() expects a file object
     triples = []
     for pid_data in data['patients'].values():
         triples.extend(list(pid_data))
     
-    # formatted_relation_triples = create_patient_triples_string(triples)
-    # print(formatted_relation_triples)
+    #print(triples)
+    formatted_relation_triples = create_patient_triples_string(triples)
+    print(formatted_relation_triples)
 
-    # formatted_relation_triples = reformat(formatted_relation_triples)
-    # print(formatted_relation_triples)
+    #formatted_relation_triples = reformat(formatted_relation_triples)
+    #print(formatted_relation_triples)
+
+    #print(evaluate(formatted_relation_triples))
+
    
     
 
