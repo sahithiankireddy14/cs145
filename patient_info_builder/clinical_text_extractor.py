@@ -1,15 +1,26 @@
 import numpy 
 import os 
-import openai
+
+from openai import OpenAI
+
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 
-
-openai.api_key = os.getenv("OPENAI_API_KEY")
-def query_llm(prompt: str, model="gpt-4o") -> str:
-    response = openai.ChatCompletion.create(
+def query_llm(prompt: str, model: str = "gpt-4o") -> str:
+   
+    response = client.chat.completions.create(
         model=model,
-        messages=[{"role": "system", "content": "You have excellent medical knowledege are an expert in reading clinical notes."},
-                    {"role": "user", "content": prompt}]
+        messages=[
+            {
+                "role": "system",
+                "content": (
+                    "You are a medical coding assistant with excellent clinical "
+                    "knowledge. You specialize in reviewing clinical notes and "
+                    "extracting patient-reported symptoms."
+                ),
+            },
+            {"role": "user", "content": prompt},
+        ],
     )
     return response.choices[0].message.content.strip()
 
