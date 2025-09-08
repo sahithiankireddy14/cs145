@@ -1,0 +1,76 @@
+{
+    "patient_number": {
+      "patient_age": "int",
+      "race": "str",
+      "gender": "str",
+      "age_of_death": "int",
+      "marital status": "str"
+    },
+    "admission_number": {
+      "diagnosis": ["str"],
+      "symptoms": ["str"],
+      "procedures": ["str"],
+      "prescriptions": ["str"],
+      "providers_involved": ["str"],
+      "emar": [
+        {
+          "emar_id": "str",
+          "medication": "str",
+          "sequence_number": "int",
+          "time": "str"
+        }
+      ],
+      "hcpcs_events": [
+        {
+          "actual_short_description": "str",
+          "official_short_description": "str",
+          "official_long_description": "str",
+          "sequence_number": "int"
+        }
+      ],
+      "diagnosis_related_group": [
+        {
+          "type": "str",
+          "description": "str",
+          "severity": "float"
+        }
+      ],
+      "physician_order_entry": [
+        {
+          "order_status": "str",
+          "order_time": "str",
+          "order_type": "str",
+          "ordered_by": "str",
+          "sequence_number": "int",
+          "transaction_type": "str"
+        }
+      ],
+      "pharmacy": {
+        "<pharmacy_id>": {
+          "starttime": "str",
+          "medication": "str",
+          "proc_type": "str",
+          "status": "str",
+          "entertime": "str",
+          "verifiedtime": "str",
+          "route": "str",
+          "frequency": "str",
+          "disp_sched": "str",
+          "infusion_type": "float",
+          "sliding_scale": "float",
+          "lockout_interval": "float",
+          "basal_rate": "float",
+          "one_hr_max": "float",
+          "doses_per_24_hrs": "float",
+          "duration": "float",
+          "duration_interval": "str",
+          "expiration_value": "float",
+          "expiration_unit": "str",
+          "expirationdate": "float",
+          "dispensation": "str",
+          "fill_quantity": "float"
+        }
+      }
+    }
+  }
+  

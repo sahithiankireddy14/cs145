@@ -2,7 +2,7 @@ import pandas as pd
 import os
 import json
 from tqdm import tqdm
-from clinical_text_extractor import extract_symptoms
+from patient_info_builder.clinical_text_extractor import extract_symptoms
 
 
 class PatientInfoBuilder:
@@ -10,8 +10,8 @@ class PatientInfoBuilder:
 
     def __init__(self):
         pd.set_option("display.max_columns", None)
-        data_base = "/Users/sahithi/Desktop/Research/physionet.org/files/mimiciv/3.1/hosp"
-        self.clinical_data_base = "/Users/sahithi/Desktop/Research/physionet.org/files/mimic-iv-note/2.2/note"
+        data_base = "physionet.org/files/mimiciv/3.1/hosp"
+        self.clinical_data_base = "physionet.org/files/mimic-iv-note/2.2/note"
 
         # --- Core tables ---
         self.df = pd.read_csv(os.path.join(data_base, "patients.csv.gz"))
@@ -25,8 +25,6 @@ class PatientInfoBuilder:
         # --- Chunked big tables ---
         self.poe_chunks = self.chunk_file(os.path.join(data_base, "poe.csv.gz"))
         self.pharmacy_chunks = self.chunk_file(os.path.join(data_base, "pharmacy.csv.gz"))
-        # issue with lab events file not loading
-        #self.labevents_chunks = self.chunk_file(os.path.join(data_base, "labevents.csv.gz"))
         self.emar_chunks = self.chunk_file(os.path.join(data_base, "emar.csv.gz"))
 
         # --- Clinical notes ---
@@ -182,9 +180,6 @@ class PatientInfoBuilder:
 
 
     def get_poe(self, hadm_id):
-        # TODO: do poe details
-        # TODO: can map by change, discontinued, etc, types 
-        # TODO: make sure to map discontinued and discontinues 
         filtered_chunks = self.get_filtered_chunks("hadm_id", hadm_id, self.poe_chunks)
         if filtered_chunks:
             admission_poes = pd.concat(filtered_chunks, ignore_index=True)
@@ -255,10 +250,11 @@ class PatientInfoBuilder:
 
             # From POE
             poe_events = self.get_poe(hadm_id)
-            for event_dict in poe_events:
-                for _, event in event_dict.items():
-                    if "ordered_by" in event:
-                        providers.add(event["ordered_by"])
+            if poe_events != None:
+                for event_dict in poe_events:
+                    for _, event in event_dict.items():
+                        if "ordered_by" in event:
+                            providers.add(event["ordered_by"])
 
             # From EMAR
             emar_events = self.get_emar(hadm_id)
@@ -287,9 +283,6 @@ class PatientInfoBuilder:
             patient_admissions_dict[hadm_id]["symptoms"] = self.symptoms(hadm_id)
             patient_admissions_dict[hadm_id]["emar"] = self.get_emar(hadm_id)
             patient_admissions_dict[hadm_id]["providers_involved"] = self.get_providers(hadm_id)
-            # patient_admissions_dict[hadm_id]["lab_events"] = self.get_labs(
-            #     patient_id, admission["admittime"], admission["dischtime"]
-            # )
         return patient_admissions_dict
     
 

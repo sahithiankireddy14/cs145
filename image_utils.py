@@ -17,7 +17,6 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 
 # Load ChexAgent model for captioning
 
-
 def query_llm(prompt: str, system_prompt:str, model="gpt-4") -> str:
 
     response = openai.ChatCompletion.create(

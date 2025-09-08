@@ -1,0 +1,1115 @@
+{
+  "pairwise": [
+    {
+      "provider_1": "Provider_P001",
+      "provider_2": "Provider_P002",
+      "sub_similarities": {
+        "medication_similarity": 0.5,
+        "procedure_similarity": 0.0,
+        "lab_similarity": 0.0
+      },
+      "overall_similarity": 0.1667,
+      "unique_to_provider_1": [
+        "Atorvastatin",
+        "ECG",
+        "Troponin Test"
+      ],
+      "unique_to_provider_2": [
+        "Clopidogrel",
+        "Stress Test",
+        "Lipid Panel"
+      ]
+    },
+    {
+      "provider_1": "Provider_P001",
+      "provider_2": "Provider_P003",
+      "sub_similarities": {
+        "medication_similarity": 0.0,
+        "procedure_similarity": 0.0,
+        "lab_similarity": 0.0
+      },
+      "overall_similarity": 0.0,
+      "unique_to_provider_1": [
+        "Atorvastatin",
+        "Aspirin",
+        "ECG",
+        "Troponin Test"
+      ],
+      "unique_to_provider_2": [
+        "Experimental Drug X",
+        "Genomic Sequencing Panel"
+      ]
+    },
+    {
+      "provider_1": "Provider_P001",
+      "provider_2": "Provider_P004",
+      "sub_similarities": {
+        "medication_similarity": 0.0,
+        "procedure_similarity": 0.0,
+        "lab_similarity": 0.0
+      },
+      "overall_similarity": 0.0,
+      "unique_to_provider_1": [
+        "Atorvastatin",
+        "Aspirin",
+        "ECG",
+        "Troponin Test"
+      ],
+      "unique_to_provider_2": [
+        "Insulin",
+        "Metformin",
+        "Glucose Tolerance Test",
+        "HbA1c"
+      ]
+    },
+    {
+      "provider_1": "Provider_P001",
+      "provider_2": "Provider_P005",
+      "sub_similarities": {
+        "medication_similarity": 0.0,
+        "procedure_similarity": 0.0,
+        "lab_similarity": 0.0
+      },
+      "overall_similarity": 0.0,
+      "unique_to_provider_1": [
+        "Atorvastatin",
+        "Aspirin",
+        "ECG",
+        "Troponin Test"
+      ],
+      "unique_to_provider_2": [
+        "Acetaminophen",
+        "Ibuprofen",
+        "Knee Replacement",
+        "X-ray"
+      ]
+    },
+    {
+      "provider_1": "Provider_P001",
+      "provider_2": "Provider_P006",
+      "sub_similarities": {
+        "medication_similarity": 0.0,
+        "procedure_similarity": 0.0,
+        "lab_similarity": 0.0
+      },
+      "overall_similarity": 0.0,
+      "unique_to_provider_1": [
+        "Atorvastatin",
+        "Aspirin",
+        "ECG",
+        "Troponin Test"
+      ],
+      "unique_to_provider_2": [
+        "Azithromycin",
+        "Amoxicillin",
+        "Vaccination",
+        "CBC"
+      ]
+    },
+    {
+      "provider_1": "Provider_P001",
+      "provider_2": "Provider_P007",
+      "sub_similarities": {
+        "medication_similarity": 0.0,
+        "procedure_similarity": 0.0,
+        "lab_similarity": 0.0
+      },
+      "overall_similarity": 0.0,
+      "unique_to_provider_1": [
+        "Atorvastatin",
+        "Aspirin",
+        "ECG",
+        "Troponin Test"
+      ],
+      "unique_to_provider_2": [
+        "Obsolete Antibiotic A",
+        "Old-Style Blood Panel"
+      ]
+    },
+    {
+      "provider_1": "Provider_P001",
+      "provider_2": "Provider_P008",
+      "sub_similarities": {
+        "medication_similarity": 0.0,
+        "procedure_similarity": 0.0,
+        "lab_similarity": 0.0
+      },
+      "overall_similarity": 0.0,
+      "unique_to_provider_1": [
+        "Atorvastatin",
+        "Aspirin",
+        "ECG",
+        "Troponin Test"
+      ],
+      "unique_to_provider_2": [
+        "Antihistamine",
+        "Topical Steroid",
+        "Skin Biopsy",
+        "Allergy Panel"
+      ]
+    },
+    {
+      "provider_1": "Provider_P001",
+      "provider_2": "Provider_P009",
+      "sub_similarities": {
+        "medication_similarity": 0.0,
+        "procedure_similarity": 0.0,
+        "lab_similarity": 0.0
+      },
+      "overall_similarity": 0.0,
+      "unique_to_provider_1": [
+        "Atorvastatin",
+        "Aspirin",
+        "ECG",
+        "Troponin Test"
+      ],
+      "unique_to_provider_2": [
+        "Fluoxetine",
+        "Sertraline",
+        "Psychotherapy Session",
+        "Depression Scale"
+      ]
+    },
+    {
+      "provider_1": "Provider_P001",
+      "provider_2": "Provider_P010",
+      "sub_similarities": {
+        "medication_similarity": 0.0,
+        "procedure_similarity": 0.0,
+        "lab_similarity": 0.0
+      },
+      "overall_similarity": 0.0,
+      "unique_to_provider_1": [
+        "Atorvastatin",
+        "Aspirin",
+        "ECG",
+        "Troponin Test"
+      ],
+      "unique_to_provider_2": [
+        "Unapproved Compound Y",
+        "Rare Lab Z"
+      ]
+    },
+    {
+      "provider_1": "Provider_P001",
+      "provider_2": "Provider_P011",
+      "sub_similarities": {
+        "medication_similarity": 0.0,
+        "procedure_similarity": 1.0,
+        "lab_similarity": 0.0
+      },
+      "overall_similarity": 0.3333,
+      "unique_to_provider_1": [
+        "Atorvastatin",
+        "Aspirin",
+        "Troponin Test"
+      ],
+      "unique_to_provider_2": [
+        "Hydrochlorothiazide",
+        "Losartan",
+        "Electrolyte Panel"
+      ]
+    },
+    {
+      "provider_1": "Provider_P001",
+      "provider_2": "Provider_P012",
+      "sub_similarities": {
+        "medication_similarity": 0.0,
+        "procedure_similarity": 0.0,
+        "lab_similarity": 0.0
+      },
+      "overall_similarity": 0.0,
+      "unique_to_provider_1": [
+        "Atorvastatin",
+        "Aspirin",
+        "ECG",
+        "Troponin Test"
+      ],
+      "unique_to_provider_2": [
+        "Methotrexate",
+        "Joint Aspiration",
+        "Rheumatology Panel"
+      ]
+    },
+    {
+      "provider_1": "Provider_P001",
+      "provider_2": "Provider_P013",
+      "sub_similarities": {
+        "medication_similarity": 0.0,
+        "procedure_similarity": 0.0,
+        "lab_similarity": 0.0
+      },
+      "overall_similarity": 0.0,
+      "unique_to_provider_1": [
+        "Atorvastatin",
+        "Aspirin",
+        "ECG",
+        "Troponin Test"
+      ],
+      "unique_to_provider_2": [
+        "Albuterol Inhaler",
+        "Pulmonary Function Test",
+        "Arterial Blood Gas"
+      ]
+    },
+    {
+      "provider_1": "Provider_P001",
+      "provider_2": "Provider_P014",
+      "sub_similarities": {
+        "medication_similarity": 0.0,
+        "procedure_similarity": 0.0,
+        "lab_similarity": 0.0
+      },
+      "overall_similarity": 0.0,
+      "unique_to_provider_1": [
+        "Atorvastatin",
+        "Aspirin",
+        "ECG",
+        "Troponin Test"
+      ],
+      "unique_to_provider_2": [
+        "Alternative Therapy Z",
+        "Energy Healing",
+        "Nonstandard Lab Panel"
+      ]
+    },
+    {
+      "provider_1": "Provider_P001",
+      "provider_2": "Provider_P015",
+      "sub_similarities": {
+        "medication_similarity": 0.0,
+        "procedure_similarity": 0.0,
+        "lab_similarity": 0.0
+      },
+      "overall_similarity": 0.0,
+      "unique_to_provider_1": [
+        "Atorvastatin",
+        "Aspirin",
+        "ECG",
+        "Troponin Test"
+      ],
+      "unique_to_provider_2": [
+        "Oxycodone",
+        "Pain Management Injection",
+        "MRI"
+      ]
+    },
+    {
+      "provider_1": "Provider_P001",
+      "provider_2": "Provider_P016",
+      "sub_similarities": {
+        "medication_similarity": 0.0,
+        "procedure_similarity": 0.0,
+        "lab_similarity": 0.0
+      },
+      "overall_similarity": 0.0,
+      "unique_to_provider_1": [
+        "Atorvastatin",
+        "Aspirin",
+        "ECG",
+        "Troponin Test"
+      ],
+      "unique_to_provider_2": [
+        "Prenatal Vitamins",
+        "Ultrasound",
+        "Prenatal Screening Panel"
+      ]
+    },
+    {
+      "provider_1": "Provider_P001",
+      "provider_2": "Provider_P017",
+      "sub_similarities": {
+        "medication_similarity": 0.0,
+        "procedure_similarity": 0.0,
+        "lab_similarity": 0.0
+      },
+      "overall_similarity": 0.0,
+      "unique_to_provider_1": [
+        "Atorvastatin",
+        "Aspirin",
+        "ECG",
+        "Troponin Test"
+      ],
+      "unique_to_provider_2": [
+        "Omeprazole",
+        "Endoscopy",
+        "Liver Function Test"
+      ]
+    },
+    {
+      "provider_1": "Provider_P001",
+      "provider_2": "Provider_P018",
+      "sub_similarities": {
+        "medication_similarity": 0.0,
+        "procedure_similarity": 0.0,
+        "lab_similarity": 0.0
+      },
+      "overall_similarity": 0.0,
+      "unique_to_provider_1": [
+        "Atorvastatin",
+        "Aspirin",
+        "ECG",
+        "Troponin Test"
+      ],
+      "unique_to_provider_2": [
+        "Experimental Immunotherapy",
+        "Tumor DNA Sequencing"
+      ]
+    },
+    {
+      "provider_1": "Provider_P001",
+      "provider_2": "Provider_P019",
+      "sub_similarities": {
+        "medication_similarity": 0.0,
+        "procedure_similarity": 0.0,
+        "lab_similarity": 0.0
+      },
+      "overall_similarity": 0.0,
+      "unique_to_provider_1": [
+        "Atorvastatin",
+        "Aspirin",
+        "ECG",
+        "Troponin Test"
+      ],
+      "unique_to_provider_2": [
+        "Warfarin",
+        "Pacemaker Implantation",
+        "INR"
+      ]
+    },
+    {
+      "provider_1": "Provider_P001",
+      "provider_2": "Provider_P020",
+      "sub_similarities": {
+        "medication_similarity": 0.0,
+        "procedure_similarity": 0.0,
+        "lab_similarity": 0.0
+      },
+      "overall_similarity": 0.0,
+      "unique_to_provider_1": [
+        "Atorvastatin",
+        "Aspirin",
+        "ECG",
+        "Troponin Test"
+      ],
+      "unique_to_provider_2": [
+        "Herbal Compound Q",
+        "Herbal Infusion",
+        "Herbal Extract Assay"
+      ]
+    },
+    {
+      "provider_1": "Provider_P002",
+      "provider_2": "Provider_P003",
+      "sub_similarities": {
+        "medication_similarity": 0.0,
+        "procedure_similarity": 0.0,
+        "lab_similarity": 0.0
+      },
+      "overall_similarity": 0.0,
+      "unique_to_provider_1": [
+        "Aspirin",
+        "Clopidogrel",
+        "Stress Test",
+        "Lipid Panel"
+      ],
+      "unique_to_provider_2": [
+        "Experimental Drug X",
+        "Genomic Sequencing Panel"
+      ]
+    },
+    {
+      "provider_1": "Provider_P002",
+      "provider_2": "Provider_P004",
+      "sub_similarities": {
+        "medication_similarity": 0.0,
+        "procedure_similarity": 0.0,
+        "lab_similarity": 0.0
+      },
+      "overall_similarity": 0.0,
+      "unique_to_provider_1": [
+        "Aspirin",
+        "Clopidogrel",
+        "Stress Test",
+        "Lipid Panel"
+      ],
+      "unique_to_provider_2": [
+        "Insulin",
+        "Metformin",
+        "Glucose Tolerance Test",
+        "HbA1c"
+      ]
+    },
+    {
+      "provider_1": "Provider_P002",
+      "provider_2": "Provider_P005",
+      "sub_similarities": {
+        "medication_similarity": 0.0,
+        "procedure_similarity": 0.0,
+        "lab_similarity": 0.0
+      },
+      "overall_similarity": 0.0,
+      "unique_to_provider_1": [
+        "Aspirin",
+        "Clopidogrel",
+        "Stress Test",
+        "Lipid Panel"
+      ],
+      "unique_to_provider_2": [
+        "Acetaminophen",
+        "Ibuprofen",
+        "Knee Replacement",
+        "X-ray"
+      ]
+    },
+    {
+      "provider_1": "Provider_P002",
+      "provider_2": "Provider_P006",
+      "sub_similarities": {
+        "medication_similarity": 0.0,
+        "procedure_similarity": 0.0,
+        "lab_similarity": 0.0
+      },
+      "overall_similarity": 0.0,
+      "unique_to_provider_1": [
+        "Aspirin",
+        "Clopidogrel",
+        "Stress Test",
+        "Lipid Panel"
+      ],
+      "unique_to_provider_2": [
+        "Azithromycin",
+        "Amoxicillin",
+        "Vaccination",
+        "CBC"
+      ]
+    },
+    {
+      "provider_1": "Provider_P002",
+      "provider_2": "Provider_P007",
+      "sub_similarities": {
+        "medication_similarity": 0.0,
+        "procedure_similarity": 0.0,
+        "lab_similarity": 0.0
+      },
+      "overall_similarity": 0.0,
+      "unique_to_provider_1": [
+        "Aspirin",
+        "Clopidogrel",
+        "Stress Test",
+        "Lipid Panel"
+      ],
+      "unique_to_provider_2": [
+        "Obsolete Antibiotic A",
+        "Old-Style Blood Panel"
+      ]
+    },
+    {
+      "provider_1": "Provider_P002",
+      "provider_2": "Provider_P008",
+      "sub_similarities": {
+        "medication_similarity": 0.0,
+        "procedure_similarity": 0.0,
+        "lab_similarity": 0.0
+      },
+      "overall_similarity": 0.0,
+      "unique_to_provider_1": [
+        "Aspirin",
+        "Clopidogrel",
+        "Stress Test",
+        "Lipid Panel"
+      ],
+      "unique_to_provider_2": [
+        "Antihistamine",
+        "Topical Steroid",
+        "Skin Biopsy",
+        "Allergy Panel"
+      ]
+    },
+    {
+      "provider_1": "Provider_P002",
+      "provider_2": "Provider_P009",
+      "sub_similarities": {
+        "medication_similarity": 0.0,
+        "procedure_similarity": 0.0,
+        "lab_similarity": 0.0
+      },
+      "overall_similarity": 0.0,
+      "unique_to_provider_1": [
+        "Aspirin",
+        "Clopidogrel",
+        "Stress Test",
+        "Lipid Panel"
+      ],
+      "unique_to_provider_2": [
+        "Fluoxetine",
+        "Sertraline",
+        "Psychotherapy Session",
+        "Depression Scale"
+      ]
+    },
+    {
+      "provider_1": "Provider_P002",
+      "provider_2": "Provider_P010",
+      "sub_similarities": {
+        "medication_similarity": 0.0,
+        "procedure_similarity": 0.0,
+        "lab_similarity": 0.0
+      },
+      "overall_similarity": 0.0,
+      "unique_to_provider_1": [
+        "Aspirin",
+        "Clopidogrel",
+        "Stress Test",
+        "Lipid Panel"
+      ],
+      "unique_to_provider_2": [
+        "Unapproved Compound Y",
+        "Rare Lab Z"
+      ]
+    },
+    {
+      "provider_1": "Provider_P002",
+      "provider_2": "Provider_P011",
+      "sub_similarities": {
+        "medication_similarity": 0.0,
+        "procedure_similarity": 0.0,
+        "lab_similarity": 0.0
+      },
+      "overall_similarity": 0.0,
+      "unique_to_provider_1": [
+        "Aspirin",
+        "Clopidogrel",
+        "Stress Test",
+        "Lipid Panel"
+      ],
+      "unique_to_provider_2": [
+        "Hydrochlorothiazide",
+        "Losartan",
+        "ECG",
+        "Electrolyte Panel"
+      ]
+    },
+    {
+      "provider_1": "Provider_P002",
+      "provider_2": "Provider_P012",
+      "sub_similarities": {
+        "medication_similarity": 0.0,
+        "procedure_similarity": 0.0,
+        "lab_similarity": 0.0
+      },
+      "overall_similarity": 0.0,
+      "unique_to_provider_1": [
+        "Aspirin",
+        "Clopidogrel",
+        "Stress Test",
+        "Lipid Panel"
+      ],
+      "unique_to_provider_2": [
+        "Methotrexate",
+        "Joint Aspiration",
+        "Rheumatology Panel"
+      ]
+    },
+    {
+      "provider_1": "Provider_P002",
+      "provider_2": "Provider_P013",
+      "sub_similarities": {
+        "medication_similarity": 0.0,
+        "procedure_similarity": 0.0,
+        "lab_similarity": 0.0
+      },
+      "overall_similarity": 0.0,
+      "unique_to_provider_1": [
+        "Aspirin",
+        "Clopidogrel",
+        "Stress Test",
+        "Lipid Panel"
+      ],
+      "unique_to_provider_2": [
+        "Albuterol Inhaler",
+        "Pulmonary Function Test",
+        "Arterial Blood Gas"
+      ]
+    },
+    {
+      "provider_1": "Provider_P002",
+      "provider_2": "Provider_P014",
+      "sub_similarities": {
+        "medication_similarity": 0.0,
+        "procedure_similarity": 0.0,
+        "lab_similarity": 0.0
+      },
+      "overall_similarity": 0.0,
+      "unique_to_provider_1": [
+        "Aspirin",
+        "Clopidogrel",
+        "Stress Test",
+        "Lipid Panel"
+      ],
+      "unique_to_provider_2": [
+        "Alternative Therapy Z",
+        "Energy Healing",
+        "Nonstandard Lab Panel"
+      ]
+    },
+    {
+      "provider_1": "Provider_P002",
+      "provider_2": "Provider_P015",
+      "sub_similarities": {
+        "medication_similarity": 0.0,
+        "procedure_similarity": 0.0,
+        "lab_similarity": 0.0
+      },
+      "overall_similarity": 0.0,
+      "unique_to_provider_1": [
+        "Aspirin",
+        "Clopidogrel",
+        "Stress Test",
+        "Lipid Panel"
+      ],
+      "unique_to_provider_2": [
+        "Oxycodone",
+        "Pain Management Injection",
+        "MRI"
+      ]
+    },
+    {
+      "provider_1": "Provider_P002",
+      "provider_2": "Provider_P016",
+      "sub_similarities": {
+        "medication_similarity": 0.0,
+        "procedure_similarity": 0.0,
+        "lab_similarity": 0.0
+      },
+      "overall_similarity": 0.0,
+      "unique_to_provider_1": [
+        "Aspirin",
+        "Clopidogrel",
+        "Stress Test",
+        "Lipid Panel"
+      ],
+      "unique_to_provider_2": [
+        "Prenatal Vitamins",
+        "Ultrasound",
+        "Prenatal Screening Panel"
+      ]
+    },
+    {
+      "provider_1": "Provider_P002",
+      "provider_2": "Provider_P017",
+      "sub_similarities": {
+        "medication_similarity": 0.0,
+        "procedure_similarity": 0.0,
+        "lab_similarity": 0.0
+      },
+      "overall_similarity": 0.0,
+      "unique_to_provider_1": [
+        "Aspirin",
+        "Clopidogrel",
+        "Stress Test",
+        "Lipid Panel"
+      ],
+      "unique_to_provider_2": [
+        "Omeprazole",
+        "Endoscopy",
+        "Liver Function Test"
+      ]
+    },
+    {
+      "provider_1": "Provider_P002",
+      "provider_2": "Provider_P018",
+      "sub_similarities": {
+        "medication_similarity": 0.0,
+        "procedure_similarity": 0.0,
+        "lab_similarity": 0.0
+      },
+      "overall_similarity": 0.0,
+      "unique_to_provider_1": [
+        "Aspirin",
+        "Clopidogrel",
+        "Stress Test",
+        "Lipid Panel"
+      ],
+      "unique_to_provider_2": [
+        "Experimental Immunotherapy",
+        "Tumor DNA Sequencing"
+      ]
+    },
+    {
+      "provider_1": "Provider_P002",
+      "provider_2": "Provider_P019",
+      "sub_similarities": {
+        "medication_similarity": 0.0,
+        "procedure_similarity": 0.0,
+        "lab_similarity": 0.0
+      },
+      "overall_similarity": 0.0,
+      "unique_to_provider_1": [
+        "Aspirin",
+        "Clopidogrel",
+        "Stress Test",
+        "Lipid Panel"
+      ],
+      "unique_to_provider_2": [
+        "Warfarin",
+        "Pacemaker Implantation",
+        "INR"
+      ]
+    },
+    {
+      "provider_1": "Provider_P002",
+      "provider_2": "Provider_P020",
+      "sub_similarities": {
+        "medication_similarity": 0.0,
+        "procedure_similarity": 0.0,
+        "lab_similarity": 0.0
+      },
+      "overall_similarity": 0.0,
+      "unique_to_provider_1": [
+        "Aspirin",
+        "Clopidogrel",
+        "Stress Test",
+        "Lipid Panel"
+      ],
+      "unique_to_provider_2": [
+        "Herbal Compound Q",
+        "Herbal Infusion",
+        "Herbal Extract Assay"
+      ]
+    },
+    {
+      "provider_1": "Provider_P003",
+      "provider_2": "Provider_P004",
+      "sub_similarities": {
+        "medication_similarity": 0.0,
+        "procedure_similarity": 0.0,
+        "lab_similarity": 0.0
+      },
+      "overall_similarity": 0.0,
+      "unique_to_provider_1": [
+        "Experimental Drug X",
+        "Genomic Sequencing Panel"
+      ],
+      "unique_to_provider_2": [
+        "Insulin",
+        "Metformin",
+        "Glucose Tolerance Test",
+        "HbA1c"
+      ]
+    },
+    {
+      "provider_1": "Provider_P003",
+      "provider_2": "Provider_P005",
+      "sub_similarities": {
+        "medication_similarity": 0.0,
+        "procedure_similarity": 0.0,
+        "lab_similarity": 0.0
+      },
+      "overall_similarity": 0.0,
+      "unique_to_provider_1": [
+        "Experimental Drug X",
+        "Genomic Sequencing Panel"
+      ],
+      "unique_to_provider_2": [
+        "Acetaminophen",
+        "Ibuprofen",
+        "Knee Replacement",
+        "X-ray"
+      ]
+    },
+    {
+      "provider_1": "Provider_P003",
+      "provider_2": "Provider_P006",
+      "sub_similarities": {
+        "medication_similarity": 0.0,
+        "procedure_similarity": 0.0,
+        "lab_similarity": 0.0
+      },
+      "overall_similarity": 0.0,
+      "unique_to_provider_1": [
+        "Experimental Drug X",
+        "Genomic Sequencing Panel"
+      ],
+      "unique_to_provider_2": [
+        "Azithromycin",
+        "Amoxicillin",
+        "Vaccination",
+        "CBC"
+      ]
+    },
+    {
+      "provider_1": "Provider_P003",
+      "provider_2": "Provider_P007",
+      "sub_similarities": {
+        "medication_similarity": 0.0,
+        "procedure_similarity": 0.0,
+        "lab_similarity": 0.0
+      },
+      "overall_similarity": 0.0,
+      "unique_to_provider_1": [
+        "Experimental Drug X",
+        "Genomic Sequencing Panel"
+      ],
+      "unique_to_provider_2": [
+        "Obsolete Antibiotic A",
+        "Old-Style Blood Panel"
+      ]
+    },
+    {
+      "provider_1": "Provider_P003",
+      "provider_2": "Provider_P008",
+      "sub_similarities": {
+        "medication_similarity": 0.0,
+        "procedure_similarity": 0.0,
+        "lab_similarity": 0.0
+      },
+      "overall_similarity": 0.0,
+      "unique_to_provider_1": [
+        "Experimental Drug X",
+        "Genomic Sequencing Panel"
+      ],
+      "unique_to_provider_2": [
+        "Antihistamine",
+        "Topical Steroid",
+        "Skin Biopsy",
+        "Allergy Panel"
+      ]
+    },
+    {
+      "provider_1": "Provider_P003",
+      "provider_2": "Provider_P009",
+      "sub_similarities": {
+        "medication_similarity": 0.0,
+        "procedure_similarity": 0.0,
+        "lab_similarity": 0.0
+      },
+      "overall_similarity": 0.0,
+      "unique_to_provider_1": [
+        "Experimental Drug X",
+        "Genomic Sequencing Panel"
+      ],
+      "unique_to_provider_2": [
+        "Fluoxetine",
+        "Sertraline",
+        "Psychotherapy Session",
+        "Depression Scale"
+      ]
+    },
+    {
+      "provider_1": "Provider_P003",
+      "provider_2": "Provider_P010",
+      "sub_similarities": {
+        "medication_similarity": 0.0,
+        "procedure_similarity": 0.0,
+        "lab_similarity": 0.0
+      },
+      "overall_similarity": 0.0,
+      "unique_to_provider_1": [
+        "Experimental Drug X",
+        "Genomic Sequencing Panel"
+      ],
+      "unique_to_provider_2": [
+        "Unapproved Compound Y",
+        "Rare Lab Z"
+      ]
+    },
+    {
+      "provider_1": "Provider_P003",
+      "provider_2": "Provider_P011",
+      "sub_similarities": {
+        "medication_similarity": 0.0,
+        "procedure_similarity": 0.0,
+        "lab_similarity": 0.0
+      },
+      "overall_similarity": 0.0,
+      "unique_to_provider_1": [
+        "Experimental Drug X",
+        "Genomic Sequencing Panel"
+      ],
+      "unique_to_provider_2": [
+        "Hydrochlorothiazide",
+        "Losartan",
+        "ECG",
+        "Electrolyte Panel"
+      ]
+    },
+    {
+      "provider_1": "Provider_P003",
+      "provider_2": "Provider_P012",
+      "sub_similarities": {
+        "medication_similarity": 0.0,
+        "procedure_similarity": 0.0,
+        "lab_similarity": 0.0
+      },
+      "overall_similarity": 0.0,
+      "unique_to_provider_1": [
+        "Experimental Drug X",
+        "Genomic Sequencing Panel"
+      ],
+      "unique_to_provider_2": [
+        "Methotrexate",
+        "Joint Aspiration",
+        "Rheumatology Panel"
+      ]
+    },
+    {
+      "provider_1": "Provider_P003",
+      "provider_2": "Provider_P013",
+      "sub_similarities": {
+        "medication_similarity": 0.0,
+        "procedure_similarity": 0.0,
+        "lab_similarity": 0.0
+      },
+      "overall_similarity": 0.0,
+      "unique_to_provider_1": [
+        "Experimental Drug X",
+        "Genomic Sequencing Panel"
+      ],
+      "unique_to_provider_2": [
+        "Albuterol Inhaler",
+        "Pulmonary Function Test",
+        "Arterial Blood Gas"
+      ]
+    },
+    {
+      "provider_1": "Provider_P003",
+      "provider_2": "Provider_P014",
+      "sub_similarities": {
+        "medication_similarity": 0.0,
+        "procedure_similarity": 0.0,
+        "lab_similarity": 0.0
+      },
+      "overall_similarity": 0.0,
+      "unique_to_provider_1": [
+        "Experimental Drug X",
+        "Genomic Sequencing Panel"
+      ],
+      "unique_to_provider_2": [
+        "Alternative Therapy Z",
+        "Energy Healing",
+        "Nonstandard Lab Panel"
+      ]
+    },
+    {
+      "provider_1": "Provider_P003",
+      "provider_2": "Provider_P015",
+      "sub_similarities": {
+        "medication_similarity": 0.0,
+        "procedure_similarity": 0.0,
+        "lab_similarity": 0.0
+      },
+      "overall_similarity": 0.0,
+      "unique_to_provider_1": [
+        "Experimental Drug X",
+        "Genomic Sequencing Panel"
+      ],
+      "unique_to_provider_2": [
+        "Oxycodone",
+        "Pain Management Injection",
+        "MRI"
+      ]
+    },
+    {
+      "provider_1": "Provider_P003",
+      "provider_2": "Provider_P016",
+      "sub_similarities": {
+        "medication_similarity": 0.0,
+        "procedure_similarity": 0.0,
+        "lab_similarity": 0.0
+      },
+      "overall_similarity": 0.0,
+      "unique_to_provider_1": [
+        "Experimental Drug X",
+        "Genomic Sequencing Panel"
+      ],
+      "unique_to_provider_2": [
+        "Prenatal Vitamins",
+        "Ultrasound",
+        "Prenatal Screening Panel"
+      ]
+    },
+    {
+      "provider_1": "Provider_P003",
+      "provider_2": "Provider_P017",
+      "sub_similarities": {
+        "medication_similarity": 0.0,
+        "procedure_similarity": 0.0,
+        "lab_similarity": 0.0
+      },
+      "overall_similarity": 0.0,
+      "unique_to_provider_1": [
+        "Experimental Drug X",
+        "Genomic Sequencing Panel"
+      ],
+      "unique_to_provider_2": [
+        "Omeprazole",
+        "Endoscopy",
+        "Liver Function Test"
+      ]
+    },
+    {
+      "provider_1": "Provider_P003",
+      "provider_2": "Provider_P018",
+      "sub_similarities": {
+        "medication_similarity": 1.0,
+        "procedure_similarity": 0.0,
+        "lab_similarity": 1.0
+      },
+      "overall_similarity": 0.6667,
+      "unique_to_provider_1": [],
+      "unique_to_provider_2": []
+    },
+    {
+      "provider_1": "Provider_P003",
+      "provider_2": "Provider_P019",
+      "sub_similarities": {
+        "medication_similarity": 0.0,
+        "procedure_similarity": 0.0,
+        "lab_similarity": 0.0
+      },
+      "overall_similarity": 0.0,
+      "unique_to_provider_1": [
+        "Experimental Drug X",
+        "Genomic Sequencing Panel"
+      ],
+      "unique_to_provider_2": [
+        "Warfarin",
+        "Pacemaker Implantation",
+        "INR"
+      ]
+    },
+    {
+      "provider_1": "Provider_P003",
+      "provider_2": "Provider_P020",
+      "sub_similarities": {
+        "medication_similarity": 0.0,
+        "procedure_similarity": 0.0,
+        "lab_similarity": 0.0
+      },
+      "overall_similarity": 0.0,
+      "unique_to_provider_1": [
+        "Experimental Drug X",
+        "Genomic Sequencing Panel"
+      ],
+      "unique_to_provider_2": [
+        "Herbal Compound Q",
+        "Herbal Infusion",
+        "Herbal Extract Assay"
+      ]
+    }
+  ],
+  "outliers": {
+    "providers": [
+      "Provider_P003",
+      "Provider_P007",
+      "Provider_P010",
+      "Provider_P014",
+      "Provider_P018",
+      "Provider_P020"
+    ],
+    "reasons": [
+      "Providers prescribed experimental or alternative medications and requested unique labs, differing from common practices."
+    ]
+  }
+}

@@ -7,35 +7,65 @@ Patient Info Dictionary:
 
 Patient Admissions Dictionary:
 - diagnosis [list of diagnoses]
+- symptoms [list of reported symptoms]
+- procedures [list of procedures]
+- prescriptions [list of prescribed medications]
+- providers involved [list of providers connected to this admission]
+- emar [list of EMAR (Electronic Medication Administration Record) events]
+    - [{emar 1 details}, {emar 2 details}, ...]
+    - {emar 1 details} -> {"emar_id": "", "medication": "", "sequence_number": "", "time": ""}
 - hcpcs events [sorted list of procedures, where each procedure is a dictionary (procedures with no given order are placed randomly at the end)] 
     - [{procedure 1 details}, {procedure 2 details}, {procedure 3 details}]
     - {procedure 1 details} -> {"actual short description" : "", "official short description of encoded procedure": "", "official long description of encoded procedure": "", "sequence number": ""}
 - diagnosis related group
     - [{drg 1 details}, {drg 2 details}, {drg 3 details}]
     - {drg 1 details} -> {"type": "", "description": "", "severity": ""} 
-- physician order entry
+- physician order entry [list of physician-entered orders keyed by order ID]
     - Example output:
-            [
-                {
-                    "version": "1",
-                    "order_description": "Vancomycin 1g IV q12h",
-                    "order_type": "Medication",
+            {
+                "10000032-12": {
                     "order_status": "Active",
-                    "transaction_type": "New",
                     "order_time": "2022-01-01 08:00:00",
-                    "ordered_by": "Provider_9021"
-                },
-
-                {
-                    "version": "2",
-                    "order_description": "Vancomycin 750mg IV q12h",
                     "order_type": "Medication",
+                    "ordered_by": "Provider_9021",
+                    "sequence_number": 1,
+                    "transaction_type": "New"
+                },
+                "10000032-19": {
                     "order_status": "Discontinued",
-                    "transaction_type": "Discontinue",
                     "order_time": "2022-01-01 12:00:00",
-                    "ordered_by": "Provider_9021"
+                    "order_type": "Medication",
+                    "ordered_by": "Provider_9021",
+                    "sequence_number": 2,
+                    "transaction_type": "Discontinue"
                 }
-            ]
-- pharmacy. please link this to physician order entry if physician order entry is present. 
-    - [{pharmacy order 1 details}, {pharmacy order 2 details}, {pharmace 3 details}]
-    - {pharmacy 1 details} -> {"poe_id":, "", "medication": "", "duration": ""} 
+            }
+
+- pharmacy [dictionary of pharmacy dispensing records keyed by pharmacy order ID; link to physician order entry if present]
+    - Example output:
+            {
+                "10000032-271": {
+                    "starttime": "2180-08-07 08:00:00",
+                    "medication": "Furosemide",
+                    "proc_type": "Unit Dose",
+                    "status": "Discontinued via patient discharge",
+                    "entertime": "2180-08-06 16:32:20",
+                    "verifiedtime": "2180-08-06 16:32:20",
+                    "route": "PO/NG",
+                    "frequency": "DAILY",
+                    "disp_sched": "08",
+                    "infusion_type": null,
+                    "sliding_scale": null,
+                    "lockout_interval": null,
+                    "basal_rate": null,
+                    "one_hr_max": null,
+                    "doses_per_24_hrs": 1.0,
+                    "duration": 840.0,
+                    "duration_interval": "Ongoing",
+                    "expiration_value": 36.0,
+                    "expiration_unit": "Hours",
+                    "expirationdate": null,
+                    "dispensation": "Omnicell",
+                    "fill_quantity": null
+                }
+            }
