@@ -29,7 +29,6 @@ def _cos(u, v):
         return 0.0
     return float(np.dot(u, v)/(nu * nv))
 
-
 class TFIDFBaseline:
     def __init__(self, patient_info):
         self.pids = list(patient_info.keys())
@@ -299,13 +298,14 @@ def ndcg_at_k(rels_in_pred_order, k=5):
 class ControlledTripletEvaluator:
 
     # evaluation function for all baselines
+
     def __init__(self, gt_per_query):
         self.gt_per_query = gt_per_query
 
     def evaluate(self, ranker, query_ids, k_pool=20):
         # counts Top-1 label == 1.0
         top1_hits_exact = [] 
-        # counts Top-1 label >= 0.75
+         # counts Top-1 label >= 0.75
         top1_hits_ge_0p75 = []
         order_accs = []
         # NDCG@n where n = 5 in this example since there are 5 comparisons
