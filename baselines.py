@@ -11,7 +11,7 @@ class Baselines:
         self.patient_info = {}
 
     def run_benchmarks(self):
-        with open("new_benchmark.txt", 'r') as file:
+        with open("Benchmark/new_benchmark.txt", 'r') as file:
             patient_profiles = file.read()
 
         patient_diagnosis = self.process_diagnosis(patient_profiles)
