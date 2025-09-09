@@ -1,0 +1,20 @@
+{
+  "outliers": {
+    "providers": [
+      "Provider_P003",
+      "Provider_P007",
+      "Provider_P010",
+      "Provider_P014",
+      "Provider_P018",
+      "Provider_P020"
+    ],
+    "reasons": [
+      "Provider_P003: Use of Experimental Drug X and no procedures.",
+      "Provider_P007: Use of obsolete medication and outdated lab tests.",
+      "Provider_P010: Use of Unapproved Compound Y and rare lab tests.",
+      "Provider_P014: Use of alternative and nonstandard therapeutic procedures and lab panels.",
+      "Provider_P018: Use of Experimental Immunotherapy and focus on tumor DNA sequencing with no procedures.",
+      "Provider_P020: Use of herbal compounds and nonstandard herbal-related procedures and labs."
+    ]
+  }
+}

@@ -6,7 +6,7 @@ from graphviz import Digraph
 
 
 class KnowledgeGraph:
-    def __init__(self, input_data=None, input_json_path=None, output_pkl="graph_data/knowledge_graph_triples.pkl"):
+    def __init__(self, input_data=None, input_json_path=None, output_pkl="graph_data/knowledge_graph_triples_final.pkl"):
         """
         Initialize KnowledgeGraph.
 
@@ -129,7 +129,7 @@ class KnowledgeGraph:
             G.add_edge(h, t, relation=r)
         return G
 
-    def visualize(self, out_path="graph_output/knowledge_graph"):
+    def visualize(self, out_path="graph_output/knowledge_graph_final"):
         dot = Digraph()
         for h, r, t in self.graph_list:
             dot.edge(h, t, label=r)

@@ -10,7 +10,7 @@ from openai import OpenAI
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 
-class ProviderAnomalyDetector:
+class ProviderBehaviorAnalysis:
     def __init__(self, pickle_path: str):
         with open(pickle_path, "rb") as f:
             self.triples = pickle.load(f)
@@ -66,7 +66,7 @@ class ProviderAnomalyDetector:
         )
         return response.choices[0].message.content.strip()
 
-    def analyze_providers(self, save_path="provider_anomalies_results.json"):
+    def analyze_providers(self, save_path="llm_applications_data/provider_behavior_results.json"):
         providers_json = json.dumps(self.providers_info, indent=2)
         prompt = f"""
         You are analyzing provider behavior using a clinical knowledge graph.
@@ -74,33 +74,15 @@ class ProviderAnomalyDetector:
         Here is provider data (JSON):
         {providers_json}
 
-        Task:
-        1. Compare providers against each other.
-        2. For each provider pair, compute similarity scores (0–1) across:
-        - Medications prescribed
-        - Procedures ordered
-        - Labs requested
-        3. Compute an overall similarity (average of sub-scores).
-        4. Identify items that are unique to each provider in the pair. Order numbers don't matter just the actual data itself
-        5. Flag providers as outliers if their ordering patterns deviate significantly from all peers.
+        Tasl
+        1. Perform pairwise comparisons of providers to evaluate similarities in their ordering patterns.
+        2. Identify key factors that make each provider’s behavior unique relative to others.
+        3. Flag providers as outliers if their ordering patterns deviate significantly from the broader peer group. Return this info
 
         Output strictly in JSON, following this schema. STRICT JSON FORMAT NO EXTRA TEXT
         ``` json
         {{
-        "pairwise": [
-            {{
-            "provider_1": "<provider_id>",
-            "provider_2": "<provider_id>",
-            "sub_similarities": {{
-                "medication_similarity": <float>,
-                "procedure_similarity": <float>,
-                "lab_similarity": <float>
-            }},
-            "overall_similarity": <float>,
-            "unique_to_provider_1": [<list of strings>],
-            "unique_to_provider_2": [<list of strings>]
-            }}
-        ],
+    
         "outliers": {{
             "providers": [<list of provider_ids>],
             "reasons": [<list of strings>]
@@ -126,12 +108,12 @@ class ProviderAnomalyDetector:
 
 
 def run_benchmark(triples_path):
-    detector = ProviderAnomalyDetector(triples_path)
+    detector = ProviderBehaviorAnalysis(triples_path)
     print(detector.triples)
     print(detector.providers_info)
     print(detector.analyze_providers())
 
 if __name__ == "__main__":
     run_benchmark(
-        "provider_benchmark_triples.pkl"
+        "llm_applications_data/provider_behavior_benchmark_triples.pkl"
     )

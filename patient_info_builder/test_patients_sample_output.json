@@ -18,7 +18,6 @@
           "Posttraumatic stress disorder",
           "Personal history of tobacco use"
         ],
-        "hcpcs_events": [],
         "diagnosis_related_group": [
           {
             "type": "APR",
@@ -546,6 +545,7 @@
             }
           }
         ],
+        "hcpcs_events": [],
         "pharmacy": [
           {
             "10000032-55": {

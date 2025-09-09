@@ -1,7 +1,7 @@
 import openai
 import re
 from baseline_models import TFIDFBaseline, Node2VecBaseline, BERTTextBaseline, ControlledTripletEvaluator, set_seed, PSNFusionBaseline, SapBERTConceptBaseline, ClinPath 
-from llm_applications import patient_similarity_v2
+from llm_applications_patient_similarity import patient_similarity_v2
 
 set_seed(42)
 

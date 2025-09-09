@@ -10,8 +10,8 @@ class PatientInfoBuilder:
 
     def __init__(self):
         pd.set_option("display.max_columns", None)
-        data_base = "physionet.org/files/mimiciv/3.1/hosp"
-        self.clinical_data_base = "physionet.org/files/mimic-iv-note/2.2/note"
+        data_base = "/Users/sahithi/Desktop/Research/physionet.org/files/mimiciv/3.1/hosp"
+        self.clinical_data_base = "/Users/sahithi/Desktop/Research/physionet.org/files/mimic-iv-note/2.2/note"
 
         # --- Core tables ---
         self.df = pd.read_csv(os.path.join(data_base, "patients.csv.gz"))
@@ -326,6 +326,7 @@ class PatientInfoBuilder:
         """
         results = {}
         patients = self.df
+        print("Total Num Patients", len(patients))
         if limit:
             patients = patients.head(limit)
 
