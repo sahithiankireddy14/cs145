@@ -397,11 +397,11 @@ def main():
 
     formatted_relation_triples = reformat_in_chunks(formatted_relation_triples, max_chars=5000)
 
-    with open("triples_string_full.txt", 'w') as f:
+    with open("llm_applications_data/triples_string_full.txt", 'w') as f:
         f.write(formatted_relation_triples)
 
     # the structured patient triples string 
-    with open('triples_string_full.txt', 'r') as file:
+    with open('llm_applications_data/triples_string_full.txt', 'r') as file:
         formatted_relation_triples = file.read()  
 
     final = evaluate(formatted_relation_triples)
