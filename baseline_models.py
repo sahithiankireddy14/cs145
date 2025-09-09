@@ -144,8 +144,8 @@ def build_degree_map(degree_rows):
 # baseline was created by author
 class ClinPath:
     def __init__(self, patients_info, model_fn, anchors=None, synth_prefixes=("2","3","4","5","6"), with_graph=True,
-        degree_stats_path="patient_degree_stats_v2.jsonl",
-        graph_stats_path="patient_similarity_graph_benchmark_v2.jsonl"):
+        degree_stats_path="llm_applications_data/patient_degree_stats.jsonl",
+        graph_stats_path="llm_applications_data/patient_similarity_graph_benchmark.jsonl"):
 
         # with_graph allows you to test with graph information in LLM call
         
